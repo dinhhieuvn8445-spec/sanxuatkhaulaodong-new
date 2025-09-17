@@ -1,6 +1,6 @@
-# Sàn Xuất Khẩu Lao Động - Job Portal Website
+# Cường Oanh Xuất Khẩu Lao Động - Job Portal Website
 
-This is a Vietnamese job portal website clone based on https://sanxuatkhaulaodong.com/. The website is designed for overseas labor export job listings and recruitment.
+This is a Vietnamese job portal website for Cường Oanh Xuất Khẩu Lao Động. The website is designed for overseas labor export job listings and recruitment.
 
 ## Features
 
