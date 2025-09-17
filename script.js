@@ -1,5 +1,36 @@
 // Basic JavaScript functionality for the website
 
+// Page Navigation Function
+function showPage(pageId) {
+    // Hide all pages
+    const pages = document.querySelectorAll('.page-content');
+    pages.forEach(page => {
+        page.classList.remove('active');
+    });
+    
+    // Show selected page
+    const targetPage = document.getElementById(pageId + '-page');
+    if (targetPage) {
+        targetPage.classList.add('active');
+    }
+    
+    // Update navigation active state
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+    });
+    
+    // Add active class to clicked nav item
+    if (event && event.target) {
+        event.target.classList.add('active');
+    }
+    
+    // Scroll to top
+    window.scrollTo(0, 0);
+    
+    return false; // Prevent default link behavior
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Search form functionality
     const searchForm = document.querySelector('.search-form');
