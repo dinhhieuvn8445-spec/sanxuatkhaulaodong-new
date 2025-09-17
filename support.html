@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chương trình hỗ trợ - Cường Oanh Xuất Khẩu Lao Động</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Navigation -->
+    <header id="header">
+        <section class="top-section">
+            <div class="container">
+                <div class="top-left">
+                    <nav class="top-menu">
+                        <ul>
+                            <li><a href="index.html" class="nav-link">Trang chủ</a></li>
+                            <li><a href="about.html" class="nav-link">Giới thiệu</a></li>
+                            <li><a href="guide.html" class="nav-link">Hướng dẫn</a></li>
+                            <li><a href="support.html" class="nav-link active">Chương trình hỗ trợ</a></li>
+                            <li><a href="employers.html" class="nav-link">Nhà tuyển dụng</a></li>
+                            <li><a href="consultation.html" class="nav-link">Tư vấn xklđ</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="top-right">
+                    <button class="btn btn-search" data-toggle="modal" data-target="#searchModal">
+                        <i class="fa fa-search"></i> Tìm kiếm
+                    </button>
+                    <button class="btn btn-success">
+                        <i class="fas fa-user"></i> Ứng viên đăng nhập
+                    </button>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-briefcase"></i> Nhà tuyển dụng đăng tin
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Header -->
+        <section class="main-header">
+            <div class="container">
+                <div class="header-left">
+                    <a href="index.html" class="logo">
+                        <img src="https://sanxuatkhaulaodong.com/upload/2024/03/logo-mua-he-large.png" alt="Sàn Xuất Khẩu Lao Động" />
+                    </a>
+                </div>
+                <div class="header-right">
+                    <div class="banner-ad">
+                        <a href="#" target="_blank">
+                            <img src="https://sanxuatkhaulaodong.com/upload/2025/08/tuyen-dung-6-medium_large.png" alt="Top banner" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1><i class="fas fa-hands-helping"></i> Chương trình hỗ trợ</h1>
+                <div class="breadcrumb">
+                    <a href="index.html">Trang chủ</a> <span>/</span> <span>Chương trình hỗ trợ</span>
+                </div>
+            </div>
+
+            <div class="content-wrapper">
+                <div class="main-column">
+                    <!-- Support Programs Overview -->
+                    <div class="support-intro">
+                        <h2>Cam kết hỗ trợ toàn diện</h2>
+                        <p>Cường Oanh Xuất Khẩu Lao Động cam kết đồng hành cùng người lao động từ khâu chuẩn bị đến khi hoàn thành hợp đồng và về nước. Chúng tôi cung cấp các chương trình hỗ trợ toàn diện để đảm bảo quyền lợi và sự an toàn cho người lao động.</p>
+                    </div>
+
+                    <!-- Support Programs Grid -->
+                    <div class="support-programs">
+                        <div class="program-card">
+                            <div class="program-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div class="program-content">
+                                <h3>Hỗ trợ đào tạo miễn phí</h3>
+                                <p>Cung cấp các khóa đào tạo ngoại ngữ và kỹ năng nghề nghiệp hoàn toàn miễn phí cho học viên có hoàn cảnh khó khăn.</p>
+                                <ul>
+                                    <li>Đào tạo tiếng Nhật, Hàn, Đức miễn phí</li>
+                                    <li>Đào tạo kỹ năng chuyên môn</li>
+                                    <li>Hỗ trợ tài liệu học tập</li>
+                                    <li>Ưu tiên cho hộ nghèo, cận nghèo</li>
+                                </ul>
+                                <button class="btn btn-primary">Đăng ký ngay</button>
+                            </div>
+                        </div>
+
+                        <div class="program-card">
+                            <div class="program-icon">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <div class="program-content">
+                                <h3>Hỗ trợ tài chính</h3>
+                                <p>Các gói hỗ trợ tài chính linh hoạt giúp người lao động giảm bớt gánh nặng chi phí ban đầu.</p>
+                                <ul>
+                                    <li>Vay vốn lãi suất 0% trong 6 tháng đầu</li>
+                                    <li>Trả góp chi phí xuất khẩu lao động</li>
+                                    <li>Hỗ trợ chi phí khẩn cấp</li>
+                                    <li>Bảo lãnh tài chính</li>
+                                </ul>
+                                <button class="btn btn-primary">Tìm hiểu thêm</button>
+                            </div>
+                        </div>
+
+                        <div class="program-card">
+                            <div class="program-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="program-content">
+                                <h3>Bảo hiểm toàn diện</h3>
+                                <p>Gói bảo hiểm đầy đủ bảo vệ người lao động trong suốt thời gian làm việc ở nước ngoài.</p>
+                                <ul>
+                                    <li>Bảo hiểm y tế quốc tế</li>
+                                    <li>Bảo hiểm tai nạn lao động</li>
+                                    <li>Bảo hiểm thất nghiệp</li>
+                                    <li>Bảo hiểm về nước sớm</li>
+                                </ul>
+                                <button class="btn btn-primary">Xem chi tiết</button>
+                            </div>
+                        </div>
+
+                        <div class="program-card">
+                            <div class="program-icon">
+                                <i class="fas fa-headset"></i>
+                            </div>
+                            <div class="program-content">
+                                <h3>Hỗ trợ 24/7</h3>
+                                <p>Dịch vụ hỗ trợ khẩn cấp 24/7 cho người lao động đang làm việc tại nước ngoài.</p>
+                                <ul>
+                                    <li>Hotline khẩn cấp 24/7</li>
+                                    <li>Hỗ trợ qua Zalo, WhatsApp</li>
+                                    <li>Văn phòng đại diện tại các quốc gia</li>
+                                    <li>Dịch vụ phiên dịch khẩn cấp</li>
+                                </ul>
+                                <button class="btn btn-primary">Liên hệ ngay</button>
+                            </div>
+                        </div>
+
+                        <div class="program-card">
+                            <div class="program-icon">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <div class="program-content">
+                                <h3>Hỗ trợ gia đình</h3>
+                                <p>Chăm sóc và hỗ trợ gia đình người lao động trong thời gian họ làm việc ở nước ngoài.</p>
+                                <ul>
+                                    <li>Thăm hỏi gia đình định kỳ</li>
+                                    <li>Hỗ trợ khẩn cấp cho gia đình</li>
+                                    <li>Tư vấn pháp lý miễn phí</li>
+                                    <li>Kết nối cộng đồng</li>
+                                </ul>
+                                <button class="btn btn-primary">Tham gia</button>
+                            </div>
+                        </div>
+
+                        <div class="program-card">
+                            <div class="program-icon">
+                                <i class="fas fa-plane-arrival"></i>
+                            </div>
+                            <div class="program-content">
+                                <h3>Hỗ trợ tái hòa nhập</h3>
+                                <p>Chương trình hỗ trợ người lao động tái hòa nhập cộng đồng sau khi hoàn thành hợp đồng.</p>
+                                <ul>
+                                    <li>Tư vấn khởi nghiệp</li>
+                                    <li>Hỗ trợ tìm việc làm trong nước</li>
+                                    <li>Đào tạo kỹ năng mới</li>
+                                    <li>Kết nối mạng lưới cựu lao động</li>
+                                </ul>
+                                <button class="btn btn-primary">Đăng ký</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Special Programs -->
+                    <div class="special-programs">
+                        <h2>Chương trình đặc biệt</h2>
+                        
+                        <div class="special-program">
+                            <div class="program-header">
+                                <h3><i class="fas fa-star"></i> Chương trình "Xuất khẩu lao động 0 đồng"</h3>
+                                <span class="program-badge">Mới</span>
+                            </div>
+                            <div class="program-details">
+                                <p>Dành cho các hộ gia đình có hoàn cảnh đặc biệt khó khăn, chúng tôi hỗ trợ 100% chi phí xuất khẩu lao động.</p>
+                                <div class="program-benefits">
+                                    <div class="benefit-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Miễn phí 100% chi phí đào tạo</span>
+                                    </div>
+                                    <div class="benefit-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Miễn phí visa và vé máy bay</span>
+                                    </div>
+                                    <div class="benefit-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Hỗ trợ chi phí sinh hoạt trong thời gian đào tạo</span>
+                                    </div>
+                                    <div class="benefit-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Cam kết việc làm với mức lương cao</span>
+                                    </div>
+                                </div>
+                                <div class="program-conditions">
+                                    <h4>Điều kiện tham gia:</h4>
+                                    <ul>
+                                        <li>Hộ nghèo, cận nghèo có giấy xác nhận</li>
+                                        <li>Tuổi từ 20-35, sức khỏe tốt</li>
+                                        <li>Cam kết làm việc tối thiểu 3 năm</li>
+                                        <li>Hoàn thành khóa đào tạo với điểm số tốt</li>
+                                    </ul>
+                                </div>
+                                <button class="btn btn-success btn-large">Đăng ký tham gia</button>
+                            </div>
+                        </div>
+
+                        <div class="special-program">
+                            <div class="program-header">
+                                <h3><i class="fas fa-users"></i> Chương trình "Gia đình xuất khẩu lao động"</h3>
+                                <span class="program-badge">Hot</span>
+                            </div>
+                            <div class="program-details">
+                                <p>Hỗ trợ cả gia đình (vợ chồng) cùng đi xuất khẩu lao động với nhiều ưu đãi đặc biệt.</p>
+                                <div class="program-benefits">
+                                    <div class="benefit-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Giảm 30% tổng chi phí cho cả gia đình</span>
+                                    </div>
+                                    <div class="benefit-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Ưu tiên sắp xếp việc làm cùng khu vực</span>
+                                    </div>
+                                    <div class="benefit-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Hỗ trợ nhà ở cho gia đình</span>
+                                    </div>
+                                    <div class="benefit-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Chăm sóc con em tại Việt Nam</span>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary btn-large">Tìm hiểu thêm</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Success Stories -->
+                    <div class="success-stories">
+                        <h2>Câu chuyện thành công</h2>
+                        <div class="stories-grid">
+                            <div class="story-card">
+                                <div class="story-avatar">
+                                    <img src="https://via.placeholder.com/80x80" alt="Nguyễn Văn A">
+                                </div>
+                                <div class="story-content">
+                                    <h4>Nguyễn Văn A - Nhật Bản</h4>
+                                    <p>"Nhờ chương trình hỗ trợ tài chính của công ty, tôi đã có thể đi xuất khẩu lao động mà không phải lo lắng về chi phí ban đầu. Sau 3 năm, tôi đã tiết kiệm được 800 triệu và mở được cửa hàng tạp hóa ở quê nhà."</p>
+                                    <div class="story-meta">
+                                        <span class="country">🇯🇵 Nhật Bản</span>
+                                        <span class="duration">3 năm</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="story-card">
+                                <div class="story-avatar">
+                                    <img src="https://via.placeholder.com/80x80" alt="Trần Thị B">
+                                </div>
+                                <div class="story-content">
+                                    <h4>Trần Thị B - Đài Loan</h4>
+                                    <p>"Chương trình đào tạo miễn phí đã giúp tôi học được tiếng Trung và kỹ năng may công nghiệp. Giờ tôi đang làm việc tại một nhà máy lớn với mức lương 22 triệu/tháng."</p>
+                                    <div class="story-meta">
+                                        <span class="country">🇹🇼 Đài Loan</span>
+                                        <span class="duration">2 năm</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="story-card">
+                                <div class="story-avatar">
+                                    <img src="https://via.placeholder.com/80x80" alt="Lê Văn C">
+                                </div>
+                                <div class="story-content">
+                                    <h4>Lê Văn C - Đức</h4>
+                                    <p>"Dịch vụ hỗ trợ 24/7 của công ty đã giúp tôi vượt qua nhiều khó khăn khi mới sang Đức. Đội ngũ hỗ trợ luôn sẵn sàng giúp đỡ mọi lúc mọi nơi."</p>
+                                    <div class="story-meta">
+                                        <span class="country">🇩🇪 Đức</span>
+                                        <span class="duration">1.5 năm</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar">
+                    <div class="sidebar-widget">
+                        <h3>Đăng ký nhận hỗ trợ</h3>
+                        <form class="support-form">
+                            <div class="form-group">
+                                <label>Họ và tên</label>
+                                <input type="text" placeholder="Nhập họ tên của bạn">
+                            </div>
+                            <div class="form-group">
+                                <label>Số điện thoại</label>
+                                <input type="tel" placeholder="Nhập số điện thoại">
+                            </div>
+                            <div class="form-group">
+                                <label>Chương trình quan tâm</label>
+                                <select>
+                                    <option>Chọn chương trình</option>
+                                    <option>Hỗ trợ đào tạo miễn phí</option>
+                                    <option>Hỗ trợ tài chính</option>
+                                    <option>Xuất khẩu lao động 0 đồng</option>
+                                    <option>Gia đình xuất khẩu lao động</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-full">Đăng ký ngay</button>
+                        </form>
+                    </div>
+
+                    <div class="sidebar-widget">
+                        <h3>Liên hệ hỗ trợ</h3>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <div>
+                                    <strong>Hotline hỗ trợ</strong>
+                                    <p>1900 1234 (24/7)</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fab fa-zalo"></i>
+                                <div>
+                                    <strong>Zalo hỗ trợ</strong>
+                                    <p>0123 456 789</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <strong>Email hỗ trợ</strong>
+                                    <p>support@cuongoanh.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-widget">
+                        <h3>Thống kê hỗ trợ</h3>
+                        <div class="support-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">15,000+</div>
+                                <div class="stat-label">Người được hỗ trợ</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">500+</div>
+                                <div class="stat-label">Gia đình nghèo được hỗ trợ</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">24/7</div>
+                                <div class="stat-label">Hỗ trợ không ngừng</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Cường Oanh Xuất Khẩu Lao Động</h3>
+                    <p>Đơn vị uy tín hàng đầu trong lĩnh vực xuất khẩu lao động Việt Nam</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-zalo"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Liên kết nhanh</h4>
+                    <ul>
+                        <li><a href="index.html">Trang chủ</a></li>
+                        <li><a href="about.html">Giới thiệu</a></li>
+                        <li><a href="guide.html">Hướng dẫn</a></li>
+                        <li><a href="support.html">Chương trình hỗ trợ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Dịch vụ</h4>
+                    <ul>
+                        <li><a href="#">Xuất khẩu lao động</a></li>
+                        <li><a href="#">Đào tạo kỹ năng</a></li>
+                        <li><a href="#">Tư vấn pháp lý</a></li>
+                        <li><a href="#">Hỗ trợ sau xuất cảnh</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Liên hệ</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Đường ABC, Quận XYZ, TP.HCM</p>
+                    <p><i class="fas fa-phone"></i> +84 123 456 789</p>
+                    <p><i class="fas fa-envelope"></i> info@cuongoanh.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Cường Oanh Xuất Khẩu Lao Động. Tất cả quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

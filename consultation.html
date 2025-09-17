@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tư vấn XKLĐ - Cường Oanh Xuất Khẩu Lao Động</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Navigation -->
+    <header id="header">
+        <section class="top-section">
+            <div class="container">
+                <div class="top-left">
+                    <nav class="top-menu">
+                        <ul>
+                            <li><a href="index.html" class="nav-link">Trang chủ</a></li>
+                            <li><a href="about.html" class="nav-link">Giới thiệu</a></li>
+                            <li><a href="guide.html" class="nav-link">Hướng dẫn</a></li>
+                            <li><a href="support.html" class="nav-link">Chương trình hỗ trợ</a></li>
+                            <li><a href="employers.html" class="nav-link">Nhà tuyển dụng</a></li>
+                            <li><a href="consultation.html" class="nav-link active">Tư vấn xklđ</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="top-right">
+                    <button class="btn btn-search" data-toggle="modal" data-target="#searchModal">
+                        <i class="fa fa-search"></i> Tìm kiếm
+                    </button>
+                    <button class="btn btn-success">
+                        <i class="fas fa-user"></i> Ứng viên đăng nhập
+                    </button>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-briefcase"></i> Nhà tuyển dụng đăng tin
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Header -->
+        <section class="main-header">
+            <div class="container">
+                <div class="header-left">
+                    <a href="index.html" class="logo">
+                        <img src="https://sanxuatkhaulaodong.com/upload/2024/03/logo-mua-he-large.png" alt="Sàn Xuất Khẩu Lao Động" />
+                    </a>
+                </div>
+                <div class="header-right">
+                    <div class="banner-ad">
+                        <a href="#" target="_blank">
+                            <img src="https://sanxuatkhaulaodong.com/upload/2025/08/tuyen-dung-6-medium_large.png" alt="Top banner" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1><i class="fas fa-comments"></i> Tư vấn xuất khẩu lao động</h1>
+                <div class="breadcrumb">
+                    <a href="index.html">Trang chủ</a> <span>/</span> <span>Tư vấn XKLĐ</span>
+                </div>
+            </div>
+
+            <div class="content-wrapper">
+                <div class="main-column">
+                    <!-- Consultation Intro -->
+                    <div class="consultation-intro">
+                        <h2>Tư vấn miễn phí 24/7</h2>
+                        <p>Đội ngũ chuyên gia tư vấn của Cường Oanh luôn sẵn sàng hỗ trợ bạn mọi lúc, mọi nơi. Chúng tôi cung cấp dịch vụ tư vấn toàn diện về xuất khẩu lao động, từ việc chọn quốc gia phù hợp đến hỗ trợ trong suốt quá trình làm việc ở nước ngoài.</p>
+                    </div>
+
+                    <!-- Consultation Methods -->
+                    <div class="consultation-methods">
+                        <h2>Các hình thức tư vấn</h2>
+                        <div class="methods-grid">
+                            <div class="method-card">
+                                <div class="method-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <h3>Tư vấn qua điện thoại</h3>
+                                <p>Gọi ngay hotline để được tư vấn trực tiếp với chuyên gia</p>
+                                <div class="method-info">
+                                    <strong>Hotline: 1900 1234</strong>
+                                    <span>Miễn phí 24/7</span>
+                                </div>
+                                <button class="btn btn-primary">Gọi ngay</button>
+                            </div>
+
+                            <div class="method-card">
+                                <div class="method-icon">
+                                    <i class="fab fa-zalo"></i>
+                                </div>
+                                <h3>Tư vấn qua Zalo</h3>
+                                <p>Chat trực tiếp với tư vấn viên qua Zalo, nhanh chóng và tiện lợi</p>
+                                <div class="method-info">
+                                    <strong>Zalo: 0123 456 789</strong>
+                                    <span>Online 24/7</span>
+                                </div>
+                                <button class="btn btn-success">Chat Zalo</button>
+                            </div>
+
+                            <div class="method-card">
+                                <div class="method-icon">
+                                    <i class="fas fa-video"></i>
+                                </div>
+                                <h3>Tư vấn video call</h3>
+                                <p>Tư vấn trực tiếp qua video call để hiểu rõ hơn về cơ hội việc làm</p>
+                                <div class="method-info">
+                                    <strong>Đặt lịch hẹn</strong>
+                                    <span>Linh hoạt theo thời gian</span>
+                                </div>
+                                <button class="btn btn-info">Đặt lịch</button>
+                            </div>
+
+                            <div class="method-card">
+                                <div class="method-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <h3>Tư vấn tại văn phòng</h3>
+                                <p>Đến trực tiếp văn phòng để được tư vấn chi tiết và xem tài liệu</p>
+                                <div class="method-info">
+                                    <strong>123 Đường ABC, Q.XYZ</strong>
+                                    <span>T2-T7: 8:00-17:30</span>
+                                </div>
+                                <button class="btn btn-warning">Xem bản đồ</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Consultation Topics -->
+                    <div class="consultation-topics">
+                        <h2>Các chủ đề tư vấn</h2>
+                        <div class="topics-accordion">
+                            <div class="topic-item">
+                                <div class="topic-header">
+                                    <i class="fas fa-globe"></i>
+                                    <h3>Chọn quốc gia phù hợp</h3>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="topic-content">
+                                    <p>Tư vấn chi tiết về các quốc gia có cơ hội việc làm tốt, phù hợp với trình độ và nguyện vọng của bạn:</p>
+                                    <ul>
+                                        <li>Phân tích ưu nhược điểm từng quốc gia</li>
+                                        <li>So sánh mức lương và điều kiện làm việc</li>
+                                        <li>Đánh giá khả năng thích ứng</li>
+                                        <li>Tư vấn về văn hóa và phong tục</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="topic-item">
+                                <div class="topic-header">
+                                    <i class="fas fa-briefcase"></i>
+                                    <h3>Chọn ngành nghề</h3>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="topic-content">
+                                    <p>Hỗ trợ lựa chọn ngành nghề phù hợp với kỹ năng và kinh nghiệm:</p>
+                                    <ul>
+                                        <li>Đánh giá kỹ năng hiện tại</li>
+                                        <li>Tư vấn về các ngành nghề có nhu cầu cao</li>
+                                        <li>Lộ trình phát triển nghề nghiệp</li>
+                                        <li>Cơ hội thăng tiến trong tương lai</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="topic-item">
+                                <div class="topic-header">
+                                    <i class="fas fa-dollar-sign"></i>
+                                    <h3>Chi phí và tài chính</h3>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="topic-content">
+                                    <p>Tư vấn về chi phí xuất khẩu lao động và các phương án tài chính:</p>
+                                    <ul>
+                                        <li>Bảng chi phí chi tiết theo từng quốc gia</li>
+                                        <li>Các gói hỗ trợ tài chính</li>
+                                        <li>Phương án vay vốn ưu đãi</li>
+                                        <li>Kế hoạch tài chính cá nhân</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="topic-item">
+                                <div class="topic-header">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <h3>Đào tạo và chuẩn bị</h3>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="topic-content">
+                                    <p>Hướng dẫn về quá trình đào tạo và chuẩn bị trước khi đi:</p>
+                                    <ul>
+                                        <li>Lộ trình học ngoại ngữ</li>
+                                        <li>Đào tạo kỹ năng chuyên môn</li>
+                                        <li>Chuẩn bị tâm lý và sức khỏe</li>
+                                        <li>Thủ tục giấy tờ cần thiết</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="topic-item">
+                                <div class="topic-header">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <h3>Quyền lợi và bảo vệ</h3>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="topic-content">
+                                    <p>Tư vấn về quyền lợi và cách bảo vệ bản thân khi làm việc ở nước ngoài:</p>
+                                    <ul>
+                                        <li>Quyền lợi theo hợp đồng lao động</li>
+                                        <li>Bảo hiểm và chế độ phúc lợi</li>
+                                        <li>Cách xử lý khi gặp khó khăn</li>
+                                        <li>Hỗ trợ pháp lý khi cần thiết</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Online Consultation Form -->
+                    <div class="online-consultation">
+                        <h2>Đăng ký tư vấn online</h2>
+                        <div class="consultation-form-wrapper">
+                            <form class="consultation-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Họ và tên *</label>
+                                        <input type="text" placeholder="Nhập họ tên của bạn" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Số điện thoại *</label>
+                                        <input type="tel" placeholder="Nhập số điện thoại" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input type="email" placeholder="Nhập email (không bắt buộc)">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Tuổi</label>
+                                        <input type="number" placeholder="Nhập tuổi" min="18" max="45">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Quốc gia quan tâm</label>
+                                        <select>
+                                            <option value="">Chọn quốc gia</option>
+                                            <option value="japan">Nhật Bản</option>
+                                            <option value="taiwan">Đài Loan</option>
+                                            <option value="korea">Hàn Quốc</option>
+                                            <option value="germany">Đức</option>
+                                            <option value="singapore">Singapore</option>
+                                            <option value="other">Khác</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Ngành nghề quan tâm</label>
+                                        <select>
+                                            <option value="">Chọn ngành nghề</option>
+                                            <option value="manufacturing">Sản xuất</option>
+                                            <option value="construction">Xây dựng</option>
+                                            <option value="agriculture">Nông nghiệp</option>
+                                            <option value="service">Dịch vụ</option>
+                                            <option value="technology">Công nghệ</option>
+                                            <option value="other">Khác</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Thời gian mong muốn được tư vấn</label>
+                                    <div class="time-options">
+                                        <label class="radio-option">
+                                            <input type="radio" name="time" value="morning">
+                                            <span>Sáng (8:00-12:00)</span>
+                                        </label>
+                                        <label class="radio-option">
+                                            <input type="radio" name="time" value="afternoon">
+                                            <span>Chiều (13:00-17:00)</span>
+                                        </label>
+                                        <label class="radio-option">
+                                            <input type="radio" name="time" value="evening">
+                                            <span>Tối (18:00-21:00)</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Câu hỏi cần tư vấn</label>
+                                    <textarea rows="4" placeholder="Nhập câu hỏi hoặc vấn đề bạn muốn được tư vấn..."></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-large">Đăng ký tư vấn</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Consultation Team -->
+                    <div class="consultation-team">
+                        <h2>Đội ngũ tư vấn viên</h2>
+                        <div class="team-grid">
+                            <div class="consultant-card">
+                                <div class="consultant-avatar">
+                                    <img src="https://via.placeholder.com/120x120" alt="Nguyễn Văn A">
+                                </div>
+                                <div class="consultant-info">
+                                    <h4>Nguyễn Văn A</h4>
+                                    <p class="position">Trưởng phòng tư vấn</p>
+                                    <p class="experience">10+ năm kinh nghiệm</p>
+                                    <div class="specialties">
+                                        <span class="specialty">Nhật Bản</span>
+                                        <span class="specialty">Đài Loan</span>
+                                    </div>
+                                    <div class="contact-consultant">
+                                        <button class="btn btn-sm btn-primary">Tư vấn ngay</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="consultant-card">
+                                <div class="consultant-avatar">
+                                    <img src="https://via.placeholder.com/120x120" alt="Trần Thị B">
+                                </div>
+                                <div class="consultant-info">
+                                    <h4>Trần Thị B</h4>
+                                    <p class="position">Chuyên viên tư vấn cấp cao</p>
+                                    <p class="experience">8+ năm kinh nghiệm</p>
+                                    <div class="specialties">
+                                        <span class="specialty">Hàn Quốc</span>
+                                        <span class="specialty">Singapore</span>
+                                    </div>
+                                    <div class="contact-consultant">
+                                        <button class="btn btn-sm btn-primary">Tư vấn ngay</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="consultant-card">
+                                <div class="consultant-avatar">
+                                    <img src="https://via.placeholder.com/120x120" alt="Lê Văn C">
+                                </div>
+                                <div class="consultant-info">
+                                    <h4>Lê Văn C</h4>
+                                    <p class="position">Chuyên viên tư vấn Châu Âu</p>
+                                    <p class="experience">6+ năm kinh nghiệm</p>
+                                    <div class="specialties">
+                                        <span class="specialty">Đức</span>
+                                        <span class="specialty">Ba Lan</span>
+                                    </div>
+                                    <div class="contact-consultant">
+                                        <button class="btn btn-sm btn-primary">Tư vấn ngay</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="consultant-card">
+                                <div class="consultant-avatar">
+                                    <img src="https://via.placeholder.com/120x120" alt="Phạm Thị D">
+                                </div>
+                                <div class="consultant-info">
+                                    <h4>Phạm Thị D</h4>
+                                    <p class="position">Chuyên viên tư vấn tài chính</p>
+                                    <p class="experience">5+ năm kinh nghiệm</p>
+                                    <div class="specialties">
+                                        <span class="specialty">Tài chính</span>
+                                        <span class="specialty">Vay vốn</span>
+                                    </div>
+                                    <div class="contact-consultant">
+                                        <button class="btn btn-sm btn-primary">Tư vấn ngay</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar">
+                    <div class="sidebar-widget">
+                        <h3>Liên hệ tư vấn nhanh</h3>
+                        <div class="quick-consultation">
+                            <div class="consultation-hotline">
+                                <i class="fas fa-phone-alt"></i>
+                                <div>
+                                    <strong>Hotline tư vấn</strong>
+                                    <p class="hotline-number">1900 1234</p>
+                                    <span class="hotline-status">Miễn phí 24/7</span>
+                                </div>
+                            </div>
+                            <div class="consultation-buttons">
+                                <button class="btn btn-success btn-full">
+                                    <i class="fab fa-zalo"></i> Chat Zalo
+                                </button>
+                                <button class="btn btn-primary btn-full">
+                                    <i class="fas fa-video"></i> Video Call
+                                </button>
+                                <button class="btn btn-info btn-full">
+                                    <i class="fas fa-calendar"></i> Đặt lịch hẹn
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-widget">
+                        <h3>Câu hỏi thường gặp</h3>
+                        <div class="faq-sidebar">
+                            <div class="faq-item-sidebar">
+                                <h4>Chi phí tư vấn là bao nhiều?</h4>
+                                <p>Hoàn toàn miễn phí! Chúng tôi cung cấp dịch vụ tư vấn miễn phí 24/7.</p>
+                            </div>
+                            <div class="faq-item-sidebar">
+                                <h4>Tư vấn có cam kết gì không?</h4>
+                                <p>Chúng tôi cam kết tư vấn trung thực, khách quan và hỗ trợ tối đa cho khách hàng.</p>
+                            </div>
+                            <div class="faq-item-sidebar">
+                                <h4>Có thể tư vấn ngoài giờ hành chính?</h4>
+                                <p>Có! Dịch vụ tư vấn của chúng tôi hoạt động 24/7, kể cả cuối tuần và ngày lễ.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-widget">
+                        <h3>Thống kê tư vấn</h3>
+                        <div class="consultation-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">25,000+</div>
+                                <div class="stat-label">Lượt tư vấn/năm</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">98%</div>
+                                <div class="stat-label">Khách hàng hài lòng</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">15</div>
+                                <div class="stat-label">Tư vấn viên chuyên nghiệp</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Cường Oanh Xuất Khẩu Lao Động</h3>
+                    <p>Đơn vị uy tín hàng đầu trong lĩnh vực xuất khẩu lao động Việt Nam</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-zalo"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Liên kết nhanh</h4>
+                    <ul>
+                        <li><a href="index.html">Trang chủ</a></li>
+                        <li><a href="about.html">Giới thiệu</a></li>
+                        <li><a href="guide.html">Hướng dẫn</a></li>
+                        <li><a href="support.html">Chương trình hỗ trợ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Dịch vụ</h4>
+                    <ul>
+                        <li><a href="#">Xuất khẩu lao động</a></li>
+                        <li><a href="#">Đào tạo kỹ năng</a></li>
+                        <li><a href="#">Tư vấn pháp lý</a></li>
+                        <li><a href="#">Hỗ trợ sau xuất cảnh</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Liên hệ</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Đường ABC, Quận XYZ, TP.HCM</p>
+                    <p><i class="fas fa-phone"></i> +84 123 456 789</p>
+                    <p><i class="fas fa-envelope"></i> info@cuongoanh.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Cường Oanh Xuất Khẩu Lao Động. Tất cả quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Accordion functionality for consultation topics
+        document.addEventListener('DOMContentLoaded', function() {
+            const topicHeaders = document.querySelectorAll('.topic-header');
+            
+            topicHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const topicItem = this.parentElement;
+                    const isActive = topicItem.classList.contains('active');
+                    
+                    // Close all topics
+                    document.querySelectorAll('.topic-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    
+                    // Open clicked topic if it wasn't active
+                    if (!isActive) {
+                        topicItem.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
