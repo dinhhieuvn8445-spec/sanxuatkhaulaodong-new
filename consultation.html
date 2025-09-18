@@ -221,33 +221,352 @@
                         <!-- Consultation Form -->
                         <div class="consultation-form-card">
                             <div class="form-header">
-                                <h3>🎯 Nhận tư vấn miễn phí ngay hôm nay!</h3>
+                                <h3>🎯 Đăng ký tư vấn miễn phí</h3>
                                 <p>Đội ngũ chuyên gia sẵn sàng hỗ trợ bạn tìm kiếm cơ hội việc làm tốt nhất</p>
                             </div>
-                            <form class="consultation-form">
+                            <form id="consultationForm" class="consultation-form" onsubmit="submitForm(event)">
                                 <div class="form-group">
-                                    <input type="text" placeholder="Họ và tên *" required>
+                                    <label for="name">Họ và tên *</label>
+                                    <input type="text" id="name" name="name" placeholder="Nhập họ và tên" required>
+                                    <div class="error-message"></div>
                                 </div>
+                                
                                 <div class="form-group">
-                                    <input type="tel" placeholder="Số điện thoại *" required>
+                                    <label for="phone">Số điện thoại *</label>
+                                    <input type="tel" id="phone" name="phone" placeholder="Nhập số điện thoại" required>
+                                    <div class="error-message"></div>
                                 </div>
+                                
                                 <div class="form-group">
-                                    <select>
-                                        <option>Chọn quốc gia quan tâm</option>
-                                        <option>Nhật Bản</option>
-                                        <option>Đài Loan</option>
-                                        <option>Hàn Quốc</option>
-                                        <option>Singapore</option>
-                                        <option>Đức</option>
-                                        <option>Khác</option>
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" name="email" placeholder="Nhập email">
+                                    <div class="error-message"></div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="age">Tuổi *</label>
+                                    <select id="age" name="age" required>
+                                        <option value="">Chọn độ tuổi</option>
+                                        <option value="18-25">18-25 tuổi</option>
+                                        <option value="26-30">26-30 tuổi</option>
+                                        <option value="31-35">31-35 tuổi</option>
+                                        <option value="36-40">36-40 tuổi</option>
+                                        <option value="41-45">41-45 tuổi</option>
+                                    </select>
+                                    <div class="error-message"></div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="gender">Giới tính *</label>
+                                    <select id="gender" name="gender" required>
+                                        <option value="">Chọn giới tính</option>
+                                        <option value="male">Nam</option>
+                                        <option value="female">Nữ</option>
+                                    </select>
+                                    <div class="error-message"></div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="province">Tỉnh/Thành phố *</label>
+                                    <select id="province" name="province" required>
+                                        <option value="">Chọn tỉnh/thành phố</option>
+                                        <option value="hanoi">Hà Nội</option>
+                                        <option value="hcm">TP. Hồ Chí Minh</option>
+                                        <option value="danang">Đà Nẵng</option>
+                                        <option value="haiphong">Hải Phòng</option>
+                                        <option value="cantho">Cần Thơ</option>
+                                        <option value="angiang">An Giang</option>
+                                        <option value="baria-vungtau">Bà Rịa - Vũng Tàu</option>
+                                        <option value="baclieu">Bạc Liêu</option>
+                                        <option value="backan">Bắc Kạn</option>
+                                        <option value="bacgiang">Bắc Giang</option>
+                                        <option value="bacninh">Bắc Ninh</option>
+                                        <option value="bentre">Bến Tre</option>
+                                        <option value="binhdinh">Bình Định</option>
+                                        <option value="binhduong">Bình Dương</option>
+                                        <option value="binhphuoc">Bình Phước</option>
+                                        <option value="binhthuan">Bình Thuận</option>
+                                        <option value="camau">Cà Mau</option>
+                                        <option value="caobang">Cao Bằng</option>
+                                        <option value="daklak">Đắk Lắk</option>
+                                        <option value="daknong">Đắk Nông</option>
+                                        <option value="dienbien">Điện Biên</option>
+                                        <option value="dongnai">Đồng Nai</option>
+                                        <option value="dongthap">Đồng Tháp</option>
+                                        <option value="gialai">Gia Lai</option>
+                                        <option value="hagiang">Hà Giang</option>
+                                        <option value="hanam">Hà Nam</option>
+                                        <option value="hatinh">Hà Tĩnh</option>
+                                        <option value="haiduong">Hải Dương</option>
+                                        <option value="haugiang">Hậu Giang</option>
+                                        <option value="hoabinh">Hòa Bình</option>
+                                        <option value="hungyen">Hưng Yên</option>
+                                        <option value="khanhhoa">Khánh Hòa</option>
+                                        <option value="kiengiang">Kiên Giang</option>
+                                        <option value="kontum">Kon Tum</option>
+                                        <option value="laichau">Lai Châu</option>
+                                        <option value="lamdong">Lâm Đồng</option>
+                                        <option value="langson">Lạng Sơn</option>
+                                        <option value="laocai">Lào Cai</option>
+                                        <option value="longan">Long An</option>
+                                        <option value="namdinh">Nam Định</option>
+                                        <option value="nghean">Nghệ An</option>
+                                        <option value="ninhbinh">Ninh Bình</option>
+                                        <option value="ninhthuan">Ninh Thuận</option>
+                                        <option value="phuyen">Phú Yên</option>
+                                        <option value="phutho">Phú Thọ</option>
+                                        <option value="quangbinh">Quảng Bình</option>
+                                        <option value="quangnam">Quảng Nam</option>
+                                        <option value="quangngai">Quảng Ngãi</option>
+                                        <option value="quangninh">Quảng Ninh</option>
+                                        <option value="quangtri">Quảng Trị</option>
+                                        <option value="soctrang">Sóc Trăng</option>
+                                        <option value="sonla">Sơn La</option>
+                                        <option value="tayninh">Tây Ninh</option>
+                                        <option value="thaibinh">Thái Bình</option>
+                                        <option value="thainguyen">Thái Nguyên</option>
+                                        <option value="thanhhoa">Thanh Hóa</option>
+                                        <option value="thuathienhue">Thừa Thiên Huế</option>
+                                        <option value="tiengiang">Tiền Giang</option>
+                                        <option value="travinh">Trà Vinh</option>
+                                        <option value="tuyenquang">Tuyên Quang</option>
+                                        <option value="vinhlong">Vĩnh Long</option>
+                                        <option value="vinhphuc">Vĩnh Phúc</option>
+                                        <option value="yenbai">Yên Bái</option>
+                                    </select>
+                                    <div class="error-message"></div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="country">Quốc gia quan tâm *</label>
+                                    <select id="country" name="country" required>
+                                        <option value="">Chọn quốc gia</option>
+                                        <option value="japan">Nhật Bản</option>
+                                        <option value="korea">Hàn Quốc</option>
+                                        <option value="taiwan">Đài Loan</option>
+                                        <option value="singapore">Singapore</option>
+                                        <option value="malaysia">Malaysia</option>
+                                        <option value="china">Trung Quốc</option>
+                                        <option value="thailand">Thái Lan</option>
+                                        <option value="philippines">Philippines</option>
+                                        <option value="indonesia">Indonesia</option>
+                                        <option value="brunei">Brunei</option>
+                                        <option value="cambodia">Campuchia</option>
+                                        <option value="laos">Lào</option>
+                                        <option value="myanmar">Myanmar</option>
+                                        <option value="vietnam">Việt Nam</option>
+                                        <option value="australia">Úc</option>
+                                        <option value="newzealand">New Zealand</option>
+                                        <option value="canada">Canada</option>
+                                        <option value="usa">Hoa Kỳ</option>
+                                        <option value="uk">Anh</option>
+                                        <option value="germany">Đức</option>
+                                        <option value="france">Pháp</option>
+                                        <option value="italy">Ý</option>
+                                        <option value="spain">Tây Ban Nha</option>
+                                        <option value="portugal">Bồ Đào Nha</option>
+                                        <option value="netherlands">Hà Lan</option>
+                                        <option value="belgium">Bỉ</option>
+                                        <option value="switzerland">Thụy Sĩ</option>
+                                        <option value="austria">Áo</option>
+                                        <option value="sweden">Thụy Điển</option>
+                                        <option value="norway">Na Uy</option>
+                                        <option value="denmark">Đan Mạch</option>
+                                        <option value="finland">Phần Lan</option>
+                                        <option value="iceland">Iceland</option>
+                                        <option value="ireland">Ireland</option>
+                                        <option value="poland">Ba Lan</option>
+                                        <option value="czech">Séc</option>
+                                        <option value="slovakia">Slovakia</option>
+                                        <option value="hungary">Hungary</option>
+                                        <option value="romania">Rumani</option>
+                                        <option value="bulgaria">Bulgaria</option>
+                                        <option value="croatia">Croatia</option>
+                                        <option value="slovenia">Slovenia</option>
+                                        <option value="serbia">Serbia</option>
+                                        <option value="bosnia">Bosnia và Herzegovina</option>
+                                        <option value="montenegro">Montenegro</option>
+                                        <option value="albania">Albania</option>
+                                        <option value="macedonia">Bắc Macedonia</option>
+                                        <option value="greece">Hy Lạp</option>
+                                        <option value="cyprus">Síp</option>
+                                        <option value="malta">Malta</option>
+                                        <option value="estonia">Estonia</option>
+                                        <option value="latvia">Latvia</option>
+                                        <option value="lithuania">Litva</option>
+                                        <option value="russia">Nga</option>
+                                        <option value="ukraine">Ukraine</option>
+                                        <option value="belarus">Belarus</option>
+                                        <option value="moldova">Moldova</option>
+                                        <option value="georgia">Georgia</option>
+                                        <option value="armenia">Armenia</option>
+                                        <option value="azerbaijan">Azerbaijan</option>
+                                        <option value="kazakhstan">Kazakhstan</option>
+                                        <option value="uzbekistan">Uzbekistan</option>
+                                        <option value="turkmenistan">Turkmenistan</option>
+                                        <option value="kyrgyzstan">Kyrgyzstan</option>
+                                        <option value="tajikistan">Tajikistan</option>
+                                        <option value="afghanistan">Afghanistan</option>
+                                        <option value="pakistan">Pakistan</option>
+                                        <option value="india">Ấn Độ</option>
+                                        <option value="bangladesh">Bangladesh</option>
+                                        <option value="srilanka">Sri Lanka</option>
+                                        <option value="maldives">Maldives</option>
+                                        <option value="nepal">Nepal</option>
+                                        <option value="bhutan">Bhutan</option>
+                                        <option value="mongolia">Mông Cổ</option>
+                                        <option value="northkorea">Triều Tiên</option>
+                                        <option value="turkey">Thổ Nhĩ Kỳ</option>
+                                        <option value="iran">Iran</option>
+                                        <option value="iraq">Iraq</option>
+                                        <option value="syria">Syria</option>
+                                        <option value="lebanon">Lebanon</option>
+                                        <option value="jordan">Jordan</option>
+                                        <option value="israel">Israel</option>
+                                        <option value="palestine">Palestine</option>
+                                        <option value="saudi">Ả Rập Xê Út</option>
+                                        <option value="uae">UAE</option>
+                                        <option value="qatar">Qatar</option>
+                                        <option value="kuwait">Kuwait</option>
+                                        <option value="bahrain">Bahrain</option>
+                                        <option value="oman">Oman</option>
+                                        <option value="yemen">Yemen</option>
+                                        <option value="egypt">Ai Cập</option>
+                                        <option value="libya">Libya</option>
+                                        <option value="tunisia">Tunisia</option>
+                                        <option value="algeria">Algeria</option>
+                                        <option value="morocco">Morocco</option>
+                                        <option value="other">Quốc gia khác</option>
+                                    </select>
+                                    <div class="error-message"></div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="industry">Ngành nghề quan tâm</label>
+                                    <select id="industry" name="industry">
+                                        <option value="">Chọn ngành nghề</option>
+                                        <option value="manufacturing">Sản xuất - Chế tạo</option>
+                                        <option value="construction">Xây dựng</option>
+                                        <option value="agriculture">Nông nghiệp</option>
+                                        <option value="food-processing">Chế biến thực phẩm</option>
+                                        <option value="electronics">Điện tử</option>
+                                        <option value="automotive">Ô tô - Xe máy</option>
+                                        <option value="textiles">Dệt may</option>
+                                        <option value="hospitality">Khách sạn - Nhà hàng</option>
+                                        <option value="healthcare">Y tế - Chăm sóc</option>
+                                        <option value="mechanical">Cơ khí</option>
+                                        <option value="factory">Công xưởng</option>
+                                        <option value="leather">Da giày</option>
+                                        <option value="furniture">Gỗ nội thất</option>
+                                        <option value="seafood">Thủy sản</option>
+                                        <option value="pharmaceutical">Y tế - Dược phẩm</option>
+                                        <option value="elderly-care">Chăm sóc người già</option>
+                                        <option value="beauty-spa">Làm đẹp - Spa</option>
+                                        <option value="education">Giáo dục - Đào tạo</option>
+                                        <option value="logistics">Vận tải - Logistics</option>
+                                        <option value="sales">Bán hàng - Thương mại</option>
+                                        <option value="it">Công nghệ thông tin</option>
+                                        <option value="finance">Tài chính - Ngân hàng</option>
+                                        <option value="insurance">Bảo hiểm</option>
+                                        <option value="real-estate">Bất động sản</option>
+                                        <option value="marketing">Marketing - Quảng cáo</option>
+                                        <option value="design">Thiết kế đồ họa</option>
+                                        <option value="quality-control">Kiểm tra chất lượng</option>
+                                        <option value="security">Bảo vệ - An ninh</option>
+                                        <option value="cleaning">Làm sạch - Vệ sinh</option>
+                                        <option value="veterinary">Thú y</option>
+                                        <option value="gardening">Làm vườn</option>
+                                        <option value="repair">Sửa chữa - Bảo dưỡng</option>
+                                        <option value="refrigeration">Điện lạnh</option>
+                                        <option value="welding">Hàn - Cắt kim loại</option>
+                                        <option value="painting">Sơn - Phủ mặt</option>
+                                        <option value="plastic">Nhựa - Cao su</option>
+                                        <option value="chemical">Hóa chất</option>
+                                        <option value="oil-gas">Dầu khí</option>
+                                        <option value="mining">Khai thác mỏ</option>
+                                        <option value="printing">In ấn - Xuất bản</option>
+                                        <option value="entertainment">Giải trí - Thể thao</option>
+                                        <option value="tourism">Du lịch</option>
+                                        <option value="environment">Môi trường</option>
+                                        <option value="renewable-energy">Năng lượng tái tạo</option>
+                                        <option value="aviation">Hàng không</option>
+                                        <option value="maritime">Hàng hải</option>
+                                        <option value="telecommunications">Điện tử viễn thông</option>
+                                        <option value="fishing">Đánh bắt cá</option>
+                                        <option value="forestry">Lâm nghiệp</option>
+                                        <option value="biotechnology">Công nghệ sinh học</option>
+                                        <option value="robotics">Robot - Tự động hóa</option>
+                                        <option value="ai">Trí tuệ nhân tạo</option>
+                                        <option value="cybersecurity">An ninh mạng</option>
+                                        <option value="data-science">Khoa học dữ liệu</option>
+                                        <option value="web-development">Phát triển web</option>
+                                        <option value="mobile-development">Phát triển ứng dụng</option>
+                                        <option value="digital-marketing">Marketing số</option>
+                                        <option value="ecommerce">Thương mại điện tử</option>
+                                        <option value="photography">Nhiếp ảnh</option>
+                                        <option value="videography">Quay phim</option>
+                                        <option value="animation">Hoạt hình</option>
+                                        <option value="music">Âm nhạc</option>
+                                        <option value="fashion">Thời trang</option>
+                                        <option value="cosmetics">Mỹ phẩm</option>
+                                        <option value="fitness">Thể dục thể thao</option>
+                                        <option value="nutrition">Dinh dưỡng</option>
+                                        <option value="translation">Dịch thuật</option>
+                                        <option value="journalism">Báo chí</option>
+                                        <option value="broadcasting">Truyền hình - Phát thanh</option>
+                                        <option value="law">Luật</option>
+                                        <option value="architecture">Kiến trúc</option>
+                                        <option value="interior-design">Thiết kế nội thất</option>
+                                        <option value="civil-engineering">Kỹ thuật xây dựng</option>
+                                        <option value="electrical-engineering">Kỹ thuật điện</option>
+                                        <option value="mechanical-engineering">Kỹ thuật cơ khí</option>
+                                        <option value="chemical-engineering">Kỹ thuật hóa học</option>
+                                        <option value="environmental-engineering">Kỹ thuật môi trường</option>
+                                        <option value="biomedical-engineering">Kỹ thuật y sinh</option>
+                                        <option value="aerospace-engineering">Kỹ thuật hàng không</option>
+                                        <option value="physics">Vật lý</option>
+                                        <option value="chemistry">Hóa học</option>
+                                        <option value="biology">Sinh học</option>
+                                        <option value="mathematics">Toán học</option>
+                                        <option value="geology">Địa chất</option>
+                                        <option value="geography">Địa lý</option>
+                                        <option value="other">Ngành khác</option>
                                     </select>
                                 </div>
+                                
                                 <div class="form-group">
-                                    <textarea placeholder="Câu hỏi cần tư vấn (tùy chọn)" rows="4"></textarea>
+                                    <label for="experience">Kinh nghiệm làm việc</label>
+                                    <select id="experience" name="experience">
+                                        <option value="">Chọn kinh nghiệm</option>
+                                        <option value="none">Chưa có kinh nghiệm</option>
+                                        <option value="1-2">1-2 năm</option>
+                                        <option value="3-5">3-5 năm</option>
+                                        <option value="5+">Trên 5 năm</option>
+                                    </select>
                                 </div>
+                                
+                                <div class="form-group">
+                                    <label for="notes">Ghi chú thêm</label>
+                                    <textarea id="notes" name="notes" placeholder="Nhập thông tin bổ sung (nếu có)" rows="3"></textarea>
+                                </div>
+                                
+                                <div class="form-group checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="agreement" name="agreement" required>
+                                        <span class="checkmark"></span>
+                                        Tôi đồng ý với <a href="#" target="_blank">điều khoản sử dụng</a> và <a href="#" target="_blank">chính sách bảo mật</a>
+                                    </label>
+                                    <div class="error-message"></div>
+                                </div>
+                                
                                 <button type="submit" class="btn btn-submit">
-                                    <i class="fas fa-paper-plane"></i> Gửi yêu cầu tư vấn
+                                    <i class="fas fa-paper-plane"></i> Đăng ký tư vấn
                                 </button>
+                                
+                                <div class="contact-info">
+                                    <p><i class="fas fa-phone"></i> Hotline: <a href="tel:0976808600">0976.808.600</a></p>
+                                    <p><i class="fas fa-clock"></i> Hỗ trợ 24/7</p>
+                                </div>
                             </form>
                         </div>
 
@@ -259,7 +578,7 @@
                                     <i class="fas fa-phone-alt"></i>
                                     <div class="contact-details">
                                         <strong>Hotline tư vấn</strong>
-                                        <p>1900 1234</p>
+                                        <p><a href="tel:0976808600">0976.808.600</a></p>
                                         <span>Miễn phí 24/7</span>
                                     </div>
                                 </div>
@@ -585,5 +904,6 @@
             });
         });
     </script>
+    <script src="script.js"></script>
 </body>
 </html>
