@@ -10,7 +10,7 @@ import sys
 from pathlib import Path
 
 # Set the port
-PORT = 12001
+PORT = 12000
 
 # Change to the project directory
 project_dir = Path(__file__).parent
@@ -36,7 +36,7 @@ if __name__ == "__main__":
     try:
         with socketserver.TCPServer(("0.0.0.0", PORT), CustomHTTPRequestHandler) as httpd:
             print(f"Server running at http://0.0.0.0:{PORT}/")
-            print(f"Access the website at: https://work-2-vlqeldrczsswcfgn.prod-runtime.all-hands.dev")
+            print(f"Access the website at: https://work-1-djnsjjkqgmodfsgy.prod-runtime.all-hands.dev")
             print("Press Ctrl+C to stop the server")
             httpd.serve_forever()
     except KeyboardInterrupt:
