@@ -1033,6 +1033,109 @@
             });
         });
     </script>
+
+    <!-- Job List Modal -->
+    <div id="jobListModal" class="modal" style="display: none;">
+        <div class="modal-content job-modal-content">
+            <div class="modal-header">
+                <h2 id="jobModalTitle">Danh sách đơn hàng</h2>
+                <span class="close" onclick="closeJobListModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="jobListContainer" class="job-list-container">
+                    <!-- Job listings will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
+    <script>
+        // Job List Modal Functions
+        function openJobListModal(countryValue, countryName) {
+            const modal = document.getElementById('jobListModal');
+            const title = document.getElementById('jobModalTitle');
+            const container = document.getElementById('jobListContainer');
+            
+            title.textContent = `Danh sách đơn hàng - ${countryName}`;
+            
+            // Filter jobs by country
+            const filteredJobs = allJobs.filter(job => job.country === countryValue);
+            
+            if (filteredJobs.length === 0) {
+                container.innerHTML = '<div class="no-jobs">Hiện tại chưa có đơn hàng nào cho quốc gia này.</div>';
+            } else {
+                container.innerHTML = filteredJobs.map(job => `
+                    <div class="job-card-modal">
+                        <div class="job-header">
+                            <div class="job-flag">${job.flag}</div>
+                            <div class="job-title-modal">
+                                <h3>${job.title}</h3>
+                                <div class="job-meta">
+                                    <span class="job-country">${job.countryName}</span>
+                                    <span class="job-views"><i class="fas fa-eye"></i> ${job.views}</span>
+                                    ${job.isHot ? '<span class="hot-badge">HOT</span>' : ''}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job-details">
+                            <div class="job-info">
+                                <div class="info-item">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                    <span>Lương: ${job.salary} ${job.currency}</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-user"></i>
+                                    <span>Giới tính: ${job.gender}</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-calendar"></i>
+                                    <span>Tuổi: ${job.ageRange}</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>Hạn nộp: ${job.deadline}</span>
+                                </div>
+                            </div>
+                            <div class="job-consultant">
+                                <div class="consultant-info">
+                                    <i class="fas fa-user-tie"></i>
+                                    <span>${job.consultant}</span>
+                                </div>
+                                <div class="consultant-contact">
+                                    <a href="tel:${job.phone}" class="contact-btn phone-btn">
+                                        <i class="fas fa-phone"></i> ${job.phone}
+                                    </a>
+                                    <a href="${job.zalo}" class="contact-btn zalo-btn" target="_blank">
+                                        <i class="fab fa-telegram"></i> Zalo
+                                    </a>
+                                    <a href="${job.facebook}" class="contact-btn facebook-btn" target="_blank">
+                                        <i class="fab fa-facebook"></i> Facebook
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeJobListModal() {
+            const modal = document.getElementById('jobListModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const jobModal = document.getElementById('jobListModal');
+            if (event.target === jobModal) {
+                closeJobListModal();
+            }
+        }
+    </script>
 </body>
 </html>

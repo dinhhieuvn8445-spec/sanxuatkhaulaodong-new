@@ -95,72 +95,103 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const countryText = this.textContent.trim();
             let countryValue = '';
+            let countryName = '';
             
             // Map country names to filter values
             if (countryText.includes('TTS Nhật Bản')) {
                 countryValue = 'nhat-ban';
+                countryName = 'TTS Nhật Bản';
             } else if (countryText.includes('Kỹ sư Nhật Bản')) {
                 countryValue = 'ky-su-nhat-ban';
+                countryName = 'Kỹ sư Nhật Bản';
             } else if (countryText.includes('Đài Loan')) {
                 countryValue = 'dai-loan';
+                countryName = 'Đài Loan';
             } else if (countryText.includes('Singapore')) {
                 countryValue = 'singapore';
+                countryName = 'Singapore';
             } else if (countryText.includes('Tokutei Nhật')) {
                 countryValue = 'tokutei-nhat';
+                countryName = 'Tokutei Nhật';
             } else if (countryText.includes('Nga')) {
                 countryValue = 'nga';
+                countryName = 'Nga';
             } else if (countryText.includes('Rumani')) {
                 countryValue = 'rumani';
+                countryName = 'Rumani';
             } else if (countryText.includes('Bulgaria')) {
                 countryValue = 'bulgaria';
+                countryName = 'Bulgaria';
             } else if (countryText.includes('Serbia')) {
                 countryValue = 'serbia';
+                countryName = 'Serbia';
             } else if (countryText.includes('Hungary')) {
                 countryValue = 'hungary';
+                countryName = 'Hungary';
             } else if (countryText.includes('Pháp')) {
                 countryValue = 'phap';
+                countryName = 'Pháp';
             } else if (countryText.includes('Algeria')) {
                 countryValue = 'algeria';
+                countryName = 'Algeria';
             } else if (countryText.includes('Hy Lạp')) {
                 countryValue = 'hy-lap';
+                countryName = 'Hy Lạp';
             } else if (countryText.includes('Ba Lan')) {
                 countryValue = 'ba-lan';
+                countryName = 'Ba Lan';
             } else if (countryText.includes('Latvia')) {
                 countryValue = 'latvia';
+                countryName = 'Latvia';
             } else if (countryText.includes('Litva')) {
                 countryValue = 'litva';
+                countryName = 'Litva';
             } else if (countryText.includes('Tây Ban Nha')) {
                 countryValue = 'tay-ban-nha';
+                countryName = 'Tây Ban Nha';
             } else if (countryText.includes('Kỹ sư Đài Loan')) {
                 countryValue = 'ky-su-dai-loan';
+                countryName = 'Kỹ sư Đài Loan';
             } else if (countryText.includes('Ireland')) {
                 countryValue = 'ireland';
+                countryName = 'Ireland';
             } else if (countryText.includes('Áo')) {
                 countryValue = 'ao';
+                countryName = 'Áo';
             } else if (countryText.includes('Croatia')) {
                 countryValue = 'croatia';
+                countryName = 'Croatia';
             } else if (countryText.includes('Slovakia')) {
                 countryValue = 'slovakia';
+                countryName = 'Slovakia';
             } else if (countryText.includes('Đan Mạch')) {
                 countryValue = 'dan-mach';
+                countryName = 'Đan Mạch';
             } else if (countryText.includes('Ả rập xê út')) {
                 countryValue = 'a-rap-xe-ut';
+                countryName = 'Ả rập xê út';
             } else if (countryText.includes('Albania')) {
                 countryValue = 'albania';
+                countryName = 'Albania';
             } else if (countryText.includes('Dubai')) {
                 countryValue = 'dubai';
+                countryName = 'Dubai';
             } else if (countryText.includes('Trung Quốc')) {
                 countryValue = 'trung-quoc';
+                countryName = 'Trung Quốc';
             } else if (countryText.includes('Na Uy')) {
                 countryValue = 'na-uy';
+                countryName = 'Na Uy';
             } else if (countryText.includes('Nước khác')) {
                 countryValue = 'nuoc-khac';
+                countryName = 'Nước khác';
             }
             
             if (countryValue) {
-                // Set the country filter and perform search
+                // Check if we're on the homepage and have search functionality
                 const countrySelect = document.querySelector('select[name="quoc_gia"]');
-                if (countrySelect) {
+                if (countrySelect && window.location.pathname === '/index.html' || window.location.pathname === '/') {
+                    // On homepage, use existing search functionality
                     countrySelect.value = countryValue;
                     performSearch();
                     
@@ -168,6 +199,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     const resultsSection = document.querySelector('.job-listings');
                     if (resultsSection) {
                         resultsSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                } else {
+                    // On other pages, open modal with job listings
+                    if (typeof openJobListModal === 'function') {
+                        openJobListModal(countryValue, countryName);
+                    } else {
+                        // Fallback: redirect to homepage with country filter
+                        window.location.href = `index.html?country=${countryValue}`;
                     }
                 }
             }

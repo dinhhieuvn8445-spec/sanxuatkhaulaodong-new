@@ -4609,3 +4609,225 @@ body {
         font-size: 12px;
     }
 }
+
+/* Job List Modal Styles */
+.job-modal-content {
+    max-width: 900px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.job-list-container {
+    max-height: 60vh;
+    overflow-y: auto;
+    padding: 10px 0;
+}
+
+.job-card-modal {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.job-card-modal:hover {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+}
+
+.job-header {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.job-flag {
+    font-size: 24px;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.job-title-modal {
+    flex: 1;
+}
+
+.job-title-modal h3 {
+    color: #ed1c24;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    line-height: 1.4;
+}
+
+.job-meta {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.job-country {
+    background: #f8f9fa;
+    color: #495057;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.job-views {
+    color: #6c757d;
+    font-size: 12px;
+}
+
+.hot-badge {
+    background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    animation: pulse 2s infinite;
+}
+
+.job-details {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.job-info {
+    flex: 1;
+    min-width: 250px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.info-item i {
+    width: 16px;
+    margin-right: 8px;
+    color: #ed1c24;
+}
+
+.job-consultant {
+    flex-shrink: 0;
+    min-width: 200px;
+}
+
+.consultant-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-weight: 500;
+    color: #333;
+}
+
+.consultant-info i {
+    margin-right: 8px;
+    color: #ed1c24;
+}
+
+.consultant-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.contact-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-align: center;
+    justify-content: center;
+}
+
+.phone-btn {
+    background: #28a745;
+    color: white;
+}
+
+.phone-btn:hover {
+    background: #218838;
+    color: white;
+}
+
+.zalo-btn {
+    background: #0084ff;
+    color: white;
+}
+
+.zalo-btn:hover {
+    background: #0056b3;
+    color: white;
+}
+
+.facebook-btn {
+    background: #1877f2;
+    color: white;
+}
+
+.facebook-btn:hover {
+    background: #166fe5;
+    color: white;
+}
+
+.contact-btn i {
+    margin-right: 5px;
+}
+
+.no-jobs {
+    text-align: center;
+    padding: 40px 20px;
+    color: #6c757d;
+    font-size: 16px;
+}
+
+/* Mobile responsive for job modal */
+@media (max-width: 768px) {
+    .job-modal-content {
+        width: 95%;
+        max-height: 90vh;
+    }
+    
+    .job-details {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .job-consultant {
+        min-width: auto;
+    }
+    
+    .consultant-contact {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .contact-btn {
+        flex: 1;
+        min-width: 80px;
+    }
+    
+    .job-title-modal h3 {
+        font-size: 14px;
+    }
+    
+    .job-meta {
+        gap: 10px;
+    }
+}
