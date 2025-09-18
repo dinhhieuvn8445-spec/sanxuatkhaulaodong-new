@@ -636,7 +636,7 @@
                 container.innerHTML = '<div class="no-jobs">Hiện tại chưa có đơn hàng nào cho quốc gia này.</div>';
             } else {
                 container.innerHTML = filteredJobs.map(job => `
-                    <div class="job-card-modal">
+                    <div class="job-card-modal" data-job-id="${job.id}">
                         <div class="job-header">
                             <div class="job-flag">${job.flag}</div>
                             <div class="job-title-modal">
@@ -691,6 +691,24 @@
             
             modal.style.display = 'block';
             document.body.style.overflow = 'hidden';
+            
+            // Add click event listeners to job cards
+            const jobCards = container.querySelectorAll('.job-card-modal');
+            jobCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    // Don't trigger if clicking on contact buttons
+                    if (e.target.closest('.contact-btn')) {
+                        return;
+                    }
+                    const jobId = this.dataset.jobId;
+                    if (jobId) {
+                        window.location.href = `job-detail.html?id=${jobId}`;
+                    }
+                });
+                
+                // Add cursor pointer style
+                card.style.cursor = 'pointer';
+            });
         }
         
         function closeJobListModal() {

@@ -230,7 +230,7 @@
                         <h1 class="section-title">Việc làm xuất khẩu lao động mới nhất</h1>
                         <div class="job-grid">
                             <!-- Job Card 1 -->
-                            <div class="job-card">
+                            <div class="job-card" data-job-id="1">
                                 <div class="job-image">
                                     <img src="images/jobs/nga-job-1.jpg" alt="Job Image">
                                     <div class="job-flag">
@@ -271,7 +271,7 @@
                             </div>
 
                             <!-- Job Card 2 -->
-                            <div class="job-card">
+                            <div class="job-card" data-job-id="2">
                                 <div class="job-image">
                                     <img src="images/jobs/dai-loan-job-1.jpg" alt="Job Image">
                                     <div class="job-flag">
@@ -311,7 +311,7 @@
                             </div>
 
                             <!-- Job Card 3 -->
-                            <div class="job-card">
+                            <div class="job-card" data-job-id="3">
                                 <div class="job-image">
                                     <img src="images/jobs/nhat-ban-job-1.jpg" alt="Job Image">
                                     <div class="job-flag">
@@ -1234,7 +1234,7 @@
                 container.innerHTML = '<div class="no-jobs">Hiện tại chưa có đơn hàng nào cho quốc gia này.</div>';
             } else {
                 container.innerHTML = filteredJobs.map(job => `
-                    <div class="job-card-modal">
+                    <div class="job-card-modal" data-job-id="${job.id}">
                         <div class="job-header">
                             <div class="job-flag">${job.flag}</div>
                             <div class="job-title-modal">
@@ -1289,6 +1289,24 @@
             
             modal.style.display = 'block';
             document.body.style.overflow = 'hidden';
+            
+            // Add click event listeners to job cards
+            const jobCards = container.querySelectorAll('.job-card-modal');
+            jobCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    // Don't trigger if clicking on contact buttons
+                    if (e.target.closest('.contact-btn')) {
+                        return;
+                    }
+                    const jobId = this.dataset.jobId;
+                    if (jobId) {
+                        window.location.href = `job-detail.html?id=${jobId}`;
+                    }
+                });
+                
+                // Add cursor pointer style
+                card.style.cursor = 'pointer';
+            });
         }
         
         function closeJobListModal() {
@@ -1296,6 +1314,26 @@
             modal.style.display = 'none';
             document.body.style.overflow = 'auto';
         }
+        
+        // Add click event listeners to homepage job cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const homeJobCards = document.querySelectorAll('.job-grid .job-card');
+            homeJobCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    // Don't trigger if clicking on contact buttons or links
+                    if (e.target.closest('.contact-btn') || e.target.closest('a')) {
+                        return;
+                    }
+                    const jobId = this.dataset.jobId;
+                    if (jobId) {
+                        window.location.href = `job-detail.html?id=${jobId}`;
+                    }
+                });
+                
+                // Add cursor pointer style
+                card.style.cursor = 'pointer';
+            });
+        });
     </script>
 </body>
 </html>

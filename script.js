@@ -206,7 +206,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         openJobListModal(countryValue, countryName);
                     } else {
                         // Fallback: redirect to homepage with country filter
-                        window.location.href = `index.html?country=${countryValue}`;
+                        // window.location.href = `index.html?country=${countryValue}`;
+                        console.log('Would redirect to:', `index.html?country=${countryValue}`);
                     }
                 }
             }
