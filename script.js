@@ -1173,6 +1173,124 @@ function createJobCard(job) {
     return card;
 }
 
+// Registration Form Handler
+function submitForm(event) {
+    event.preventDefault();
+    
+    const form = document.getElementById('consultationForm');
+    const formData = new FormData(form);
+    
+    // Get form values
+    const data = {
+        fullName: formData.get('fullName'),
+        phone: formData.get('phone'),
+        email: formData.get('email'),
+        age: formData.get('age'),
+        gender: formData.get('gender'),
+        province: formData.get('province'),
+        country: formData.get('country'),
+        industry: formData.get('industry'),
+        experience: formData.get('experience'),
+        notes: formData.get('notes'),
+        agreement: formData.get('agreement')
+    };
+    
+    // Validate required fields
+    if (!data.fullName || !data.phone || !data.age || !data.gender || !data.province || !data.country || !data.agreement) {
+        showMessage('Vui lòng điền đầy đủ các thông tin bắt buộc (*)', 'error');
+        return;
+    }
+    
+    // Validate phone number (Vietnamese format)
+    const phoneRegex = /^(0|\+84)[3|5|7|8|9][0-9]{8}$/;
+    if (!phoneRegex.test(data.phone.replace(/\s/g, ''))) {
+        showMessage('Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại Việt Nam.', 'error');
+        return;
+    }
+    
+    // Validate email if provided
+    if (data.email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(data.email)) {
+            showMessage('Email không hợp lệ.', 'error');
+            return;
+        }
+    }
+    
+    // Show loading state
+    const submitBtn = form.querySelector('.btn-submit');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
+    submitBtn.disabled = true;
+    
+    // Simulate form submission (replace with actual API call)
+    setTimeout(() => {
+        // Reset button
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+        
+        // Show success message
+        showMessage(`Bạn đã đăng ký thành công! Tư vấn viên của chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.`, 'success');
+        
+        // Reset form
+        form.reset();
+        
+        // Log data for development (remove in production)
+        console.log('Form submitted with data:', data);
+        
+        // Optional: Send data to server
+        // sendToServer(data);
+        
+    }, 2000);
+}
+
+// Show success/error messages
+function showMessage(message, type) {
+    // Remove existing messages
+    const existingMessages = document.querySelectorAll('.success-message, .error-message');
+    existingMessages.forEach(msg => msg.remove());
+    
+    // Create message element
+    const messageDiv = document.createElement('div');
+    messageDiv.className = type === 'success' ? 'success-message show' : 'error-message show';
+    messageDiv.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-triangle'}"></i> ${message}`;
+    
+    // Insert message at the top of the form
+    const form = document.getElementById('consultationForm');
+    form.insertBefore(messageDiv, form.firstChild);
+    
+    // Auto-hide message after 5 seconds
+    setTimeout(() => {
+        messageDiv.classList.remove('show');
+        setTimeout(() => messageDiv.remove(), 300);
+    }, 5000);
+    
+    // Scroll to message
+    messageDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+// Optional: Send data to server (implement as needed)
+function sendToServer(data) {
+    // Example implementation:
+    /*
+    fetch('/api/consultation-request', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+        console.log('Server response:', result);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showMessage('Có lỗi xảy ra khi gửi thông tin. Vui lòng thử lại sau.', 'error');
+    });
+    */
+}
+
 // Export functions for potential future use
 window.WebsiteUtils = {
     formatCurrency,
@@ -1181,5 +1299,7 @@ window.WebsiteUtils = {
     viewJobDetails,
     consultJob,
     performSearch,
-    displaySearchResults
+    displaySearchResults,
+    submitForm,
+    showMessage
 };
