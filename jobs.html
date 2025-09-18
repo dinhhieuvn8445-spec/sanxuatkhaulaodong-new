@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách đơn hàng xuất khẩu lao động | Cường Oanh XKLĐ</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Navigation -->
+    <header id="header">
+        <section class="top-section">
+            <div class="container">
+                <div class="top-left">
+                    <nav class="top-menu">
+                        <ul>
+                            <li><a href="index.html" class="nav-link">Trang chủ</a></li>
+                            <li><a href="about.html" class="nav-link">Giới thiệu</a></li>
+                            <li><a href="guide.html" class="nav-link">Hướng dẫn</a></li>
+                            <li><a href="consultation.html" class="nav-link">Tư vấn xklđ</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="top-right">
+                    <button class="btn btn-search" data-toggle="modal" data-target="#searchModal">
+                        <i class="fa fa-search"></i> Tìm kiếm
+                    </button>
+                    <button class="btn btn-primary" onclick="openLoginModal()">
+                        <i class="fas fa-user"></i> Đăng nhập
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Header -->
+        <section class="main-header">
+            <div class="container">
+                <div class="header-left">
+                    <a href="index.html" class="logo">
+                        <img src="https://sanxuatkhaulaodong.com/upload/2024/03/logo-mua-he-large.png" alt="Sàn Xuất Khẩu Lao Động" />
+                    </a>
+                </div>
+                <div class="header-right">
+                    <div class="banner-ad">
+                        <a href="#" target="_blank">
+                            <img src="https://sanxuatkhaulaodong.com/upload/2025/08/tuyen-dung-6-medium_large.png" alt="Top banner" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Country Navigation -->
+        <section class="country-nav">
+            <div class="container">
+                <ul class="country-list">
+                    <li><a href="#" data-country="japan">🇯🇵 TTS Nhật Bản <span class="count">941</span></a></li>
+                    <li><a href="#" data-country="japan-engineer">🇯🇵 Kỹ sư Nhật Bản <span class="count">615</span></a></li>
+                    <li><a href="#" data-country="taiwan">🇹🇼 Đài Loan <span class="count">455</span></a></li>
+                    <li><a href="#" data-country="singapore">🇸🇬 Singapore <span class="count">39</span></a></li>
+                    <li><a href="#" data-country="tokutei">🇯🇵 Tokutei Nhật <span class="count">32</span></a></li>
+                    <li><a href="#" data-country="russia">🇷🇺 Nga <span class="count">46</span></a></li>
+                    <li><a href="#" data-country="romania">🇷🇴 Rumani <span class="count">45</span></a></li>
+                    <li><a href="#" data-country="bulgaria">🇧🇬 Bulgaria <span class="count">62</span></a></li>
+                    <li><a href="#" data-country="serbia">🇷🇸 Serbia <span class="count">1</span></a></li>
+                    <li><a href="#" data-country="hungary">🇭🇺 Hungary <span class="count">25</span></a></li>
+                    <li><a href="#" data-country="france">🇫🇷 Pháp <span class="count">1</span></a></li>
+                    <li><a href="#" data-country="algeria">🇩🇿 Algeria <span class="count">32</span></a></li>
+                    <li><a href="#" data-country="greece">🇬🇷 Hy Lạp <span class="count">71</span></a></li>
+                    <li><a href="#" data-country="poland">🇵🇱 Ba Lan <span class="count">26</span></a></li>
+                    <li><a href="#" data-country="latvia">🇱🇻 Latvia <span class="count">3</span></a></li>
+                    <li><a href="#" data-country="lithuania">🇱🇹 Litva <span class="count">10</span></a></li>
+                    <li><a href="#" data-country="spain">🇪🇸 Tây Ban Nha <span class="count">1</span></a></li>
+                    <li><a href="#" data-country="taiwan-engineer">🇹🇼 Kỹ sư Đài Loan <span class="count">10</span></a></li>
+                    <li><a href="#" data-country="ireland">🇮🇪 Ireland <span class="count">1</span></a></li>
+                    <li><a href="#" data-country="austria">🇦🇹 Áo <span class="count">1</span></a></li>
+                    <li><a href="#" data-country="croatia">🇭🇷 Croatia <span class="count">5</span></a></li>
+                    <li><a href="#" data-country="slovakia">🇸🇰 Slovakia <span class="count">13</span></a></li>
+                    <li><a href="#" data-country="denmark">🇩🇰 Đan Mạch <span class="count">5</span></a></li>
+                    <li><a href="#" data-country="saudi">🇸🇦 Ả rập xê út <span class="count">5</span></a></li>
+                    <li><a href="#" data-country="albania">🇦🇱 Albania <span class="count">2</span></a></li>
+                    <li><a href="#" data-country="dubai">🇦🇪 Dubai <span class="count">6</span></a></li>
+                    <li><a href="#" data-country="china">🇨🇳 Trung Quốc <span class="count">1</span></a></li>
+                    <li><a href="#" data-country="norway">🇳🇴 Na Uy <span class="count">1</span></a></li>
+                    <li><a href="#" data-country="other">🌍 Nước khác <span class="count">5</span></a></li>
+                </ul>
+            </div>
+        </section>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Search Form -->
+            <section class="search-section">
+                <div class="search-form-container">
+                    <form class="search-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <select class="form-select" name="country">
+                                    <option value="">Tất cả Quốc gia</option>
+                                    <option value="japan">TTS Nhật Bản</option>
+                                    <option value="taiwan">Đài Loan</option>
+                                    <option value="singapore">Singapore</option>
+                                    <option value="russia">Nga</option>
+                                    <option value="romania">Rumani</option>
+                                    <option value="bulgaria">Bulgaria</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-select" name="industry">
+                                    <option value="">Tất cả Ngành nghề</option>
+                                    <option value="factory">Công xưởng</option>
+                                    <option value="food">Chế biến thực phẩm</option>
+                                    <option value="mechanical">Cơ khí</option>
+                                    <option value="electronics">Điện tử</option>
+                                    <option value="construction">Xây dựng</option>
+                                    <option value="agriculture">Nông nghiệp</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <select class="form-select" name="location">
+                                    <option value="">Nơi thi tuyển</option>
+                                    <option value="hanoi">Hà Nội</option>
+                                    <option value="hcm">Hồ Chí Minh</option>
+                                    <option value="danang">Đà Nẵng</option>
+                                    <option value="nghean">Nghệ An</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-select" name="gender">
+                                    <option value="">Giới tính</option>
+                                    <option value="male">Nam</option>
+                                    <option value="female">Nữ</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-select" name="birth_year">
+                                    <option value="">Năm sinh</option>
+                                    <option value="2007">2007</option>
+                                    <option value="2006">2006</option>
+                                    <option value="2005">2005</option>
+                                    <option value="2004">2004</option>
+                                    <option value="2003">2003</option>
+                                    <option value="2002">2002</option>
+                                    <option value="2001">2001</option>
+                                    <option value="2000">2000</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Tìm kiếm đơn hàng</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Jobs List -->
+            <section class="jobs-section">
+                <div class="jobs-header">
+                    <h2>Danh sách đơn hàng xuất khẩu lao động</h2>
+                    <div class="jobs-count">
+                        <span id="jobs-count">Hiển thị <strong>50</strong> đơn hàng từ tổng số <strong>2,847</strong> đơn hàng</span>
+                    </div>
+                </div>
+
+                <div class="jobs-grid" id="jobs-container">
+                    <!-- Job cards will be loaded here -->
+                </div>
+
+                <div class="pagination">
+                    <button class="btn btn-outline" id="prev-page" disabled>« Trang trước</button>
+                    <div class="page-numbers">
+                        <button class="btn btn-page active">1</button>
+                        <button class="btn btn-page">2</button>
+                        <button class="btn btn-page">3</button>
+                        <button class="btn btn-page">4</button>
+                        <button class="btn btn-page">5</button>
+                        <span>...</span>
+                        <button class="btn btn-page">57</button>
+                    </div>
+                    <button class="btn btn-outline" id="next-page">Trang sau »</button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <img src="https://sanxuatkhaulaodong.com/upload/2024/03/logo-mua-he-large.png" alt="Logo" />
+                    </div>
+                    <div class="company-info">
+                        <h4>CƯỜNG OANH XUẤT KHẨU LAO ĐỘNG</h4>
+                        <p>Website số 1 về xuất khẩu lao động</p>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <div class="certification">
+                        <div class="cert-badge">
+                            <span class="cert-icon">✓</span>
+                            <div>
+                                <strong>ĐÃ ĐĂNG KÝ</strong><br>
+                                BỘ CÔNG THƯƠNG
+                            </div>
+                        </div>
+                        <div class="company-details">
+                            <p><strong>ĐĂNG KÝ WEBSITE TMĐT: 2023-0478/ĐK/TMĐT</strong></p>
+                            <p><strong>CÔNG TY TNHH ANVIBI GROUP.</strong></p>
+                            <p>Giấy đăng ký kinh doanh số: 0110151964</p>
+                            <p>Do Sở Kế hoạch & Đầu Tư Tp. Hà Nội cấp ngày 17/10/2022</p>
+                            <p>Địa chỉ: Liên Hà, Đông Anh, Hà Nội.</p>
+                            <p>Liên hệ quảng cáo: info@anvibi.com</p>
+                            <p>Hỗ trợ khách hàng: Info@anvibi.com</p>
+                            <p>Kết nối với chúng tôi</p>
+                            <div class="social-links">
+                                <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                                <a href="#" class="social-link"><i class="fab fa-google"></i></a>
+                                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" class="social-link"><i class="fab fa-skype"></i></a>
+                                <a href="#" class="social-link">Z</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>HƯỚNG DẪN</h4>
+                    <ul>
+                        <li><a href="#">Đăng nhập</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>QUY ĐỊNH CHÍNH SÁCH</h4>
+                    <ul>
+                        <li><a href="#">Giới thiệu</a></li>
+                        <li><a href="#">Điều khoản sử dụng dịch vụ</a></li>
+                        <li><a href="#">Chính sách bảo mật thông tin</a></li>
+                        <li><a href="#">Quy trình giải quyết tranh chấp.</a></li>
+                        <li><a href="#">Quy chế hoạt động</a></li>
+                        <li><a href="#">Dành cho nhà tuyển dụng</a></li>
+                        <li><a href="#">Dành cho ứng viên</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>TIN TỨC</h4>
+                    <ul>
+                        <li><a href="#">Tin tức</a></li>
+                        <li><a href="#">Thông tin cần biết</a></li>
+                        <li><a href="#">Thông tin xklđ mới nhất</a></li>
+                        <li><a href="#">Chương trình hỗ trợ xklđ</a></li>
+                        <li><a href="#">Visa Đồng Nai</a></li>
+                        <li><a href="#">Vietnam Manpower</a></li>
+                        <li><a href="#">Làm hộ chiếu ở Long Khánh</a></li>
+                        <li><a href="#">Công ty du lịch ở Long Khánh</a></li>
+                        <li><a href="#">Vé máy bay long khánh</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>NGÔN NGỮ</h4>
+                    <ul>
+                        <li><a href="#">Tiếng Việt</a></li>
+                        <li><a href="#">English</a></li>
+                        <li><a href="#">Japanese</a></li>
+                        <li><a href="#">Korean</a></li>
+                        <li><a href="#">Chinese</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="jobs.js"></script>
+</body>
+</html>
