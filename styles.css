@@ -703,39 +703,50 @@ body {
 .recruiter-contact {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
+    margin-top: 5px;
 }
 
 .phone {
-    font-size: 12px;
-    color: #ed1c24;
-    font-weight: bold;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 3px;
+    text-decoration: none;
+    color: #ed1c24;
+    font-weight: bold;
+    font-size: 12px;
 }
 
 .phone-icon {
-    width: 24px;
-    height: 24px;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    color: white;
-    text-decoration: none;
-    background-color: #007bff;
+    width: 22px !important;
+    height: 22px !important;
+    border-radius: 4px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 12px !important;
+    color: white !important;
+    text-decoration: none !important;
+    background: linear-gradient(135deg, #1e90ff 0%, #0066ff 100%) !important;
+    font-weight: bold !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+    border: 1px solid #0066ff !important;
+}
+
+.phone-icon:hover {
+    background: linear-gradient(135deg, #0066ff 0%, #0044cc 100%) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.3) !important;
 }
 
 .contact-icons {
     display: flex;
-    gap: 5px;
+    gap: 3px;
 }
 
 .contact-icons a {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
     border-radius: 4px;
     display: flex;
     align-items: center;
@@ -744,20 +755,29 @@ body {
     color: white;
     text-decoration: none;
     font-weight: bold;
+    line-height: 1;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    transition: all 0.2s ease;
 }
 
 .zalo-icon {
-    background-color: #0068ff;
-    font-size: 8px;
+    background-color: #0084ff;
+}
+
+.zalo-icon:hover {
+    background-color: #0066cc;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
 }
 
 .facebook-icon {
     background-color: #1877f2;
-    font-size: 12px;
 }
 
-.facebook-icon {
-    background-color: #1877f2;
+.facebook-icon:hover {
+    background-color: #166fe5;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
 }
 
 .job-footer {
