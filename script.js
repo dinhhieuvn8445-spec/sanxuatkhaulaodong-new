@@ -282,18 +282,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Contact icons functionality
-    const contactIcons = document.querySelectorAll('.contact-icons a');
-    contactIcons.forEach(icon => {
-        icon.addEventListener('click', function(e) {
-            e.preventDefault();
-            if (this.classList.contains('zalo-icon')) {
-                alert('Liên hệ qua Zalo - Chức năng này sẽ được phát triển sau!');
-            } else if (this.classList.contains('facebook-icon')) {
-                alert('Liên hệ qua Facebook - Chức năng này sẽ được phát triển sau!');
-            }
-        });
-    });
+    // Contact icons functionality - Removed alerts, let individual handlers work
 
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {

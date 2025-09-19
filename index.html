@@ -256,7 +256,7 @@
                                                         0981057683
                                                     </div>
                                                     <div class="contact-icons">
-                                                        <a href="https://zalo.me/qr/p/0981057683" target="_blank" class="zalo-icon">Zalo</a>
+                                                        <a href="javascript:void(0)" onclick="showZaloQR('0981057683')" class="zalo-icon">Zalo</a>
                                                         <a href="https://www.facebook.com/profile.php?id=61558585135713" target="_blank" class="facebook-icon">f</a>
                                                     </div>
                                                 </div>
@@ -296,7 +296,7 @@
                                                         0968803554
                                                     </div>
                                                     <div class="contact-icons">
-                                                        <a href="https://zalo.me/qr/p/0968803554" target="_blank" class="zalo-icon">Zalo</a>
+                                                        <a href="javascript:void(0)" onclick="showZaloQR('0968803554')" class="zalo-icon">Zalo</a>
                                                         <a href="https://www.facebook.com/profile.php?id=61553002468184" target="_blank" class="facebook-icon">f</a>
                                                     </div>
                                                 </div>
@@ -337,7 +337,7 @@
                                                         0364370000
                                                     </div>
                                                     <div class="contact-icons">
-                                                        <a href="https://zalo.me/qr/p/0364370000" target="_blank" class="zalo-icon">Zalo</a>
+                                                        <a href="javascript:void(0)" onclick="showZaloQR('0364370000')" class="zalo-icon">Zalo</a>
                                                         <a href="https://www.facebook.com/tran.anh.hai.195277" target="_blank" class="facebook-icon">f</a>
                                                     </div>
                                                 </div>
@@ -1345,6 +1345,54 @@
                 });
             }
         });
+
+        // QR Code Modal Functions
+        function showZaloQR(phone) {
+            const modal = document.getElementById('zaloQRModal');
+            const qrImage = document.getElementById('qrCodeImage');
+            const phoneNumber = document.getElementById('qrPhoneNumber');
+            
+            // Set phone number
+            phoneNumber.textContent = phone;
+            
+            // Generate QR code using QR Server API
+            const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://zalo.me/qr/p/${phone}`;
+            qrImage.src = qrCodeUrl;
+            
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeZaloQR() {
+            const modal = document.getElementById('zaloQRModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('zaloQRModal');
+            if (event.target === modal) {
+                closeZaloQR();
+            }
+        });
     </script>
+
+    <!-- Zalo QR Code Modal -->
+    <div id="zaloQRModal" class="modal" style="display: none;">
+        <div class="modal-content qr-modal-content">
+            <div class="modal-header">
+                <h3>Liên hệ qua Zalo</h3>
+                <span class="close" onclick="closeZaloQR()">&times;</span>
+            </div>
+            <div class="modal-body qr-modal-body">
+                <div class="qr-container">
+                    <img id="qrCodeImage" src="" alt="Zalo QR Code" class="qr-code-image">
+                    <p class="qr-instruction">Quét mã QR để liên hệ qua Zalo</p>
+                    <p class="qr-phone">SĐT: <span id="qrPhoneNumber"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
