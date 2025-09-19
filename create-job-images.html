@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Job Images</title>
+    <style>
+        .job-image-creator {
+            width: 300px;
+            height: 200px;
+            position: relative;
+            margin: 10px;
+            border-radius: 8px;
+            overflow: hidden;
+            display: inline-block;
+        }
+        
+        .nga-bg {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+        }
+        
+        .dai-loan-bg {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+        }
+        
+        .nhat-ban-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .singapore-bg {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        
+        .bulgaria-bg {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+        
+        .job-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 90%;
+        }
+        
+        .job-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .job-details {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .flag-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Job Images Creator</h1>
+    
+    <div class="job-image-creator nga-bg" id="nga-job">
+        <div class="job-content">
+            <div class="flag-icon">🇷🇺</div>
+            <div class="job-title">Liên Bang Nga</div>
+            <div class="job-details">Thợ vận hành máy đúc<br>$870/tháng</div>
+        </div>
+    </div>
+    
+    <div class="job-image-creator dai-loan-bg" id="dai-loan-job">
+        <div class="job-content">
+            <div class="flag-icon">🇹🇼</div>
+            <div class="job-title">Đài Loan</div>
+            <div class="job-details">Tập Đoàn Điện Tử<br>28,590 Đài tệ/tháng</div>
+        </div>
+    </div>
+    
+    <div class="job-image-creator nhat-ban-bg" id="nhat-ban-job">
+        <div class="job-content">
+            <div class="flag-icon">🇯🇵</div>
+            <div class="job-title">Nhật Bản</div>
+            <div class="job-details">Nhân viên khách sạn 4*<br>21 Man/tháng</div>
+        </div>
+    </div>
+    
+    <div class="job-image-creator singapore-bg" id="singapore-job">
+        <div class="job-content">
+            <div class="flag-icon">🇸🇬</div>
+            <div class="job-title">Singapore</div>
+            <div class="job-details">Thợ xây dựng<br>1,056 SGD/tháng</div>
+        </div>
+    </div>
+    
+    <div class="job-image-creator bulgaria-bg" id="bulgaria-job">
+        <div class="job-content">
+            <div class="flag-icon">🇧🇬</div>
+            <div class="job-title">Bulgaria</div>
+            <div class="job-details">Thợ giặt là<br>24-30 triệu/tháng</div>
+        </div>
+    </div>
+
+    <script>
+        // Function to convert div to canvas and download as image
+        function downloadImage(elementId, filename) {
+            const element = document.getElementById(elementId);
+            
+            // Use html2canvas library (you would need to include it)
+            // For now, we'll just create better CSS backgrounds
+            console.log('Would download image for:', elementId);
+        }
+    </script>
+</body>
+</html>

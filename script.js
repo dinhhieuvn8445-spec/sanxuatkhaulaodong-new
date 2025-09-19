@@ -112,12 +112,37 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Job title links functionality
+    // Job title links functionality - All jobs can show details
     const jobLinks = document.querySelectorAll('.job-title a');
     jobLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
-            alert('Chi tiết công việc - Chức năng này sẽ được phát triển sau!');
+            
+            // Find the parent job card to get the job ID
+            const jobCard = this.closest('.job-card');
+            const jobId = jobCard ? jobCard.getAttribute('data-job-id') : null;
+            
+            // Allow all jobs to show details
+            if (jobId) {
+                // Redirect to job detail page with job ID
+                window.location.href = `job-detail.html?id=${jobId}`;
+            }
+        });
+    });
+
+    // Make all job cards clickable
+    const allJobCards = document.querySelectorAll('.job-card');
+    allJobCards.forEach(card => {
+        card.addEventListener('click', function(e) {
+            // Don't trigger if clicking on a link or button inside the card
+            if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('a') || e.target.closest('button')) {
+                return;
+            }
+            
+            const jobId = this.getAttribute('data-job-id');
+            if (jobId) {
+                window.location.href = `job-detail.html?id=${jobId}`;
+            }
         });
     });
 
@@ -339,10 +364,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Add click tracking for analytics (placeholder)
+    // Add click tracking for job cards - Only first 3 have details
     document.addEventListener('click', function(e) {
-        if (e.target.matches('.job-card, .job-card *')) {
-            console.log('Job card clicked');
+        // Handle job card clicks (excluding buttons and links inside)
+        if (e.target.matches('.job-card') || (e.target.closest('.job-card') && !e.target.matches('a, button, .consult-btn, .job-title a'))) {
+            const jobCard = e.target.closest('.job-card');
+            const jobId = jobCard ? jobCard.getAttribute('data-job-id') : null;
+            
+            if (jobId && (jobId === '1' || jobId === '2' || jobId === '3')) {
+                // Redirect to job detail page with job ID
+                window.location.href = `job-detail.html?id=${jobId}`;
+            } else if (jobId) {
+                alert('Đơn hàng này chưa có chi tiết. Vui lòng liên hệ tư vấn viên để biết thêm thông tin!');
+            }
+            console.log('Job card clicked:', jobId);
         }
         if (e.target.matches('.consult-btn')) {
             console.log('Consult button clicked');

@@ -583,16 +583,219 @@ body {
     box-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
 
+/* All job cards are clickable with enhanced hover effect */
+.job-card {
+    cursor: pointer;
+    position: relative;
+}
+
+.job-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 6px 20px rgba(237, 28, 36, 0.2);
+}
+
 .job-image {
     position: relative;
     height: 200px;
     overflow: hidden;
+    border-radius: 8px 8px 0 0;
+    background-size: cover;
+    background-position: center;
 }
 
 .job-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+/* Job cards styling like original sanxuatkhaulaodong.com */
+.job-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.job-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(237, 28, 36, 0.15);
+}
+
+/* Job image with real images like original site */
+.job-image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 8px 8px 0 0;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Show original images and remove gradient overlays */
+.job-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* HOT badge */
+.job-hot {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff4757;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: bold;
+    z-index: 3;
+}
+
+/* Job content styling like original */
+.job-content {
+    padding: 15px;
+}
+
+.job-salary {
+    color: #ed1c24;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.job-salary .currency {
+    font-size: 14px;
+    color: #666;
+}
+
+.job-requirements {
+    background: #ff8c00;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+.job-deadline {
+    background: #007bff;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+.job-title {
+    font-size: 14px;
+    line-height: 1.4;
+    margin-bottom: 15px;
+}
+
+.job-title a {
+    color: #333;
+    text-decoration: none;
+}
+
+.job-title a:hover {
+    color: #ed1c24;
+}
+
+/* Recruiter section like original */
+.job-recruiter {
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+    margin-bottom: 10px;
+}
+
+.recruiter-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.recruiter-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #ddd;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.recruiter-name {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.phone {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.phone-icon {
+    margin-right: 5px;
+    text-decoration: none;
+}
+
+.contact-icons {
+    display: flex;
+    gap: 10px;
+}
+
+.contact-icons a {
+    background: #007bff;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    text-decoration: none;
+    font-size: 11px;
+}
+
+.zalo-icon {
+    background: #0084ff !important;
+}
+
+.facebook-icon {
+    background: #1877f2 !important;
+}
+
+/* Job footer like original */
+.job-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.consult-btn {
+    background: #28a745;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.view-count {
+    color: #666;
+    font-size: 12px;
+}
+
+.view-count i {
+    margin-right: 3px;
 }
 
 .job-flag {

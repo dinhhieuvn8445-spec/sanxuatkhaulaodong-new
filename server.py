@@ -36,7 +36,7 @@ if __name__ == "__main__":
     try:
         with socketserver.TCPServer(("0.0.0.0", PORT), CustomHTTPRequestHandler) as httpd:
             print(f"Server running at http://0.0.0.0:{PORT}/")
-            print(f"Access the website at: https://work-1-djnsjjkqgmodfsgy.prod-runtime.all-hands.dev")
+            print(f"Access the website at: https://work-1-mshglbgemrxnuvwc.prod-runtime.all-hands.dev")
             print("Press Ctrl+C to stop the server")
             httpd.serve_forever()
     except KeyboardInterrupt:
