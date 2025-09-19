@@ -1,239 +1,38 @@
-10.2.24.16 - - [19/Sep/2025 03:06:30] "GET / HTTP/1.1" 200 -
-10.2.70.3 - - [19/Sep/2025 03:06:31] "GET / HTTP/1.1" 200 -
-10.2.70.3 - - [19/Sep/2025 03:06:31] "GET /styles.css HTTP/1.1" 200 -
-10.2.70.3 - - [19/Sep/2025 03:06:31] "GET /images/flags/russia.png HTTP/1.1" 200 -
-10.2.70.3 - - [19/Sep/2025 03:06:31] "GET /images/jobs/nga-job-1.jpg HTTP/1.1" 200 -
-10.2.70.3 - - [19/Sep/2025 03:06:31] "GET /images/jobs/dai-loan-job-1.jpg HTTP/1.1" 200 -
-10.2.70.3 - - [19/Sep/2025 03:06:31] "GET /images/flags/taiwan.png HTTP/1.1" 200 -
-10.2.70.3 - - [19/Sep/2025 03:06:31] "GET /images/jobs/nhat-ban-job-1.jpg HTTP/1.1" 200 -
-10.2.70.3 - - [19/Sep/2025 03:06:32] "GET /script.js HTTP/1.1" 200 -
-10.2.70.3 - - [19/Sep/2025 03:06:32] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:06:32] "GET /images/flags/japan.png HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:06:32] "GET /images/logos/suleco.png HTTP/1.1" 200 -
-10.2.70.3 - - [19/Sep/2025 03:06:32] "GET /images/logos/ecocom.png HTTP/1.1" 200 -
-10.2.70.3 - - [19/Sep/2025 03:06:32] "GET /images/logos/asia.png HTTP/1.1" 200 -
-10.2.70.3 - - [19/Sep/2025 03:06:32] "GET /images/logos/htd.png HTTP/1.1" 200 -
-10.2.70.3 - - [19/Sep/2025 03:06:32] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:06:32] "GET /images/flags/japan.png HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:06:33] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:06:33] "GET /favicon.ico HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:06:41] "GET /job-detail.html?id=1 HTTP/1.1" 200 -
-10.2.70.3 - - [19/Sep/2025 03:06:41] "GET /styles.css HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:06:41] "GET /script.js HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:06:41] "GET /images/jobs/nga-job-1.jpg HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:06:58] "GET /about.html HTTP/1.1" 200 -
-10.2.70.3 - - [19/Sep/2025 03:06:59] "GET /styles.css?v=2024091801 HTTP/1.1" 200 -
-10.2.70.3 - - [19/Sep/2025 03:06:59] "GET /script.js HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:07:01] "GET /index.html?country=ky-su-nhat-ban&name=K%E1%BB%B9%20s%C6%B0%20Nh%E1%BA%ADt%20B%E1%BA%A3n HTTP/1.1" 200 -
-10.2.70.3 - - [19/Sep/2025 03:07:01] "GET /styles.css HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:07:02] "GET /images/jobs/nga-job-1.jpg HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:07:02] "GET /images/flags/taiwan.png HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:07:02] "GET /images/flags/russia.png HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:07:02] "GET /images/jobs/dai-loan-job-1.jpg HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:07:02] "GET /images/logos/suleco.png HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:07:02] "GET /images/logos/ecocom.png HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:07:02] "GET /images/logos/asia.png HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:07:02] "GET /images/logos/htd.png HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:07:02] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:07:02] "GET /images/flags/japan.png HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:07:02] "GET /images/jobs/nhat-ban-job-1.jpg HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:07:06] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:07:06] "GET /images/flags/japan.png HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:07:06] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:07:06] "GET /images/jobs/nhat-ban-job-2.jpg HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:07:10] "GET /index.html HTTP/1.1" 200 -
-10.2.70.3 - - [19/Sep/2025 03:07:11] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:07:11] "GET /images/flags/japan.png HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:07:11] "GET /script.js HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:07:36] "GET /images/jobs/nhat-ban-job-1.jpg HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:07:36] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:07:36] "GET /images/flags/japan.png HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:07:36] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:07:36] "GET /images/jobs/singapore-job-1.jpg HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:07:36] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:07:36] "GET /images/flags/singapore.png HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:07:36] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:07:36] "GET /images/flags/romania.png HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:07:36] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:07:36] "GET /images/jobs/rumani-job-1.jpg HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:07:36] "GET /images/flags/bulgaria.png HTTP/1.1" 200 -
-10.2.70.3 - - [19/Sep/2025 03:07:36] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:07:36] "GET /images/jobs/bulgaria-job-1.jpg HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:07:36] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:07:36] "GET /images/jobs/hungary-job-1.jpg HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:07:36] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:07:36] "GET /images/jobs/phap-job-1.jpg HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:07:36] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:07:36] "GET /images/jobs/hy-lap-job-1.jpg HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:07:37] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:07:37] "GET /images/jobs/ba-lan-job-1.jpg HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:07:37] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:07:37] "GET /images/jobs/dai-loan-job-2.jpg HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:07:37] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:07:37] "GET /images/jobs/nga-job-3.jpg HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:07:37] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:07:37] "GET /images/jobs/dai-loan-job-3.jpg HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:07:37] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:07:37] "GET /images/jobs/nga-job-4.jpg HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:07:37] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:07:37] "GET /images/jobs/nhat-ban-job-2.jpg HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:07:37] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:07:37] "GET /images/jobs/slovakia-job-1.jpg HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:07:37] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:07:37] "GET /images/jobs/singapore-job-2.jpg HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:07:37] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:07:37] "GET /images/jobs/hy-lap-job-2.jpg HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:07:37] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:07:37] "GET /images/jobs/algeria-job-1.jpg HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:07:37] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:07:37] "GET /images/jobs/rumani-job-2.jpg HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:07:37] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:07:37] "GET /images/jobs/singapore-job-3.jpg HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:08:00] "GET /index.html HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:08:01] "GET /images/jobs/nga-job-1.jpg HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:08:01] "GET /styles.css HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:08:01] "GET /images/flags/russia.png HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:08:01] "GET /images/jobs/dai-loan-job-1.jpg HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:08:01] "GET /script.js HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:08:01] "GET /images/flags/taiwan.png HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:08:01] "GET /images/logos/suleco.png HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:08:01] "GET /images/logos/asia.png HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:08:01] "GET /images/logos/ecocom.png HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:08:01] "GET /images/logos/htd.png HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:08:01] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:08:01] "GET /images/flags/japan.png HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:08:01] "GET /images/jobs/nhat-ban-job-1.jpg HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:08:23] "GET / HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:08:45] "GET / HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:10:43] "GET / HTTP/1.1" 200 -
-10.2.24.16 - - [19/Sep/2025 03:10:43] "GET /styles.css HTTP/1.1" 200 -
-10.2.24.16 - - [19/Sep/2025 03:10:43] "GET /images/jobs/nhat-ban-job-1.jpg HTTP/1.1" 200 -
-10.2.24.16 - - [19/Sep/2025 03:10:43] "GET /images/jobs/dai-loan-job-1.jpg HTTP/1.1" 200 -
-10.2.24.16 - - [19/Sep/2025 03:10:43] "GET /images/flags/russia.png HTTP/1.1" 200 -
-10.2.24.16 - - [19/Sep/2025 03:10:43] "GET /images/jobs/nga-job-1.jpg HTTP/1.1" 200 -
-10.2.24.16 - - [19/Sep/2025 03:10:43] "GET /images/logos/suleco.png HTTP/1.1" 200 -
-10.2.24.16 - - [19/Sep/2025 03:10:43] "GET /images/flags/taiwan.png HTTP/1.1" 200 -
-10.2.24.16 - - [19/Sep/2025 03:10:43] "GET /script.js HTTP/1.1" 200 -
-10.2.24.16 - - [19/Sep/2025 03:10:43] "GET /images/logos/asia.png HTTP/1.1" 200 -
-10.2.24.16 - - [19/Sep/2025 03:10:43] "GET /images/logos/ecocom.png HTTP/1.1" 200 -
-10.2.24.16 - - [19/Sep/2025 03:10:43] code 404, message File not found
-10.2.24.16 - - [19/Sep/2025 03:10:43] "GET /images/flags/japan.png HTTP/1.1" 404 -
-10.2.24.16 - - [19/Sep/2025 03:10:43] "GET /images/logos/htd.png HTTP/1.1" 200 -
-10.2.24.16 - - [19/Sep/2025 03:10:56] "GET /job-detail.html?id=1 HTTP/1.1" 200 -
-10.2.24.16 - - [19/Sep/2025 03:10:56] "GET /styles.css HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:10:56] "GET /script.js HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:11:10] "GET /styles.css HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:11:10] "GET /script.js HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:11:10] code 404, message File not found
-10.2.24.16 - - [19/Sep/2025 03:11:10] "GET /images/flags/japan.png HTTP/1.1" 404 -
-10.2.24.16 - - [19/Sep/2025 03:12:18] "GET /job-detail.html?id=1 HTTP/1.1" 200 -
-10.2.24.16 - - [19/Sep/2025 03:12:18] "GET /styles.css HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:12:18] "GET /script.js HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:12:18] "GET /images/jobs/nga-job-1.jpg HTTP/1.1" 304 -
-10.2.30.22 - - [19/Sep/2025 03:21:43] "GET /index.html HTTP/1.1" 304 -
-10.2.30.22 - - [19/Sep/2025 03:21:43] "GET /styles.css HTTP/1.1" 200 -
-10.2.30.22 - - [19/Sep/2025 03:21:43] "GET /images/jobs/nga-job-1.jpg HTTP/1.1" 304 -
-10.2.30.22 - - [19/Sep/2025 03:21:43] "GET /images/jobs/dai-loan-job-1.jpg HTTP/1.1" 304 -
-10.2.30.22 - - [19/Sep/2025 03:21:43] "GET /images/flags/russia.png HTTP/1.1" 304 -
-10.2.30.22 - - [19/Sep/2025 03:21:43] "GET /script.js HTTP/1.1" 200 -
-10.2.30.22 - - [19/Sep/2025 03:21:43] "GET /images/flags/taiwan.png HTTP/1.1" 304 -
-10.2.30.22 - - [19/Sep/2025 03:21:43] "GET /images/jobs/nhat-ban-job-1.jpg HTTP/1.1" 304 -
-10.2.30.22 - - [19/Sep/2025 03:21:43] code 404, message File not found
-10.2.30.22 - - [19/Sep/2025 03:21:43] "GET /images/flags/japan.png HTTP/1.1" 404 -
-10.2.30.22 - - [19/Sep/2025 03:21:43] "GET /images/logos/ecocom.png HTTP/1.1" 304 -
-10.2.30.22 - - [19/Sep/2025 03:21:43] "GET /images/logos/suleco.png HTTP/1.1" 304 -
-10.2.30.22 - - [19/Sep/2025 03:21:43] "GET /images/logos/asia.png HTTP/1.1" 304 -
-10.2.30.22 - - [19/Sep/2025 03:21:43] "GET /images/logos/htd.png HTTP/1.1" 304 -
-10.2.30.22 - - [19/Sep/2025 03:21:44] "GET / HTTP/1.1" 304 -
-10.2.30.22 - - [19/Sep/2025 03:21:48] code 404, message File not found
-10.2.30.22 - - [19/Sep/2025 03:21:48] "GET /images/flags/japan.png HTTP/1.1" 404 -
-10.2.30.22 - - [19/Sep/2025 03:21:50] code 404, message File not found
-10.2.30.22 - - [19/Sep/2025 03:21:50] "GET /images/flags/japan.png HTTP/1.1" 404 -
-10.2.30.22 - - [19/Sep/2025 03:21:50] code 404, message File not found
-10.2.30.22 - - [19/Sep/2025 03:21:50] "GET /images/jobs/nhat-ban-job-2.jpg HTTP/1.1" 404 -
-10.2.30.22 - - [19/Sep/2025 03:21:53] code 404, message File not found
-10.2.30.22 - - [19/Sep/2025 03:21:53] "GET /images/flags/japan.png HTTP/1.1" 404 -
-10.2.30.22 - - [19/Sep/2025 03:23:26] "GET / HTTP/1.1" 304 -
-10.2.30.22 - - [19/Sep/2025 03:23:42] "GET /job-detail.html?id=1 HTTP/1.1" 200 -
-10.2.30.22 - - [19/Sep/2025 03:23:42] "GET /styles.css HTTP/1.1" 304 -
-10.2.30.22 - - [19/Sep/2025 03:23:42] "GET /script.js HTTP/1.1" 304 -
-10.2.30.22 - - [19/Sep/2025 03:23:42] "GET /images/jobs/nga-job-1.jpg HTTP/1.1" 304 -
-10.2.30.22 - - [19/Sep/2025 03:23:49] "GET /job-detail.html?id=5 HTTP/1.1" 200 -
-10.2.24.16 - - [19/Sep/2025 03:23:57] "GET / HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:23:57] "GET /styles.css HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:23:57] "GET /images/flags/russia.png HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:23:57] "GET /images/jobs/nga-job-1.jpg HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:23:57] "GET /images/logos/suleco.png HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:23:57] "GET /script.js HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:23:57] "GET /images/flags/taiwan.png HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:23:57] "GET /images/jobs/dai-loan-job-1.jpg HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:23:57] "GET /images/logos/asia.png HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:23:57] "GET /images/logos/ecocom.png HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:23:57] "GET /images/jobs/nhat-ban-job-1.jpg HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:23:57] "GET /images/logos/htd.png HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:23:57] code 404, message File not found
-10.2.24.16 - - [19/Sep/2025 03:23:57] "GET /images/flags/japan.png HTTP/1.1" 404 -
-10.2.30.22 - - [19/Sep/2025 03:25:18] "GET / HTTP/1.1" 304 -
-10.2.16.11 - - [19/Sep/2025 03:28:12] "GET / HTTP/1.1" 304 -
-10.2.16.11 - - [19/Sep/2025 03:28:12] "GET /styles.css HTTP/1.1" 200 -
-10.2.16.11 - - [19/Sep/2025 03:28:12] "GET /images/jobs/nga-job-1.jpg HTTP/1.1" 304 -
-10.2.16.11 - - [19/Sep/2025 03:28:12] "GET /images/flags/russia.png HTTP/1.1" 304 -
-10.2.16.11 - - [19/Sep/2025 03:28:12] "GET /images/jobs/dai-loan-job-1.jpg HTTP/1.1" 304 -
-10.2.16.11 - - [19/Sep/2025 03:28:12] "GET /script.js HTTP/1.1" 200 -
-10.2.16.11 - - [19/Sep/2025 03:28:12] "GET /images/logos/ecocom.png HTTP/1.1" 304 -
-10.2.16.11 - - [19/Sep/2025 03:28:12] "GET /images/logos/suleco.png HTTP/1.1" 304 -
-10.2.16.11 - - [19/Sep/2025 03:28:12] "GET /images/flags/taiwan.png HTTP/1.1" 304 -
-10.2.16.11 - - [19/Sep/2025 03:28:12] "GET /images/jobs/nhat-ban-job-1.jpg HTTP/1.1" 304 -
-10.2.16.11 - - [19/Sep/2025 03:28:12] code 404, message File not found
-10.2.16.11 - - [19/Sep/2025 03:28:12] "GET /images/flags/japan.png HTTP/1.1" 404 -
-10.2.16.11 - - [19/Sep/2025 03:28:12] "GET /images/logos/asia.png HTTP/1.1" 304 -
-10.2.16.11 - - [19/Sep/2025 03:28:12] "GET /images/logos/htd.png HTTP/1.1" 304 -
-10.2.16.11 - - [19/Sep/2025 03:28:29] "GET /job-detail.html?id=1 HTTP/1.1" 200 -
-10.2.16.11 - - [19/Sep/2025 03:28:29] "GET /styles.css HTTP/1.1" 304 -
-10.2.16.11 - - [19/Sep/2025 03:28:29] "GET /script.js HTTP/1.1" 304 -
-10.2.16.11 - - [19/Sep/2025 03:28:38] "GET /styles.css HTTP/1.1" 304 -
-10.2.16.11 - - [19/Sep/2025 03:28:38] code 404, message File not found
-10.2.16.11 - - [19/Sep/2025 03:28:38] "GET /images/flags/japan.png HTTP/1.1" 404 -
-10.2.16.11 - - [19/Sep/2025 03:28:53] "GET /job-detail.html?id=2 HTTP/1.1" 200 -
-10.2.16.11 - - [19/Sep/2025 03:28:53] "GET /styles.css HTTP/1.1" 304 -
-10.2.16.11 - - [19/Sep/2025 03:28:53] "GET /script.js HTTP/1.1" 304 -
-10.2.29.11 - - [19/Sep/2025 03:29:01] "GET / HTTP/1.1" 304 -
-10.2.16.11 - - [19/Sep/2025 03:29:04] "GET /styles.css HTTP/1.1" 304 -
-10.2.16.11 - - [19/Sep/2025 03:29:04] code 404, message File not found
-10.2.16.11 - - [19/Sep/2025 03:29:04] "GET /images/flags/japan.png HTTP/1.1" 404 -
-10.2.16.11 - - [19/Sep/2025 03:29:17] "GET /job-detail.html?id=3 HTTP/1.1" 200 -
-10.2.16.11 - - [19/Sep/2025 03:29:17] "GET /styles.css HTTP/1.1" 304 -
-10.2.16.11 - - [19/Sep/2025 03:29:17] "GET /script.js HTTP/1.1" 304 -
-10.2.30.22 - - [19/Sep/2025 03:40:58] "GET / HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:41:08] "GET /index.html HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:41:08] "GET /styles.css HTTP/1.1" 200 -
-10.2.24.16 - - [19/Sep/2025 03:41:08] "GET /images/jobs/nga-job-1.jpg HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:41:08] "GET /images/flags/russia.png HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:41:08] "GET /images/jobs/dai-loan-job-1.jpg HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:41:08] "GET /script.js HTTP/1.1" 200 -
-10.2.24.16 - - [19/Sep/2025 03:41:08] "GET /images/flags/taiwan.png HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:41:08] "GET /images/jobs/nhat-ban-job-1.jpg HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:41:08] "GET /images/logos/suleco.png HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:41:08] code 404, message File not found
-10.2.24.16 - - [19/Sep/2025 03:41:08] "GET /images/flags/japan.png HTTP/1.1" 404 -
-10.2.24.16 - - [19/Sep/2025 03:41:08] "GET /images/logos/ecocom.png HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:41:09] "GET /images/logos/htd.png HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:41:09] "GET /images/logos/asia.png HTTP/1.1" 304 -
-10.2.24.16 - - [19/Sep/2025 03:41:15] "GET /job-detail.html?id=3 HTTP/1.1" 200 -
-10.2.24.16 - - [19/Sep/2025 03:41:15] "GET /job-detail.html?id=3 HTTP/1.1" 200 -
-10.2.70.3 - - [19/Sep/2025 03:44:39] "GET / HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:44:39] "GET /styles.css HTTP/1.1" 200 -
-10.2.70.3 - - [19/Sep/2025 03:44:39] "GET /images/jobs/nga-job-1.jpg HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:44:39] "GET /images/flags/russia.png HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:44:39] "GET /images/jobs/dai-loan-job-1.jpg HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:44:39] "GET /script.js HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:44:39] "GET /images/flags/taiwan.png HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:44:39] "GET /images/jobs/nhat-ban-job-1.jpg HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:44:39] code 404, message File not found
-10.2.70.3 - - [19/Sep/2025 03:44:39] "GET /images/flags/japan.png HTTP/1.1" 404 -
-10.2.70.3 - - [19/Sep/2025 03:44:39] "GET /images/logos/ecocom.png HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:44:39] "GET /images/logos/suleco.png HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:44:39] "GET /images/logos/asia.png HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:44:39] "GET /images/logos/htd.png HTTP/1.1" 304 -
-10.2.70.3 - - [19/Sep/2025 03:45:20] "GET /job-detail.html?id=1 HTTP/1.1" 200 -
-10.2.70.3 - - [19/Sep/2025 03:45:20] "GET /styles.css HTTP/1.1" 304 -
+10.2.30.22 - - [19/Sep/2025 18:25:21] "GET / HTTP/1.1" 200 -
+10.2.70.3 - - [19/Sep/2025 18:25:22] "GET / HTTP/1.1" 304 -
+10.2.70.3 - - [19/Sep/2025 18:25:22] "GET /styles.css HTTP/1.1" 304 -
+10.2.70.3 - - [19/Sep/2025 18:25:22] "GET /images/jobs/nga-factory.jpg HTTP/1.1" 304 -
+10.2.70.3 - - [19/Sep/2025 18:25:22] "GET /images/jobs/taiwan-electronics.jpg HTTP/1.1" 304 -
+10.2.70.3 - - [19/Sep/2025 18:25:22] "GET /images/flags/russia.png HTTP/1.1" 304 -
+10.2.70.3 - - [19/Sep/2025 18:25:22] "GET /images/jobs/japan-hotel.jpg HTTP/1.1" 304 -
+10.2.70.3 - - [19/Sep/2025 18:25:22] "GET /script.js HTTP/1.1" 304 -
+10.2.70.3 - - [19/Sep/2025 18:25:22] "GET /images/flags/taiwan.png HTTP/1.1" 304 -
+10.2.70.3 - - [19/Sep/2025 18:25:22] "GET /images/logos/suleco.png HTTP/1.1" 304 -
+10.2.70.3 - - [19/Sep/2025 18:25:22] "GET /images/flags/japan.png HTTP/1.1" 304 -
+10.2.70.3 - - [19/Sep/2025 18:25:22] "GET /images/logos/ecocom.png HTTP/1.1" 304 -
+10.2.70.3 - - [19/Sep/2025 18:25:22] "GET /images/logos/htd.png HTTP/1.1" 304 -
+10.2.70.3 - - [19/Sep/2025 18:25:22] "GET /images/logos/asia.png HTTP/1.1" 304 -
+10.2.24.16 - - [19/Sep/2025 18:25:33] "GET / HTTP/1.1" 200 -
+10.2.24.16 - - [19/Sep/2025 18:25:33] "GET /styles.css HTTP/1.1" 200 -
+10.2.24.16 - - [19/Sep/2025 18:25:33] "GET /images/jobs/nga-factory.jpg HTTP/1.1" 200 -
+10.2.24.16 - - [19/Sep/2025 18:25:33] "GET /images/flags/russia.png HTTP/1.1" 200 -
+10.2.24.16 - - [19/Sep/2025 18:25:33] "GET /images/flags/japan.png HTTP/1.1" 200 -
+10.2.24.16 - - [19/Sep/2025 18:25:33] "GET /images/logos/suleco.png HTTP/1.1" 200 -
+10.2.24.16 - - [19/Sep/2025 18:25:33] "GET /images/jobs/taiwan-electronics.jpg HTTP/1.1" 200 -
+10.2.24.16 - - [19/Sep/2025 18:25:33] "GET /images/logos/ecocom.png HTTP/1.1" 200 -
+10.2.24.16 - - [19/Sep/2025 18:25:33] "GET /script.js HTTP/1.1" 200 -
+10.2.24.16 - - [19/Sep/2025 18:25:34] "GET /images/logos/asia.png HTTP/1.1" 200 -
+10.2.24.16 - - [19/Sep/2025 18:25:34] "GET /images/flags/taiwan.png HTTP/1.1" 200 -
+10.2.24.16 - - [19/Sep/2025 18:25:34] "GET /images/logos/htd.png HTTP/1.1" 200 -
+10.2.24.16 - - [19/Sep/2025 18:25:34] "GET /images/jobs/japan-hotel.jpg HTTP/1.1" 200 -
+10.2.70.3 - - [19/Sep/2025 18:26:37] code 404, message File not found
+10.2.70.3 - - [19/Sep/2025 18:26:37] "GET /favicon.ico HTTP/1.1" 404 -
+10.2.70.3 - - [19/Sep/2025 18:26:39] "GET /job-detail.html?id=1 HTTP/1.1" 200 -
+10.2.70.3 - - [19/Sep/2025 18:26:39] "GET /job-detail.html?id=1 HTTP/1.1" 200 -
+10.2.70.3 - - [19/Sep/2025 18:26:40] "GET /images/jobs/nga-job-1.jpg HTTP/1.1" 200 -
+10.2.70.3 - - [19/Sep/2025 18:33:15] "GET / HTTP/1.1" 200 -
+10.2.70.3 - - [19/Sep/2025 18:33:16] "GET /images/flags/bulgaria.png HTTP/1.1" 200 -
+10.2.30.22 - - [19/Sep/2025 18:33:35] "GET / HTTP/1.1" 304 -
+10.2.30.22 - - [19/Sep/2025 18:33:41] "GET / HTTP/1.1" 304 -
+10.2.30.22 - - [19/Sep/2025 18:33:48] "GET / HTTP/1.1" 304 -
+10.2.30.22 - - [19/Sep/2025 18:33:57] "GET / HTTP/1.1" 304 -
