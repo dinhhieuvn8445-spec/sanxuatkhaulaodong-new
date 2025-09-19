@@ -3,145 +3,558 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chi tiết đơn hàng - Cường Oanh Xuất Khẩu Lao Động</title>
+    <title>Chi tiết công việc - Cường Oanh Xuất Khẩu Lao Động</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .job-detail-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            gap: 30px;
+        }
+        
+        .job-detail-main {
+            flex: 2;
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .job-detail-sidebar {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .breadcrumb {
+            background: #f8f9fa;
+            padding: 15px 0;
+            margin-bottom: 20px;
+        }
+        
+        .breadcrumb-nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .breadcrumb-nav a {
+            color: #007bff;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+        
+        .breadcrumb-nav a:hover {
+            text-decoration: underline;
+        }
+        
+        .breadcrumb-nav span {
+            color: #6c757d;
+            margin: 0 5px;
+        }
+        
+        .job-title {
+            color: #ed1c24;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ed1c24;
+        }
+        
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        
+        .info-table th,
+        .info-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .info-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #495057;
+            width: 200px;
+        }
+        
+        .info-table td {
+            color: #333;
+        }
+        
+        .highlight-value {
+            color: #ed1c24;
+            font-weight: bold;
+        }
+        
+        .green-value {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .job-banner {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .job-banner img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        
+        .consultant-info {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .consultant-info h3 {
+            color: #ed1c24;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .consultant-contact {
+            margin-bottom: 15px;
+        }
+        
+        .consultant-contact strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .contact-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .contact-btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-phone {
+            background: #007bff;
+            color: white;
+        }
+        
+        .btn-zalo {
+            background: #0084ff;
+            color: white;
+        }
+        
+        .btn-facebook {
+            background: #1877f2;
+            color: white;
+        }
+        
+        .btn-consult {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-info {
+            background: #17a2b8;
+            color: white;
+        }
+        
+        .btn-save {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-report {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .contact-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        
+        .section-title {
+            color: #ed1c24;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 30px 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ed1c24;
+        }
+        
+        .job-content {
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .job-content h4 {
+            color: #ed1c24;
+            margin: 20px 0 10px 0;
+        }
+        
+        .job-content ul {
+            padding-left: 20px;
+        }
+        
+        .job-content li {
+            margin-bottom: 8px;
+        }
+        
+        .warning-note {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 30px;
+            color: #856404;
+        }
+        
+        @media (max-width: 768px) {
+            .job-detail-container {
+                flex-direction: column;
+                padding: 10px;
+            }
+            
+            .job-detail-main {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <div class="header-top">
-                <div class="header-left">
-                    <nav class="main-nav">
+    <!-- Top Navigation -->
+    <header id="header">
+        <section class="top-section">
+            <div class="container">
+                <div class="top-left">
+                    <nav class="top-menu">
                         <ul>
-                            <li><a href="index.html">Trang chủ</a></li>
-                            <li><a href="about.html">Giới thiệu</a></li>
-                            <li><a href="guide.html">Hướng dẫn</a></li>
-                            <li><a href="consultation.html">Tư vấn xklđ</a></li>
+                            <li><a href="index.html" class="nav-link">Trang chủ</a></li>
+                            <li><a href="about.html" class="nav-link">Giới thiệu</a></li>
+                            <li><a href="guide.html" class="nav-link">Hướng dẫn</a></li>
+                            <li><a href="consultation.html" class="nav-link">Tư vấn xklđ</a></li>
                         </ul>
                     </nav>
                 </div>
+                <div class="top-right">
+                    <button class="btn btn-search" data-toggle="modal" data-target="#searchModal">
+                        <i class="fa fa-search"></i> Tìm kiếm
+                    </button>
+                    <button class="btn btn-primary" onclick="openLoginModal()">
+                        <i class="fas fa-user"></i> Đăng nhập
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Header -->
+        <section class="main-header">
+            <div class="container">
+                <div class="header-left">
+                    <a href="index.html" class="logo">
+                        <img src="https://sanxuatkhaulaodong.com/upload/2024/03/logo-mua-he-large.png" alt="Sàn Xuất Khẩu Lao Động" />
+                    </a>
+                </div>
                 <div class="header-right">
-                    <button class="search-btn"><i class="fas fa-search"></i> Tìm kiếm</button>
-                    <button class="login-btn"><i class="fas fa-user"></i> Đăng nhập</button>
+                    <div class="banner-ad">
+                        <a href="#" target="_blank">
+                            <img src="https://sanxuatkhaulaodong.com/upload/2025/08/tuyen-dung-6-medium_large.png" alt="Top banner" />
+                        </a>
+                    </div>
                 </div>
             </div>
-            <div class="header-middle">
-                <div class="logo">
-                    <a href="index.html">
-                        <img src="https://sanxuatkhaulaodong.com/upload/2024/03/logo-mua-he-large.png" alt="Sàn Xuất Khẩu Lao Động">
-                    </a>
-                </div>
-                <div class="banner">
-                    <a href="#" class="banner-link">
-                        <img src="https://sanxuatkhaulaodong.com/upload/2025/08/tuyen-dung-6-medium_large.png" alt="Top banner">
-                    </a>
-                </div>
+        </section>
+
+        <!-- Country Flags Section -->
+        <section class="country-flags">
+            <div class="container">
+                <ul class="country-list">
+                    <!-- Row 1 -->
+                    <li><a href="#"><span class="flag-circle japan"></span> TTS Nhật Bản <span class="job-count">941</span></a></li>
+                    <li><a href="#"><span class="flag-circle japan"></span> Kỹ sư Nhật Bản <span class="job-count">615</span></a></li>
+                    <li><a href="#"><span class="flag-circle taiwan"></span> Đài Loan <span class="job-count">455</span></a></li>
+                    <li><a href="#"><span class="flag-circle singapore"></span> Singapore <span class="job-count">39</span></a></li>
+                    <li><a href="#"><span class="flag-circle japan"></span> Tokutei Nhật <span class="job-count">32</span></a></li>
+                    <li><a href="#"><span class="flag-circle russia"></span> Nga <span class="job-count">46</span></a></li>
+                    <li><a href="#"><span class="flag-circle romania"></span> Rumani <span class="job-count">45</span></a></li>
+                    <li><a href="#"><span class="flag-circle bulgaria"></span> Bulgaria <span class="job-count">62</span></a></li>
+                    
+                    <!-- Row 2 -->
+                    <li><a href="#"><span class="flag-circle serbia"></span> Serbia <span class="job-count">1</span></a></li>
+                    <li><a href="#"><span class="flag-circle hungary"></span> Hungary <span class="job-count">25</span></a></li>
+                    <li><a href="#"><span class="flag-circle france"></span> Pháp <span class="job-count">1</span></a></li>
+                    <li><a href="#"><span class="flag-circle algeria"></span> Algeria <span class="job-count">32</span></a></li>
+                    <li><a href="#"><span class="flag-circle greece"></span> Hy Lạp <span class="job-count">71</span></a></li>
+                    <li><a href="#"><span class="flag-circle poland"></span> Ba Lan <span class="job-count">26</span></a></li>
+                    <li><a href="#"><span class="flag-circle latvia"></span> Latvia <span class="job-count">3</span></a></li>
+                    <li><a href="#"><span class="flag-circle lithuania"></span> Litva <span class="job-count">10</span></a></li>
+                    <li><a href="#"><span class="flag-circle spain"></span> Tây Ban Nha <span class="job-count">1</span></a></li>
+                    
+                    <!-- Row 3 -->
+                    <li><a href="#"><span class="flag-circle taiwan-engineer"></span> Kỹ sư Đài Loan <span class="job-count">10</span></a></li>
+                    <li><a href="#"><span class="flag-circle ireland"></span> Ireland <span class="job-count">1</span></a></li>
+                    <li><a href="#"><span class="flag-circle austria"></span> Áo <span class="job-count">1</span></a></li>
+                    <li><a href="#"><span class="flag-circle croatia"></span> Croatia <span class="job-count">5</span></a></li>
+                    <li><a href="#"><span class="flag-circle slovakia"></span> Slovakia <span class="job-count">13</span></a></li>
+                    <li><a href="#"><span class="flag-circle denmark"></span> Đan Mạch <span class="job-count">5</span></a></li>
+                    <li><a href="#"><span class="flag-circle saudi-arabia"></span> Ả rập xê út <span class="job-count">5</span></a></li>
+                    <li><a href="#"><span class="flag-circle albania"></span> Albania <span class="job-count">2</span></a></li>
+                    <li><a href="#"><span class="flag-circle uae"></span> Dubai <span class="job-count">6</span></a></li>
+                    
+                    <!-- Row 4 -->
+                    <li><a href="#"><span class="flag-circle china"></span> Trung Quốc <span class="job-count">1</span></a></li>
+                    <li><a href="#"><span class="flag-circle norway"></span> Na Uy <span class="job-count">1</span></a></li>
+                    <li><a href="#"><span class="flag-circle other"></span> Nước khác <span class="job-count">5</span></a></li>
+                </ul>
             </div>
-        </div>
+        </section>
     </header>
 
+    <!-- Breadcrumb -->
+    <section class="breadcrumb">
+        <div class="breadcrumb-nav">
+            <a href="index.html"><i class="fas fa-home"></i></a>
+            <span>|</span>
+            <a href="index.html">Quốc gia</a>
+            <span>|</span>
+            <a href="index.html">Xuất khẩu lao động Nga</a>
+            <span>|</span>
+            <span id="job-breadcrumb-title">Liên Bang Nga tuyển 10 nam thợ vận hành máy đúc [Phí thấp].</span>
+        </div>
+    </section>
+
     <!-- Main Content -->
-    <main class="main-content">
-        <div class="container">
-            <div class="job-detail-container">
-                <div class="job-detail-header">
-                    <h1 id="job-title">Chi tiết đơn hàng</h1>
-                    <p>Job ID: <span id="job-id">Loading...</span></p>
-                </div>
+    <main>
+        <div class="job-detail-container">
+            <!-- Main Content -->
+            <div class="job-detail-main">
+                <h1 class="job-title" id="job-main-title">🇷🇺 Liên Bang Nga tuyển 10 nam thợ vận hành máy đúc [Phí thấp].</h1>
                 
-                <div class="job-detail-content">
-                    <div class="job-info">
-                        <h2>Thông tin công việc</h2>
-                        <div class="info-grid">
-                            <div class="info-item">
-                                <label>Quốc gia:</label>
-                                <span id="job-country">Loading...</span>
-                            </div>
-                            <div class="info-item">
-                                <label>Địa điểm:</label>
-                                <span id="job-location">Loading...</span>
-                            </div>
-                            <div class="info-item">
-                                <label>Công ty:</label>
-                                <span id="job-company">Loading...</span>
-                            </div>
-                            <div class="info-item">
-                                <label>Ngành nghề:</label>
-                                <span id="job-industry">Loading...</span>
-                            </div>
-                        </div>
-                        
-                        <div class="job-description">
-                            <h3>Mô tả công việc</h3>
-                            <div id="job-description">Loading...</div>
-                        </div>
-                        
-                        <div class="job-requirements">
-                            <h3>Yêu cầu</h3>
-                            <div class="requirements-grid">
-                                <div class="req-item">
-                                    <label>Giới tính:</label>
-                                    <span id="job-gender">Loading...</span>
-                                </div>
-                                <div class="req-item">
-                                    <label>Năm sinh:</label>
-                                    <span id="job-birth-year">Loading...</span>
-                                </div>
-                                <div class="req-item">
-                                    <label>Học vấn:</label>
-                                    <span id="job-education">Loading...</span>
-                                </div>
-                                <div class="req-item">
-                                    <label>Sức khỏe:</label>
-                                    <span id="job-health">Loading...</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="job-salary">
-                            <h3>Lương và phúc lợi</h3>
-                            <div class="salary-grid">
-                                <div class="salary-item">
-                                    <label>Lương cơ bản:</label>
-                                    <span id="job-basic-salary">Loading...</span>
-                                </div>
-                                <div class="salary-item">
-                                    <label>Thu nhập dự kiến:</label>
-                                    <span id="job-expected-income">Loading...</span>
-                                </div>
-                                <div class="salary-item">
-                                    <label>Thời gian làm việc:</label>
-                                    <span id="job-working-time">Loading...</span>
-                                </div>
-                                <div class="salary-item">
-                                    <label>Làm thêm:</label>
-                                    <span id="job-overtime">Loading...</span>
-                                </div>
-                            </div>
-                        </div>
+                <!-- Job Information Table -->
+                <div class="section-title">Thông tin đơn hàng</div>
+                <table class="info-table">
+                    <tr>
+                        <th>Mã đơn hàng</th>
+                        <td id="job-id">14779</td>
+                    </tr>
+                    <tr>
+                        <th>Quốc gia</th>
+                        <td id="job-country">Nga</td>
+                    </tr>
+                    <tr>
+                        <th>Tỉnh, khu vực</th>
+                        <td id="job-location">Toàn quốc</td>
+                    </tr>
+                    <tr>
+                        <th>Công ty, nghiệp đoàn</th>
+                        <td id="job-company">Vùng Ryazan, g Sasovo, ul.Pushkin, 21</td>
+                    </tr>
+                    <tr>
+                        <th>Ngành nghề</th>
+                        <td id="job-industry">Công xưởng, Bảo dưỡng máy móc, Cơ khí, Điện tử, Đồng gói công nghiệp, Hàn xi, hàn mig, mạ, Ô tô, Ngành nghề khác</td>
+                    </tr>
+                    <tr>
+                        <th>Công việc cụ thể</th>
+                        <td id="job-specific" class="green-value">Thợ vận hành máy đúc trong nhà máy.</td>
+                    </tr>
+                    <tr>
+                        <th>Nơi thi tuyển</th>
+                        <td id="job-test-location">Hà Nội</td>
+                    </tr>
+                    <tr>
+                        <th>Thời gian làm việc</th>
+                        <td id="job-working-time">08h/ngày - 22 ngày/tháng</td>
+                    </tr>
+                    <tr>
+                        <th>Lương cơ bản</th>
+                        <td id="job-salary" class="highlight-value">870.00 Usd/tháng</td>
+                    </tr>
+                    <tr>
+                        <th>Làm thêm</th>
+                        <td id="job-overtime">Làm thêm nhiều</td>
+                    </tr>
+                    <tr>
+                        <th>Thu nhập dự kiến</th>
+                        <td id="job-expected-income" class="green-value">29.00 Triệu/tháng</td>
+                    </tr>
+                    <tr>
+                        <th>Quyền lợi khác</th>
+                        <td id="job-benefits">
+                            - Làm thêm giờ: Theo chính sách của công ty và Luật pháp Nga.<br>
+                            - Bữa ăn: Người sử dụng lao động cung cấp 01 bữa ăn/ngày làm việc, không bao gồm cuối tuần và các ngày lễ. Các bữa ăn còn lại, nhân viên sẽ tự túc.<br>
+                            - Chỗ ở: Được người sử dụng lao động cung cấp miễn phí, trang bị đầy đủ các thiết bị nhà bếp cần thiết để tự nấu ăn.<br>
+                            - Phương tiện đi lại tại địa phương: Do Người sử dụng lao động cung cấp.<br>
+                            - Bảo hiểm - cơ sở y tế: Do công ty cung cấp theo Luật Lao động Nga.<br>
+                            - Tất cả các loại thuế địa phương: Do Người sử dụng lao động cung cấp, theo Luật Lao động Nga.<br>
+                            - Vé máy bay: Người sử dụng lao động chi trả vé một chiều từ Việt Nam đến Nga và vé máy bay khứ hồi sau khi kết thúc hợp đồng.<br>
+                            - Các điều khoản và điều kiện khác: Tất cả các điều khoản và điều kiện khác tuân theo Luật Lao động Nga, Hợp đồng Cung ứng và Hợp đồng Lao động.
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Số lượng tuyển</th>
+                        <td id="job-quantity">10</td>
+                    </tr>
+                    <tr>
+                        <th>Hợp đồng</th>
+                        <td id="job-contract">2 năm</td>
+                    </tr>
+                    <tr>
+                        <th>Phí xuất cảnh</th>
+                        <td id="job-fee">Chương trình hỗ trợ</td>
+                    </tr>
+                    <tr>
+                        <th>Chương trình hỗ trợ</th>
+                        <td id="job-support">Đăng ký trực tiếp.<br>Phí xuất cảnh thấp.</td>
+                    </tr>
+                </table>
+
+                <!-- Requirements Section -->
+                <div class="section-title">Yêu cầu</div>
+                <table class="info-table">
+                    <tr>
+                        <th>Giới tính</th>
+                        <td id="job-gender">Nam</td>
+                    </tr>
+                    <tr>
+                        <th>Năm sinh</th>
+                        <td id="job-birth-year">1975 - 2005</td>
+                    </tr>
+                    <tr>
+                        <th>Yêu cầu khác</th>
+                        <td id="job-other-requirements">
+                            Nam giới từ 20 - 50 tuổi.<br>
+                            Sức khỏe tốt, chăm chỉ.<br>
+                            Ý thức làm việc tốt, tuân thủ nội quy của công ty.<br>
+                            Phối hợp làm thêm theo sự phân công của quản lý.<br>
+                            Ưu tiên ứng viên có kinh nghiệm liên quan và đăng ký sớm.
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- Recruitment Section -->
+                <div class="section-title">Thi tuyển</div>
+                <table class="info-table">
+                    <tr>
+                        <th>Hình thức thi tuyển</th>
+                        <td id="job-test-format">Thi tuyển trực tiếp.</td>
+                    </tr>
+                    <tr>
+                        <th>Ngày thi tuyển</th>
+                        <td id="job-test-date">-</td>
+                    </tr>
+                    <tr>
+                        <th>Hạn đăng ký</th>
+                        <td id="job-deadline">-</td>
+                    </tr>
+                    <tr>
+                        <th>Dự kiến xuất cảnh</th>
+                        <td id="job-departure">12/2025</td>
+                    </tr>
+                </table>
+
+                <!-- Detailed Content -->
+                <div class="section-title">Nội dung chi tiết</div>
+                <div class="job-content" id="job-detailed-content">
+                    <p><strong>Công ty CP Đầu tư và Cung ứng Nhân lực Năm Châu (NAM CHAU IMS)</strong> là doanh nghiệp được Bộ lao động TB & XH cấp phép Hoạt động dịch vụ đưa người lao động Việt Nam đi làm việc có thời hạn tại nước ngoài theo Giấy phép số <strong>1192/LĐTBXH-GP.</strong></p>
+                    
+                    <p>Căn cứ hợp đồng với đối tác nước ngoài, NAM CHAU IMS cần tuyển lao động đi làm Ngành nghề xây dựng như sau:.</p>
+                    
+                    <h4>Danh sách tuyển</h4>
+                    <ol>
+                        <li>10 Thợ vận hành máy đúc.</li>
+                        <li>10 Thợ lắp ráp khuôn đúc.</li>
+                        <li>02 Thợ nấu kim loại và hợp kim.</li>
+                        <li>02 Thợ rót kim loại.</li>
+                        <li>04 Thợ nạp nguyên liệu.</li>
+                    </ol>
+                    
+                    <h4>Các điều khoản và điều kiện:</h4>
+                    <ul>
+                        <li>Tuổi: 20-50 tuổi.</li>
+                        <li>Giới tính: Chỉ Nam.</li>
+                        <li>Nơi làm việc: Nga, vùng Ryazan, g. Sasovo, ul. Pushkin, 21.</li>
+                        <li>Thời hạn Hợp đồng: 2 năm và có thể gia hạn.</li>
+                        <li>Thời gian thử việc: 03 tháng kể từ ngày bắt đầu, 600 USD/tháng.</li>
+                        <li>Giờ làm việc: 05 ngày/tuần, 08 giờ/ngày.</li>
+                        <li>Làm thêm giờ: Theo chính sách của công ty và Luật pháp Nga.</li>
+                        <li>Bữa ăn: Người sử dụng lao động cung cấp 01 bữa ăn/ngày làm việc, không bao gồm cuối tuần và các ngày lễ. Các bữa ăn còn lại, nhân viên sẽ tự túc.</li>
+                        <li>Chỗ ở: Được người sử dụng lao động cung cấp miễn phí, trang bị đầy đủ các thiết bị nhà bếp cần thiết để tự nấu ăn.</li>
+                        <li>Phương tiện đi lại tại địa phương: Do Người sử dụng lao động cung cấp.</li>
+                        <li>Bảo hiểm - cơ sở y tế: Do công ty cung cấp theo Luật Lao động Nga.</li>
+                        <li>Tất cả các loại thuế địa phương: Do Người sử dụng lao động cung cấp, theo Luật Lao động Nga.</li>
+                        <li>Vé máy bay: Người sử dụng lao động chi trả vé một chiều từ Việt Nam đến Nga và vé máy bay khứ hồi sau khi kết thúc hợp đồng.</li>
+                        <li>Các điều khoản và điều kiện khác: Tất cả các điều khoản và điều kiện khác tuân theo Luật Lao động Nga, Hợp đồng Cung ứng và Hợp đồng Lao động.</li>
+                    </ul>
+                    
+                    <p><strong>Hình ảnh nơi ở của công nhân:</strong></p>
+                </div>
+
+                <!-- Warning Note -->
+                <div class="warning-note">
+                    <p><strong>Ứng viên lưu ý:</strong> Sàn xuất khẩu lao động .com là nền tảng kết nối thông tin, sàn không có chức năng đưa người lao động đi làm việc tại nước ngoài. Các tin tuyển dụng do nhà tuyển dụng trực tiếp đăng tải và chỉ có giá trị tham khảo, ứng viên cần tìm hiểu kỹ thông tin trước khi đăng ký.</p>
+                    <p>Để được tư vấn, ứng viên có thể bấm nút "Tư vấn giúp tôi" hoặc liên hệ trực tiếp với nhà tuyển dụng.</p>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="job-detail-sidebar">
+                <!-- Job Banner -->
+                <div class="job-banner">
+                    <img src="https://sanxuatkhaulaodong.com/upload/2024/09/nam-chau-ims-medium_large.png" alt="Job Banner" id="job-banner-img">
+                </div>
+
+                <!-- Consultant Info -->
+                <div class="consultant-info">
+                    <h3>Cần bộ tư vấn</h3>
+                    <div class="consultant-contact">
+                        <strong id="consultant-name">Năm Châu IMS</strong>
+                        <p id="consultant-description">Xuất khẩu lao động Nhật Bản, Đài Loan...</p>
+                        <a href="#" id="consultant-link">Xem thêm »</a>
                     </div>
                     
-                    <div class="consultant-info">
-                        <h3>Thông tin tư vấn</h3>
-                        <div class="consultant-card">
-                            <div class="consultant-avatar">
-                                <img id="consultant-avatar" src="" alt="Consultant">
-                            </div>
-                            <div class="consultant-details">
-                                <h4 id="consultant-name">Loading...</h4>
-                                <p id="consultant-description">Loading...</p>
-                                <div class="contact-buttons">
-                                    <a href="tel:0356111283" class="contact-btn phone-btn">
-                                        <i class="fas fa-phone"></i> Gọi ngay
-                                    </a>
-                                    <a href="https://zalo.me/0356111283" class="contact-btn zalo-btn">
-                                        <i class="fab fa-facebook-messenger"></i> Zalo
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="contact-buttons">
+                        <a href="tel:0981057683" class="contact-btn btn-phone">
+                            <i class="fas fa-phone"></i> 0981057683
+                        </a>
+                        <a href="https://zalo.me/0981057683" class="contact-btn btn-zalo" target="_blank">
+                            <i class="fab fa-facebook-messenger"></i> 0981057683
+                        </a>
+                        <a href="#" class="contact-btn btn-facebook" id="consultant-facebook">
+                            <i class="fab fa-facebook"></i> Xem trang cá nhân
+                        </a>
+                        <a href="#" class="contact-btn btn-consult">
+                            TƯ VẤN GIÚP TÔI
+                        </a>
+                        <a href="#" class="contact-btn btn-info">
+                            THÔNG TIN NHÀ TUYỂN DỤNG
+                        </a>
+                        <a href="#" class="contact-btn btn-save">
+                            LƯU Ý DÀNH CHO ỨNG VIÊN
+                        </a>
+                        <a href="#" class="contact-btn btn-report">
+                            BÁO CÁO NHÀ TUYỂN DỤNG
+                        </a>
                     </div>
                 </div>
             </div>
@@ -149,215 +562,288 @@
     </main>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-col">
-                    <h4>Liên hệ</h4>
-                    <ul>
-                        <li><a href="tel:0356111283"><i class="fas fa-phone"></i> 0356111283</a></li>
-                        <li><a href="mailto:info@sanxuatkhaulaodong.com"><i class="fas fa-envelope"></i> info@sanxuatkhaulaodong.com</a></li>
-                    </ul>
+    <footer id="footer">
+        <div class="footer-main">
+            <div class="container">
+                <div class="footer-header">
+                    <div class="footer-logo-section">
+                        <div class="footer-logo">
+                            <img src="https://sanxuatkhaulaodong.com/upload/2024/03/logo-mua-he-large.png" alt="Logo">
+                        </div>
+                        <div class="footer-title">
+                            <h2>CƯỜNG OANH XUẤT KHẨU LAO ĐỘNG</h2>
+                            <p>Website số 1 về xuất khẩu lao động</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="footer-col">
-                    <h4>Dịch vụ</h4>
-                    <ul>
-                        <li><a href="#">Xuất khẩu lao động</a></li>
-                        <li><a href="#">Tư vấn visa</a></li>
-                        <li><a href="#">Đào tạo ngôn ngữ</a></li>
-                    </ul>
+
+                <div class="footer-content">
+                    <div class="footer-col company-col">
+                        <div class="registration-badge">
+                            <div class="badge-icon">✓</div>
+                            <div class="badge-text">
+                                <strong>ĐÃ ĐĂNG KÝ</strong><br>
+                                BỘ CÔNG THƯƠNG
+                            </div>
+                        </div>
+                        <div class="company-details">
+                            <p><strong>ĐĂNG KÝ WEBSITE TMĐT: 2023-0478/ĐK/TMĐT</strong></p>
+                            <p><strong>CÔNG TY TNHH ANVIBI GROUP.</strong></p>
+                            <p>Giấy đăng ký kinh doanh số: 0110151964</p>
+                            <p>Do Sở Kế hoạch & Đầu Tư Tp. Hà Nội cấp ngày 17/10/2022</p>
+                            <p>Địa chỉ: Liên Hà, Đông Anh, Hà Nội.</p>
+                            <p>Liên hệ quảng cáo: info@anvibi.com</p>
+                            <p>Hỗ trợ khách hàng: Info@anvibi.com</p>
+                            <p>Kết nối với chúng tôi</p>
+                            <div class="social-links">
+                                <a href="#" class="social-link facebook"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" class="social-link google"><i class="fab fa-google"></i></a>
+                                <a href="#" class="social-link linkedin"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#" class="social-link skype"><i class="fab fa-skype"></i></a>
+                                <a href="#" class="social-link zalo">Z</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="footer-col">
+                        <h4>HƯỚNG DẪN</h4>
+                        <ul>
+                            <li><a href="#">Đăng nhập</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-col">
+                        <h4>QUY ĐỊNH CHÍNH SÁCH</h4>
+                        <ul>
+                            <li><a href="#">Giới thiệu</a></li>
+                            <li><a href="#">Điều khoản sử dụng dịch vụ</a></li>
+                            <li><a href="#">Chính sách bảo mật thông tin</a></li>
+                            <li><a href="#">Quy trình giải quyết tranh chấp.</a></li>
+                            <li><a href="#">Quy chế hoạt động</a></li>
+                            <li><a href="#">Dành cho nhà tuyển dụng</a></li>
+                            <li><a href="#">Dành cho ứng viên</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-col">
+                        <h4>TIN TỨC</h4>
+                        <ul>
+                            <li><a href="#">Tin tức</a></li>
+                            <li><a href="#">Thông tin cần biết</a></li>
+                            <li><a href="#">Thông tin xklđ mới nhất</a></li>
+                            <li><a href="#">Chương trình hỗ trợ xklđ</a></li>
+                            <li><a href="#">Visa Đồng Nai</a></li>
+                            <li><a href="#">Vietnam Manpower</a></li>
+                            <li><a href="#">Làm hộ chiếu ở Long Khánh</a></li>
+                            <li><a href="#">Công ty du lịch ở Long Khánh</a></li>
+                            <li><a href="#">Vé máy bay long khánh</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-col">
+                        <h4>NGÔN NGỮ</h4>
+                        <ul>
+                            <li><a href="#">Tiếng Việt</a></li>
+                            <li><a href="#">English</a></li>
+                            <li><a href="#">Japanese</a></li>
+                            <li><a href="#">Korean</a></li>
+                            <li><a href="#">Chinese</a></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="footer-col">
-                    <h4>Hỗ trợ</h4>
-                    <ul>
-                        <li><a href="#">Hướng dẫn</a></li>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">Chính sách</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Cường Oanh Xuất Khẩu Lao Động. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
+    <script src="script.js"></script>
     <script>
-        console.log('Job detail page loaded');
-        
-        // Get job ID from URL parameters
-        function getJobIdFromUrl() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('id');
-        }
-
-        // Get job data by ID
-        function getJobData(jobId) {
-            const jobs = {
-                '1': {
-                    id: '1',
-                    title: 'Tuyển 10 nam nữ tốt nghiệp ngành kinh tế làm nhân viên trong khách sạn 4* tại Nhật bản.',
-                    country: 'TTS Nhật Bản',
-                    location: '11. Saitama',
-                    company: 'Công ty xây dựng Nhật Bản.',
-                    industry: 'Lái xe, lái máy, Xây dựng , Ngành nghề khác',
-                    description: 'Làm việc tại các công trình xây dựng.<br>Vận hành máy xây dựng và hỗ trợ các công việc liên quan tại Nhật Bản.<br>Công ty đã có TTS Việt Nam.<br>Công việc làm thêm nhiều.<br>Công ty đối xử với TTS Việt Nam rất tốt.',
-                    testLocation: 'Hà Nội',
-                    workingTime: '08h/ngày - 05 ngày/tuần.',
-                    basicSalary: '195,000 Yên/tháng',
-                    overtime: 'Làm thêm nhiều',
-                    expectedIncome: '22 - 32 Man/tháng',
-                    gender: 'Nam',
-                    birthYear: '1983 - 2000',
-                    education: 'Tốt nghiệp THCS trở lên',
-                    major: 'Không yêu cầu',
-                    skill: 'Không yêu cầu',
-                    language: 'Không yêu cầu',
-                    languageRequirement: 'Có',
-                    health: 'Tốt',
-                    vision: 'Bình thường',
-                    hepatitis: 'Nhận',
-                    tattoo: 'Nhận xăm nhỏ',
-                    otherRequirements: 'Nam nữ từ 18 đến 38 tuổi.<br>Sức khỏe tốt, chăm chỉ.<br>Nhận các bạn bị viêm gan B + xăm nhỏ.<br>Ý thức làm việc tốt, chấp hành nội quy của công ty, phối hợp làm thêm khi cần.<br>Yêu thích tiếng Nhật và cuộc sống tại Nhật Bản.<br>Ưu tiên ứng viên đăng ký sớm.',
-                    testFormat: 'Thi tuyển trực tiếp.',
-                    testDate: 'Liên hệ để biết thêm chi tiết',
-                    deadline: 'Liên hệ để biết thêm chi tiết',
-                    departure: '02/2026',
-                    image: 'https://sanxuatkhaulaodong.com/upload/gallery/4562/medium/250711164151-dai-loan-1107-4.png',
-                    consultant: {
-                        name: 'Mr. Tân',
-                        avatar: 'https://sanxuatkhaulaodong.com/upload/gallery/4562/medium/250711164151-dai-loan-1107-4.png',
-                        description: 'Đơn hàng trực tiếp - Tư vấn tỏ rằng - Hỗ trợ phi xuất cảnh thấp nhất - Cam kết không phát sinh chi phí. Các bạn cần tư vấn đơn cứ nhắn tin cho',
-                        phone: '0356111283'
-                    }
-                },
-                '2': {
-                    id: '2',
-                    title: 'Tuyển 15 nam làm công nhân xây dựng tại Đài Loan',
-                    country: 'Đài Loan',
-                    location: 'Đài Bắc',
-                    company: 'Công ty xây dựng Đài Loan ABC',
-                    industry: 'Xây dựng',
-                    description: 'Làm việc tại các công trình xây dựng tại Đài Loan.<br>Công việc ổn định, môi trường làm việc tốt.<br>Có cơ hội học hỏi kỹ thuật mới.',
-                    testLocation: 'TP.HCM',
-                    workingTime: '08h/ngày - 06 ngày/tuần.',
-                    basicSalary: '25,000 TWD/tháng',
-                    overtime: 'Có làm thêm',
-                    expectedIncome: '30,000 - 35,000 TWD/tháng',
-                    gender: 'Nam',
-                    birthYear: '1985 - 2002',
-                    education: 'Tốt nghiệp THPT',
-                    health: 'Tốt',
-                    consultant: {
-                        name: 'Ms. Lan',
-                        avatar: 'https://sanxuatkhaulaodong.com/upload/gallery/4562/medium/250711164151-dai-loan-1107-4.png',
-                        description: 'Chuyên tư vấn đơn hàng Đài Loan - Kinh nghiệm 5 năm',
-                        phone: '0356111283'
-                    }
-                },
-                '3': {
-                    id: '3',
-                    title: 'Tuyển 10 nam nữ tốt nghiệp ngành kinh tế làm nhân viên trong khách sạn 4* tại Nhật bản.',
-                    country: 'TTS Nhật Bản',
-                    location: 'Tokyo',
-                    company: 'Khách sạn 4* Tokyo',
-                    industry: 'Nhà hàng - Khách sạn',
-                    description: 'Làm việc tại khách sạn 4* tại Tokyo, Nhật Bản.<br>Công việc phục vụ khách hàng, dọn phòng, hỗ trợ lễ tân.<br>Môi trường làm việc chuyên nghiệp, có cơ hội học hỏi tiếng Nhật.',
-                    testLocation: 'Hà Nội',
-                    workingTime: '08h/ngày - 05 ngày/tuần.',
-                    basicSalary: '180,000 Yên/tháng',
-                    overtime: 'Có làm thêm',
-                    expectedIncome: '21 - 25 Man/tháng',
-                    gender: 'Nam, Nữ',
-                    birthYear: '1985 - 2004',
-                    education: 'Tốt nghiệp ngành kinh tế',
-                    health: 'Tốt',
-                    consultant: {
-                        name: 'Mr. Tấn',
-                        avatar: 'https://sanxuatkhaulaodong.com/upload/gallery/4562/medium/250711164151-dai-loan-1107-4.png',
-                        description: 'Chuyên tư vấn đơn hàng Nhật Bản - Kinh nghiệm 8 năm',
-                        phone: '0356111283'
-                    }
-                }
-            };
-            
-            return jobs[jobId];
-        }
-
-        // Update job details on the page
-        function updateJobDetails(jobData) {
-            console.log('Updating job details with data:', jobData);
-            
-            // Update basic info
-            document.getElementById('job-title').textContent = jobData.title;
-            document.getElementById('job-id').textContent = jobData.id;
-            document.getElementById('job-country').textContent = jobData.country;
-            document.getElementById('job-location').textContent = jobData.location;
-            document.getElementById('job-company').textContent = jobData.company;
-            document.getElementById('job-industry').textContent = jobData.industry;
-            document.getElementById('job-description').innerHTML = jobData.description;
-            
-            // Update requirements
-            document.getElementById('job-gender').textContent = jobData.gender;
-            document.getElementById('job-birth-year').textContent = jobData.birthYear;
-            document.getElementById('job-education').textContent = jobData.education;
-            document.getElementById('job-health').textContent = jobData.health;
-            
-            // Update salary info
-            document.getElementById('job-basic-salary').textContent = jobData.basicSalary;
-            document.getElementById('job-expected-income').textContent = jobData.expectedIncome;
-            document.getElementById('job-working-time').textContent = jobData.workingTime;
-            document.getElementById('job-overtime').textContent = jobData.overtime;
-            
-            // Update consultant info
-            document.getElementById('consultant-name').textContent = jobData.consultant.name;
-            document.getElementById('consultant-description').textContent = jobData.consultant.description;
-            document.getElementById('consultant-avatar').src = jobData.consultant.avatar;
-            
-            // Update contact links
-            const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
-            phoneLinks.forEach(link => {
-                link.href = 'tel:' + jobData.consultant.phone;
-            });
-            
-            const zaloLinks = document.querySelectorAll('a[href*="zalo.me"]');
-            zaloLinks.forEach(link => {
-                link.href = 'https://zalo.me/' + jobData.consultant.phone;
-            });
-            
-            // Update page title
-            document.title = jobData.title + ' - Cường Oanh Xuất Khẩu Lao Động';
-        }
-
-        // Load job details based on ID
-        function loadJobDetails(jobId) {
-            console.log('Loading job details for ID:', jobId);
-            const jobData = getJobData(jobId);
-            
-            if (jobData) {
-                console.log('Job data found:', jobData);
-                updateJobDetails(jobData);
-            } else {
-                console.log('No job data found for ID:', jobId);
-                // Show error message instead of redirecting
-                document.getElementById('job-title').textContent = 'Không tìm thấy thông tin đơn hàng';
-                document.getElementById('job-id').textContent = jobId || 'N/A';
-            }
-        }
-
-        // Initialize page
+        // Load job detail based on URL parameters or job ID
         document.addEventListener('DOMContentLoaded', function() {
-            const jobId = getJobIdFromUrl();
-            console.log('Job ID from URL:', jobId);
+            const urlParams = new URLSearchParams(window.location.search);
+            const jobId = urlParams.get('id');
             
             if (jobId) {
-                loadJobDetails(jobId);
+                loadJobDetail(jobId);
             } else {
-                console.log('No job ID provided');
-                document.getElementById('job-title').textContent = 'Không có ID đơn hàng';
-                document.getElementById('job-id').textContent = 'N/A';
+                // Default job detail (for demo)
+                loadJobDetail('1');
             }
         });
+
+        function loadJobDetail(jobId) {
+            // Find job from allJobs array (defined in script.js)
+            const job = allJobs.find(j => j.id == jobId);
+            
+            if (job) {
+                // Update page title and breadcrumb
+                document.title = `${job.title} - Cường Oanh Xuất Khẩu Lao Động`;
+                document.getElementById('job-breadcrumb-title').textContent = job.title;
+                document.getElementById('job-main-title').innerHTML = `${job.flag} ${job.title}`;
+                
+                // Update job information table
+                document.getElementById('job-id').textContent = job.id;
+                document.getElementById('job-country').textContent = job.countryName;
+                document.getElementById('job-salary').textContent = `${job.salary} ${job.currency}/tháng`;
+                document.getElementById('job-gender').textContent = job.gender;
+                document.getElementById('job-birth-year').textContent = job.ageRange.replace(/[()]/g, '');
+                
+                // Update additional job details based on available data
+                if (job.location) {
+                    document.getElementById('job-location').textContent = job.location;
+                }
+                
+                if (job.company) {
+                    document.getElementById('job-company').textContent = job.company;
+                } else {
+                    document.getElementById('job-company').textContent = `Công ty tuyển dụng tại ${job.countryName}`;
+                }
+                
+                if (job.industry) {
+                    document.getElementById('job-industry').textContent = job.industry;
+                } else {
+                    document.getElementById('job-industry').textContent = 'Đa ngành nghề';
+                }
+                
+                if (job.workDescription) {
+                    document.getElementById('job-specific').textContent = job.workDescription;
+                } else {
+                    document.getElementById('job-specific').textContent = `Làm việc tại ${job.countryName} theo yêu cầu công ty.`;
+                }
+                
+                if (job.workingTime) {
+                    document.getElementById('job-working-time').textContent = job.workingTime;
+                } else {
+                    document.getElementById('job-working-time').textContent = '08h/ngày - 22 ngày/tháng';
+                }
+                
+                if (job.overtime) {
+                    document.getElementById('job-overtime').textContent = job.overtime;
+                } else {
+                    document.getElementById('job-overtime').textContent = 'Có làm thêm';
+                }
+                
+                if (job.expectedIncome) {
+                    document.getElementById('job-expected-income').textContent = job.expectedIncome;
+                } else {
+                    // Calculate expected income based on salary
+                    const salaryNum = parseFloat(job.salary.replace(/[,\.]/g, ''));
+                    let expectedIncome = '';
+                    if (job.currency === 'Usd') {
+                        expectedIncome = `${Math.round(salaryNum * 25 / 1000)} Triệu/tháng`;
+                    } else if (job.currency === 'Yên') {
+                        expectedIncome = `${Math.round(salaryNum / 10000)} Man/tháng`;
+                    } else if (job.currency === 'Đài tệ') {
+                        expectedIncome = `${Math.round(salaryNum * 0.8 / 1000)} Triệu/tháng`;
+                    } else {
+                        expectedIncome = `${Math.round(salaryNum * 1.2)} ${job.currency}/tháng`;
+                    }
+                    document.getElementById('job-expected-income').textContent = expectedIncome;
+                }
+                
+                if (job.deadline) {
+                    document.getElementById('job-departure').textContent = job.deadline;
+                }
+                
+                // Update consultant info
+                document.getElementById('consultant-name').textContent = job.consultant;
+                document.querySelector('.contact-btn.btn-phone').href = `tel:${job.phone}`;
+                document.querySelector('.contact-btn.btn-phone').innerHTML = `<i class="fas fa-phone"></i> ${job.phone}`;
+                document.querySelector('.contact-btn.btn-zalo').href = job.zalo;
+                document.querySelector('.contact-btn.btn-zalo').innerHTML = `<i class="fab fa-facebook-messenger"></i> ${job.phone}`;
+                document.getElementById('consultant-facebook').href = job.facebook;
+                
+                // Update job banner image
+                document.getElementById('job-banner-img').src = job.image;
+                
+                // Update detailed content based on country
+                updateDetailedContent(job);
+                
+            } else {
+                // Job not found, show error message
+                document.getElementById('job-main-title').textContent = 'Không tìm thấy thông tin công việc';
+                document.querySelector('.job-detail-main').innerHTML = `
+                    <h1 class="job-title">Không tìm thấy công việc</h1>
+                    <p>Công việc với ID ${jobId} không tồn tại hoặc đã bị xóa.</p>
+                    <a href="index.html" class="contact-btn btn-consult">Quay lại trang chủ</a>
+                `;
+            }
+        }
+        
+        function updateDetailedContent(job) {
+            const detailedContent = document.getElementById('job-detailed-content');
+            
+            // Create detailed content based on country and job type
+            let content = `
+                <p><strong>Thông tin chi tiết về công việc tại ${job.countryName}</strong></p>
+                <p>Công ty tuyển dụng: ${job.company || 'Công ty uy tín tại ' + job.countryName}</p>
+                
+                <h4>Mô tả công việc:</h4>
+                <ul>
+                    <li>Làm việc tại ${job.countryName} theo hợp đồng lao động chính thức</li>
+                    <li>Tuân thủ quy định pháp luật và nội quy công ty</li>
+                    <li>Được đào tạo và hướng dẫn kỹ thuật cần thiết</li>
+                    <li>Môi trường làm việc an toàn, chuyên nghiệp</li>
+                </ul>
+                
+                <h4>Quyền lợi:</h4>
+                <ul>
+                    <li>Lương cơ bản: ${job.salary} ${job.currency}/tháng</li>
+                    <li>Được cung cấp chỗ ở hoặc hỗ trợ tiền nhà</li>
+                    <li>Bảo hiểm y tế và tai nạn lao động</li>
+                    <li>Hỗ trợ vé máy bay khứ hồi</li>
+                    <li>Cơ hội gia hạn hợp đồng</li>
+                </ul>
+                
+                <h4>Yêu cầu:</h4>
+                <ul>
+                    <li>Giới tính: ${job.gender}</li>
+                    <li>Năm sinh: ${job.ageRange.replace(/[()]/g, '')}</li>
+                    <li>Sức khỏe tốt, không có bệnh truyền nhiễm</li>
+                    <li>Có tinh thần trách nhiệm và kỷ luật cao</li>
+                    <li>Sẵn sàng làm việc xa nhà trong thời gian dài</li>
+                </ul>
+            `;
+            
+            // Add country-specific information
+            if (job.country === 'nhat-ban' || job.country === 'ky-su-nhat-ban' || job.country === 'tokutei-nhat') {
+                content += `
+                    <h4>Đặc điểm làm việc tại Nhật Bản:</h4>
+                    <ul>
+                        <li>Môi trường làm việc kỷ luật, chuyên nghiệp</li>
+                        <li>Cơ hội học hỏi công nghệ tiên tiến</li>
+                        <li>Được học tiếng Nhật miễn phí</li>
+                        <li>Chế độ phúc lợi tốt theo luật Nhật Bản</li>
+                    </ul>
+                `;
+            } else if (job.country === 'dai-loan' || job.country === 'ky-su-dai-loan') {
+                content += `
+                    <h4>Đặc điểm làm việc tại Đài Loan:</h4>
+                    <ul>
+                        <li>Văn hóa gần gũi với Việt Nam</li>
+                        <li>Cơ hội học hỏi kinh nghiệm quản lý</li>
+                        <li>Chế độ làm thêm giờ hấp dẫn</li>
+                        <li>Môi trường làm việc thân thiện</li>
+                    </ul>
+                `;
+            } else if (job.country === 'nga') {
+                content += `
+                    <h4>Đặc điểm làm việc tại Nga:</h4>
+                    <ul>
+                        <li>Cơ hội làm việc tại các dự án lớn</li>
+                        <li>Học hỏi công nghệ và kỹ thuật tiên tiến</li>
+                        <li>Chế độ nghỉ phép theo luật Nga</li>
+                        <li>Được hỗ trợ học tiếng Nga cơ bản</li>
+                    </ul>
+                `;
+            }
+            
+            content += `
+                <p><strong>Lưu ý quan trọng:</strong></p>
+                <p>Đây là thông tin tham khảo. Ứng viên cần liên hệ trực tiếp với nhà tuyển dụng để được tư vấn chi tiết và xác nhận thông tin chính xác nhất.</p>
+            `;
+            
+            detailedContent.innerHTML = content;
+        }
     </script>
 </body>
 </html>

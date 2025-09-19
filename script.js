@@ -32,6 +32,39 @@ function showPage(pageId) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Check for URL parameters on page load (for country filtering from other pages)
+    const urlParams = new URLSearchParams(window.location.search);
+    const countryParam = urlParams.get('country');
+    const countryNameParam = urlParams.get('name');
+    
+    if (countryParam && countryNameParam) {
+        // Set the country filter and perform search
+        const countrySelect = document.querySelector('select[name="quoc_gia"]');
+        if (countrySelect) {
+            countrySelect.value = countryParam;
+            
+            // Wait a bit for the page to fully load, then perform search
+            setTimeout(() => {
+                performSearch();
+                
+                // Show notification about the filter
+                showCountryFilterNotification(countryNameParam);
+                
+                // Scroll to results after search
+                setTimeout(() => {
+                    const resultsSection = document.querySelector('.job-listings');
+                    if (resultsSection) {
+                        resultsSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }, 500);
+                
+                // Clean up URL parameters
+                const newUrl = window.location.pathname;
+                window.history.replaceState({}, document.title, newUrl);
+            }, 300);
+        }
+    }
+
     // Search form functionality
     const searchForm = document.querySelector('.search-form');
     if (searchForm) {
@@ -190,7 +223,9 @@ document.addEventListener('DOMContentLoaded', function() {
             if (countryValue) {
                 // Check if we're on the homepage and have search functionality
                 const countrySelect = document.querySelector('select[name="quoc_gia"]');
-                if (countrySelect && window.location.pathname === '/index.html' || window.location.pathname === '/') {
+                const isHomePage = window.location.pathname === '/index.html' || window.location.pathname === '/' || window.location.pathname.endsWith('/');
+                
+                if (countrySelect && isHomePage) {
                     // On homepage, use existing search functionality
                     countrySelect.value = countryValue;
                     performSearch();
@@ -201,14 +236,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         resultsSection.scrollIntoView({ behavior: 'smooth' });
                     }
                 } else {
-                    // On other pages, open modal with job listings
-                    if (typeof openJobListModal === 'function') {
-                        openJobListModal(countryValue, countryName);
-                    } else {
-                        // Fallback: redirect to homepage with country filter
-                        // window.location.href = `index.html?country=${countryValue}`;
-                        console.log('Would redirect to:', `index.html?country=${countryValue}`);
-                    }
+                    // On other pages, redirect to homepage with country filter
+                    window.location.href = `index.html?country=${countryValue}&name=${encodeURIComponent(countryName)}`;
                 }
             }
         });
@@ -1067,7 +1096,8 @@ function createJobCardForHomepage(job) {
 }
 
 function viewJobDetails(jobId) {
-    alert(`Chi tiết công việc ID: ${jobId}\n\nChức năng này sẽ được phát triển sau!`);
+    // Redirect to job detail page with job ID parameter
+    window.location.href = `job-detail.html?id=${jobId}`;
 }
 
 function consultJob(jobId) {
@@ -1331,6 +1361,90 @@ function sendToServer(data) {
     */
 }
 
+// Function to show country filter notification
+function showCountryFilterNotification(countryName) {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = 'country-filter-notification';
+    notification.innerHTML = `
+        <div class="notification-content">
+            <i class="fas fa-filter"></i>
+            <span>Đang hiển thị công việc tại: <strong>${countryName}</strong></span>
+            <button class="close-notification" onclick="this.parentElement.parentElement.remove()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    `;
+    
+    // Add styles
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #ed1c24;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 9999;
+        font-family: 'Roboto', sans-serif;
+        font-size: 14px;
+        max-width: 350px;
+        animation: slideInRight 0.3s ease-out;
+    `;
+    
+    // Add animation styles to head if not exists
+    if (!document.querySelector('#country-filter-styles')) {
+        const style = document.createElement('style');
+        style.id = 'country-filter-styles';
+        style.textContent = `
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            .notification-content {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .close-notification {
+                background: none;
+                border: none;
+                color: white;
+                cursor: pointer;
+                padding: 0;
+                margin-left: auto;
+                font-size: 16px;
+            }
+            .close-notification:hover {
+                opacity: 0.8;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    // Add to page
+    document.body.appendChild(notification);
+    
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+        if (notification.parentElement) {
+            notification.style.animation = 'slideInRight 0.3s ease-out reverse';
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 300);
+        }
+    }, 5000);
+}
+
 // Export functions for potential future use
 window.WebsiteUtils = {
     formatCurrency,
@@ -1341,5 +1455,6 @@ window.WebsiteUtils = {
     performSearch,
     displaySearchResults,
     submitForm,
-    showMessage
+    showMessage,
+    showCountryFilterNotification
 };
