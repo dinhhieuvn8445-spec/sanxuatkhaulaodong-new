@@ -94,14 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Load more functionality
-    const loadMoreBtn = document.querySelector('.btn-load-more');
-    if (loadMoreBtn) {
-        loadMoreBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            loadMoreJobs();
-        });
-    }
+    // Load more functionality removed - handled in index.html
 
     // View more candidates functionality
     const viewMoreBtn = document.querySelector('.btn-view-more');
@@ -419,7 +412,7 @@ const allJobs = [
         isHot: true,
         image: "images/jobs/nga-job-1.jpg",
         facebook: "https://www.facebook.com/profile.php?id=61558585135713",
-        zalo: "https://zalo.me/0981057683"
+        zalo: "https://zalo.me/qr/p/0981057683"
     },
     {
         id: 2,
@@ -438,7 +431,7 @@ const allJobs = [
         isHot: false,
         image: "images/jobs/dai-loan-job-1.jpg",
         facebook: "https://www.facebook.com/profile.php?id=61553002468184",
-        zalo: "https://zalo.me/0968803554"
+        zalo: "https://zalo.me/qr/p/0968803554"
     },
     {
         id: 3,
@@ -457,7 +450,7 @@ const allJobs = [
         isHot: true,
         image: "images/jobs/nhat-ban-job-1.jpg",
         facebook: "https://www.facebook.com/buitanxkld",
-        zalo: "https://zalo.me/0356111283"
+        zalo: "https://zalo.me/qr/p/0356111283"
     },
     {
         id: 4,
@@ -476,7 +469,7 @@ const allJobs = [
         isHot: true,
         image: "images/jobs/nga-job-1.jpg",
         facebook: "https://www.facebook.com/vietnga",
-        zalo: "https://zalo.me/0987654321"
+        zalo: "https://zalo.me/qr/p/0987654321"
     },
     {
         id: 5,
@@ -495,7 +488,7 @@ const allJobs = [
         isHot: false,
         image: "images/jobs/nga-job-1.jpg",
         facebook: "https://www.facebook.com/xkldnga",
-        zalo: "https://zalo.me/0912345678"
+        zalo: "https://zalo.me/qr/p/0912345678"
     },
     {
         id: 6,
@@ -514,7 +507,7 @@ const allJobs = [
         isHot: true,
         image: "images/jobs/singapore-job-1.jpg",
         facebook: "https://www.facebook.com/singaporejobs",
-        zalo: "https://zalo.me/0901234567"
+        zalo: "https://zalo.me/qr/p/0901234567"
     },
     {
         id: 7,
@@ -533,7 +526,7 @@ const allJobs = [
         isHot: false,
         image: "images/jobs/rumani-job-1.jpg",
         facebook: "https://www.facebook.com/romaniawork",
-        zalo: "https://zalo.me/0987123456"
+        zalo: "https://zalo.me/qr/p/0987123456"
     },
     {
         id: 8,
@@ -552,7 +545,7 @@ const allJobs = [
         isHot: false,
         image: "images/jobs/bulgaria-job-1.jpg",
         facebook: "https://www.facebook.com/bulgariajobs",
-        zalo: "https://zalo.me/0976543210"
+        zalo: "https://zalo.me/qr/p/0976543210"
     },
     {
         id: 9,
@@ -571,7 +564,7 @@ const allJobs = [
         isHot: true,
         image: "images/jobs/hungary-job-1.jpg",
         facebook: "https://www.facebook.com/hungarywork",
-        zalo: "https://zalo.me/0965432109"
+        zalo: "https://zalo.me/qr/p/0965432109"
     },
     {
         id: 10,
@@ -590,7 +583,7 @@ const allJobs = [
         isHot: true,
         image: "images/jobs/phap-job-1.jpg",
         facebook: "https://www.facebook.com/francejobs",
-        zalo: "https://zalo.me/0954321098"
+        zalo: "https://zalo.me/qr/p/0954321098"
     },
     {
         id: 11,
@@ -609,7 +602,7 @@ const allJobs = [
         isHot: false,
         image: "images/jobs/hy-lap-job-1.jpg",
         facebook: "https://www.facebook.com/greecework",
-        zalo: "https://zalo.me/0943210987"
+        zalo: "https://zalo.me/qr/p/0943210987"
     },
     {
         id: 12,
@@ -628,7 +621,7 @@ const allJobs = [
         isHot: true,
         image: "images/jobs/ba-lan-job-1.jpg",
         facebook: "https://www.facebook.com/polandjobs",
-        zalo: "https://zalo.me/0932109876"
+        zalo: "https://zalo.me/qr/p/0932109876"
     },
     {
         id: 13,
@@ -647,7 +640,7 @@ const allJobs = [
         isHot: true,
         image: "images/jobs/nga-job-3.jpg",
         facebook: "https://www.facebook.com/tran.anh.hai.195277",
-        zalo: "https://zalo.me/0364370000"
+        zalo: "https://zalo.me/qr/p/0364370000"
     },
     {
         id: 14,
@@ -666,7 +659,7 @@ const allJobs = [
         isHot: true,
         image: "images/jobs/bulgaria-job-1.jpg",
         facebook: "https://www.facebook.com/bulgariajobs",
-        zalo: "https://zalo.me/0362046120"
+        zalo: "https://zalo.me/qr/p/0362046120"
     },
     {
         id: 15,
@@ -685,7 +678,7 @@ const allJobs = [
         isHot: true,
         image: "images/jobs/dai-loan-job-2.jpg",
         facebook: "https://www.facebook.com/profile.php?id=61553090643077",
-        zalo: "https://zalo.me/0975109764"
+        zalo: "https://zalo.me/qr/p/0975109764"
     },
     {
         id: 16,
@@ -704,7 +697,7 @@ const allJobs = [
         isHot: false,
         image: "images/jobs/nhat-ban-job-2.jpg",
         facebook: "https://www.facebook.com/buitanxkld",
-        zalo: "https://zalo.me/0356111283"
+        zalo: "https://zalo.me/qr/p/0356111283"
     },
     {
         id: 17,
@@ -723,7 +716,7 @@ const allJobs = [
         isHot: true,
         image: "images/jobs/dai-loan-job-3.jpg",
         facebook: "https://www.facebook.com/profile.php?id=61553090643077",
-        zalo: "https://zalo.me/0975109764"
+        zalo: "https://zalo.me/qr/p/0975109764"
     },
     {
         id: 18,
@@ -742,7 +735,7 @@ const allJobs = [
         isHot: true,
         image: "images/jobs/nga-job-4.jpg",
         facebook: "https://www.facebook.com/tran.anh.hai.195277",
-        zalo: "https://zalo.me/0364370000"
+        zalo: "https://zalo.me/qr/p/0364370000"
     },
     {
         id: 19,
@@ -761,7 +754,7 @@ const allJobs = [
         isHot: true,
         image: "images/jobs/slovakia-job-1.jpg",
         facebook: "https://www.facebook.com/slovakiajobs",
-        zalo: "https://zalo.me/0362046120"
+        zalo: "https://zalo.me/qr/p/0362046120"
     },
     {
         id: 20,
@@ -780,7 +773,7 @@ const allJobs = [
         isHot: false,
         image: "images/jobs/singapore-job-2.jpg",
         facebook: "https://www.facebook.com/tran.anh.hai.195277",
-        zalo: "https://zalo.me/0364370000"
+        zalo: "https://zalo.me/qr/p/0364370000"
     },
     {
         id: 21,
@@ -799,7 +792,7 @@ const allJobs = [
         isHot: false,
         image: "images/jobs/hy-lap-job-1.jpg",
         facebook: "https://www.facebook.com/greecework",
-        zalo: "https://zalo.me/0362046120"
+        zalo: "https://zalo.me/qr/p/0362046120"
     },
     {
         id: 22,
@@ -818,7 +811,7 @@ const allJobs = [
         isHot: false,
         image: "images/jobs/hy-lap-job-2.jpg",
         facebook: "https://www.facebook.com/greecework",
-        zalo: "https://zalo.me/0362046120"
+        zalo: "https://zalo.me/qr/p/0362046120"
     },
     {
         id: 23,
@@ -837,7 +830,7 @@ const allJobs = [
         isHot: false,
         image: "images/jobs/algeria-job-1.jpg",
         facebook: "https://www.facebook.com/algeriajobs",
-        zalo: "https://zalo.me/0865983982"
+        zalo: "https://zalo.me/qr/p/0865983982"
     },
     {
         id: 24,
@@ -856,7 +849,7 @@ const allJobs = [
         isHot: false,
         image: "images/jobs/rumani-job-2.jpg",
         facebook: "https://www.facebook.com/romaniawork",
-        zalo: "https://zalo.me/0865983982"
+        zalo: "https://zalo.me/qr/p/0865983982"
     },
     {
         id: 25,
@@ -875,7 +868,7 @@ const allJobs = [
         isHot: true,
         image: "images/jobs/singapore-job-3.jpg",
         facebook: "https://www.facebook.com/singaporejobs",
-        zalo: "https://zalo.me/0966708161"
+        zalo: "https://zalo.me/qr/p/0966708161"
     }
 ];
 
@@ -897,7 +890,8 @@ const additionalJobs = [
         views: "36795",
         isHot: true,
         image: "https://sanxuatkhaulaodong.com/upload/gallery/4562/medium/250711164151-dai-loan-1107-4.png",
-        facebook: "https://www.facebook.com/profile.php?id=61553002468184"
+        facebook: "https://www.facebook.com/profile.php?id=61553002468184",
+        zalo: "https://zalo.me/qr/p/0918705886"
     },
     {
         id: 5,
@@ -915,7 +909,8 @@ const additionalJobs = [
         views: "13166",
         isHot: true,
         image: "https://sanxuatkhaulaodong.com/upload/gallery/4562/medium/250711164151-dai-loan-1107-4.png",
-        facebook: "https://www.facebook.com/profile.php?id=61553090643077"
+        facebook: "https://www.facebook.com/profile.php?id=61553090643077",
+        zalo: "https://zalo.me/qr/p/0975109764"
     },
     {
         id: 6,
@@ -933,7 +928,8 @@ const additionalJobs = [
         views: "20112",
         isHot: true,
         image: "https://sanxuatkhaulaodong.com/upload/gallery/4562/medium/250711164151-dai-loan-1107-4.png",
-        facebook: "https://www.facebook.com/profile.php?id=61553090643077"
+        facebook: "https://www.facebook.com/profile.php?id=61553090643077",
+        zalo: "https://zalo.me/qr/p/0975109764"
     },
     {
         id: 7,
@@ -951,7 +947,8 @@ const additionalJobs = [
         views: "3872",
         isHot: false,
         image: "https://sanxuatkhaulaodong.com/upload/gallery/544/medium/250711164151-nhat-ban-1107-4.png",
-        facebook: "https://www.facebook.com/profile.php?id=61553002468184"
+        facebook: "https://www.facebook.com/profile.php?id=61553002468184",
+        zalo: "https://zalo.me/qr/p/0356111283"
     },
     {
         id: 8,
@@ -969,7 +966,8 @@ const additionalJobs = [
         views: "20463",
         isHot: false,
         image: "https://sanxuatkhaulaodong.com/upload/gallery/4562/medium/250711164151-dai-loan-1107-4.png",
-        facebook: "https://www.facebook.com/profile.php?id=61553090643077"
+        facebook: "https://www.facebook.com/profile.php?id=61553090643077",
+        zalo: "https://zalo.me/qr/p/0975109764"
     },
     {
         id: 9,
@@ -987,7 +985,8 @@ const additionalJobs = [
         views: "11997",
         isHot: false,
         image: "https://sanxuatkhaulaodong.com/upload/gallery/7624/medium/250711164151-singapore-1107-4.png",
-        facebook: "https://www.facebook.com/profile.php?id=61553002468184"
+        facebook: "https://www.facebook.com/profile.php?id=61553002468184",
+        zalo: "https://zalo.me/qr/p/0364370000"
     },
     {
         id: 10,
@@ -1045,30 +1044,11 @@ const additionalJobs = [
 let currentJobsDisplayed = 3; // Initially showing 3 jobs
 
 function loadMoreJobs() {
-    const jobsContainer = document.querySelector('.job-grid');
-    const loadMoreBtn = document.querySelector('.btn-load-more');
+    // Placeholder function - không load gì cả
+    console.log('Load more button clicked - ready for future implementation');
     
-    if (!jobsContainer) {
-        console.log('Jobs container not found');
-        return;
-    }
-    
-    // Show 3 more jobs each time
-    const jobsToShow = additionalJobs.slice(currentJobsDisplayed - 3, currentJobsDisplayed + 3);
-    
-    console.log(`Loading ${jobsToShow.length} more jobs`);
-    
-    jobsToShow.forEach(job => {
-        const jobCard = createJobCardForHomepage(job);
-        jobsContainer.appendChild(jobCard);
-    });
-    
-    currentJobsDisplayed += 3;
-    
-    // Hide "Load More" button if no more jobs
-    if (currentJobsDisplayed >= additionalJobs.length + 3) {
-        loadMoreBtn.style.display = 'none';
-    }
+    // TODO: Thêm logic load thêm đơn hàng tại đây khi cần
+    // Hiện tại chỉ giữ nguyên 3 đơn hàng đầu tiên
 }
 
 function createJobCardForHomepage(job) {
@@ -1113,7 +1093,7 @@ function createJobCardForHomepage(job) {
                                 ${job.phone}
                             </div>
                             <div class="contact-icons">
-                                <a href="https://zalo.me/qr/p/${job.phone}" target="_blank" class="zalo-icon">Zalo</a>
+                                <a href="https://zalo.me/qr/p/qr/p/${job.phone}" target="_blank" class="zalo-icon">Zalo</a>
                                 <a href="${job.facebook || '#'}" target="_blank" class="facebook-icon">f</a>
                             </div>
                         </div>
