@@ -997,6 +997,106 @@ function showCountryFilterNotification(countryName) {
     }, 5000);
 }
 
+// Candidate data for "Show more candidates" functionality
+const candidateData = [
+    // Initial candidates (already displayed)
+    { name: "Vũ Ngọc Điệp", details: "1990 - Hà Nội", visible: true },
+    { name: "Đặng Thị Thanh Phương", details: "2004", visible: true },
+    { name: "Lê Hoài Việt", details: "1987 - Đà Nẵng", visible: true },
+    
+    // Additional candidates to show when "Xem thêm" is clicked
+    { name: "Nguyễn Văn Minh", details: "1995 - TP.HCM", visible: false },
+    { name: "Trần Thị Lan", details: "1992 - Hải Phòng", visible: false },
+    { name: "Phạm Đức Anh", details: "1988 - Đà Nẵng", visible: false },
+    { name: "Lê Thị Mai", details: "1996 - Nghệ An", visible: false },
+    { name: "Hoàng Văn Tùng", details: "1990 - Thanh Hóa", visible: false },
+    { name: "Ngô Thị Hương", details: "1994 - Quảng Ninh", visible: false },
+    { name: "Đỗ Văn Hải", details: "1987 - Bắc Ninh", visible: false },
+    { name: "Bùi Thị Nga", details: "1993 - Thái Bình", visible: false },
+    { name: "Vương Văn Đức", details: "1991 - Nam Định", visible: false },
+    { name: "Đinh Thị Linh", details: "1989 - Hưng Yên", visible: false },
+    { name: "Trịnh Văn Khoa", details: "1995 - Vĩnh Phúc", visible: false },
+    { name: "Lý Thị Hoa", details: "1992 - Hà Nam", visible: false },
+    { name: "Phan Văn Long", details: "1986 - Ninh Bình", visible: false },
+    { name: "Chu Thị Yến", details: "1997 - Thái Nguyên", visible: false },
+    { name: "Dương Văn Phúc", details: "1990 - Lào Cai", visible: false }
+];
+
+let currentCandidateIndex = 3; // Start from index 3 (after initial 3 candidates)
+const candidatesPerLoad = 5; // Show 5 more candidates each time
+
+// Function to show more candidates
+function showMoreCandidates() {
+    const candidateList = document.querySelector('.candidate-list');
+    const showMoreBtn = document.querySelector('.btn-view-more');
+    
+    if (!candidateList || !showMoreBtn) return;
+    
+    // Calculate how many candidates to show
+    const endIndex = Math.min(currentCandidateIndex + candidatesPerLoad, candidateData.length);
+    
+    // Add new candidates to the list
+    for (let i = currentCandidateIndex; i < endIndex; i++) {
+        const candidate = candidateData[i];
+        
+        const candidateElement = document.createElement('li');
+        candidateElement.innerHTML = `
+            <div class="candidate-avatar"></div>
+            <div class="candidate-info">
+                <div class="candidate-name">${candidate.name}</div>
+                <div class="candidate-details">${candidate.details}</div>
+                <a href="#" class="candidate-link">Thông tin chi tiết</a>
+            </div>
+        `;
+        
+        // Add fade-in animation
+        candidateElement.style.opacity = '0';
+        candidateElement.style.transform = 'translateY(20px)';
+        candidateElement.style.transition = 'all 0.3s ease';
+        
+        candidateList.appendChild(candidateElement);
+        
+        // Trigger animation
+        setTimeout(() => {
+            candidateElement.style.opacity = '1';
+            candidateElement.style.transform = 'translateY(0)';
+        }, i * 100); // Stagger animation
+    }
+    
+    // Update current index
+    currentCandidateIndex = endIndex;
+    
+    // Hide "Xem thêm" button if all candidates are shown
+    if (currentCandidateIndex >= candidateData.length) {
+        showMoreBtn.style.display = 'none';
+        
+        // Add "Đã hiển thị tất cả ứng viên" message
+        const allShownMessage = document.createElement('div');
+        allShownMessage.className = 'all-candidates-shown';
+        allShownMessage.innerHTML = '<i class="fas fa-check-circle"></i> Đã hiển thị tất cả ứng viên';
+        allShownMessage.style.cssText = `
+            text-align: center;
+            color: #059669;
+            font-size: 14px;
+            margin-top: 15px;
+            padding: 10px;
+            background: #f0f9f4;
+            border-radius: 6px;
+            border: 1px solid #d1fae5;
+        `;
+        
+        showMoreBtn.parentNode.insertBefore(allShownMessage, showMoreBtn);
+    } else {
+        // Update button text to show remaining count
+        const remaining = candidateData.length - currentCandidateIndex;
+        showMoreBtn.innerHTML = `Xem thêm ứng viên (${remaining})`;
+    }
+    
+    return false; // Prevent default link behavior
+}
+
+// Candidate functionality is now called directly from HTML onclick event
+
 // Export functions for potential future use
 window.WebsiteUtils = {
     formatCurrency,
@@ -1008,5 +1108,6 @@ window.WebsiteUtils = {
     displaySearchResults,
     submitForm,
     showMessage,
-    showCountryFilterNotification
+    showCountryFilterNotification,
+    showMoreCandidates
 };

@@ -5560,3 +5560,159 @@ body {
         height: 180px;
     }
 }
+
+/* Enhanced styles for candidate list functionality */
+.candidate-list {
+    max-height: none;
+    overflow: visible;
+}
+
+.candidate-list li {
+    transition: all 0.3s ease;
+    margin-bottom: 15px;
+}
+
+.candidate-list li:hover {
+    transform: translateX(5px);
+    background-color: #f8fafc;
+    border-radius: 8px;
+    padding: 10px;
+    margin-left: -10px;
+    margin-right: -10px;
+}
+
+.btn-view-more {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-view-more:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.btn-view-more:active {
+    transform: translateY(0);
+}
+
+/* Loading animation for button */
+.btn-view-more.loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.btn-view-more.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border: 2px solid transparent;
+    border-top: 2px solid #fff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Fade in animation for new candidates */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.candidate-list li.new-candidate {
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+/* Success message styling */
+.all-candidates-shown {
+    animation: fadeInUp 0.3s ease forwards;
+}
+
+.all-candidates-shown i {
+    margin-right: 8px;
+}
+
+/* Improved candidate info styling */
+.candidate-info {
+    flex: 1;
+}
+
+.candidate-name {
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 4px;
+    font-size: 15px;
+}
+
+.candidate-details {
+    color: #6b7280;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.candidate-link {
+    color: #2563eb;
+    font-size: 13px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.candidate-link:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+}
+
+/* Avatar styling improvements */
+.candidate-avatar {
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(135deg, #2563eb, #059669);
+    border-radius: 50%;
+    margin-right: 12px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.candidate-avatar::before {
+    content: '👤';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: white;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+    .candidate-list li:hover {
+        transform: none;
+        margin-left: 0;
+        margin-right: 0;
+        padding: 8px;
+    }
+    
+    .candidate-avatar {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .candidate-avatar::before {
+        font-size: 18px;
+    }
+}
