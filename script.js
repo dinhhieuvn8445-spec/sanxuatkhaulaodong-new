@@ -1011,15 +1011,7 @@ const candidateData = [
     { id: 7, name: "Lê Thị Mai", details: "1996 - Nghệ An", visible: false },
     { id: 8, name: "Hoàng Văn Tùng", details: "1990 - Thanh Hóa", visible: false },
     { id: 9, name: "Ngô Thị Hương", details: "1994 - Quảng Ninh", visible: false },
-    { id: 10, name: "Đỗ Văn Hải", details: "1987 - Bắc Ninh", visible: false },
-    { id: 11, name: "Bùi Thị Nga", details: "1993 - Thái Bình", visible: false },
-    { id: 12, name: "Vương Văn Đức", details: "1991 - Nam Định", visible: false },
-    { id: 13, name: "Đinh Thị Linh", details: "1989 - Hưng Yên", visible: false },
-    { id: 14, name: "Trịnh Văn Khoa", details: "1995 - Vĩnh Phúc", visible: false },
-    { id: 15, name: "Lý Thị Hoa", details: "1992 - Hà Nam", visible: false },
-    { id: 16, name: "Phan Văn Long", details: "1986 - Ninh Bình", visible: false },
-    { id: 17, name: "Chu Thị Yến", details: "1997 - Thái Nguyên", visible: false },
-    { id: 18, name: "Dương Văn Phúc", details: "1990 - Lào Cai", visible: false }
+    { id: 10, name: "Đỗ Văn Hải", details: "1987 - Bắc Ninh", visible: false }
 ];
 
 let currentCandidateIndex = 3; // Start from index 3 (after initial 3 candidates)
