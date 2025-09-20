@@ -10,7 +10,7 @@ import sys
 from pathlib import Path
 
 # Set the port
-PORT = 12000
+PORT = 12001
 
 # Change to the project directory
 project_dir = Path(__file__).parent

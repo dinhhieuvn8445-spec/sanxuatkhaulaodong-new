@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (viewMoreBtn) {
         viewMoreBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            alert('Xem thêm ứng viên - Chức năng này sẽ được phát triển sau!');
+            // Removed alert message - functionality to be developed later
         });
     }
 
