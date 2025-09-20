@@ -73,6 +73,17 @@ document.addEventListener('DOMContentLoaded', function() {
             performSearch();
         });
     }
+    
+    // Add reset button functionality
+    const countrySelect = document.querySelector('select[name="quoc_gia"]');
+    if (countrySelect) {
+        countrySelect.addEventListener('change', function() {
+            if (this.value === '') {
+                // Reset to show all jobs
+                resetToAllJobs();
+            }
+        });
+    }
 
     // Consult buttons functionality
     const consultBtns = document.querySelectorAll('.consult-btn');
@@ -565,6 +576,24 @@ function performSearch() {
     displaySearchResults(filteredJobs);
 }
 
+function resetToAllJobs() {
+    const sectionTitle = document.querySelector('.section-title');
+    const loadMoreBtn = document.querySelector('.btn-load-more');
+    
+    // Reset section title
+    if (sectionTitle) {
+        sectionTitle.textContent = 'Việc làm xuất khẩu lao động mới nhất';
+    }
+    
+    // Show load more button
+    if (loadMoreBtn) {
+        loadMoreBtn.style.display = 'block';
+    }
+    
+    // Reload the original jobs from HTML (first 3 jobs)
+    location.reload();
+}
+
 function displaySearchResults(jobs) {
     const jobsContainer = document.querySelector('.job-grid');
     const sectionTitle = document.querySelector('.section-title');
@@ -582,7 +611,26 @@ function displaySearchResults(jobs) {
         if (jobs.length === 0) {
             sectionTitle.textContent = 'Không tìm thấy việc làm phù hợp';
         } else {
-            sectionTitle.textContent = `Tìm thấy ${jobs.length} việc làm phù hợp`;
+            // Check if filtering by country
+            const countrySelect = document.querySelector('select[name="quoc_gia"]');
+            const selectedCountry = countrySelect ? countrySelect.value : '';
+            
+            if (selectedCountry) {
+                // Get country name for display
+                let countryName = '';
+                if (selectedCountry === 'nga') countryName = 'Nga';
+                else if (selectedCountry === 'dai-loan') countryName = 'Đài Loan';
+                else if (selectedCountry === 'nhat-ban') countryName = 'TTS Nhật Bản';
+                else if (selectedCountry === 'singapore') countryName = 'Singapore';
+                
+                if (countryName) {
+                    sectionTitle.textContent = `Tìm thấy ${jobs.length} việc làm tại ${countryName}`;
+                } else {
+                    sectionTitle.textContent = `Tìm thấy ${jobs.length} việc làm phù hợp`;
+                }
+            } else {
+                sectionTitle.textContent = `Tìm thấy ${jobs.length} việc làm phù hợp`;
+            }
         }
     }
     
@@ -590,6 +638,33 @@ function displaySearchResults(jobs) {
     jobs.forEach(job => {
         const jobCard = createJobCard(job);
         jobsContainer.appendChild(jobCard);
+    });
+    
+    // Add hover effects to new job cards
+    const newJobCards = jobsContainer.querySelectorAll('.job-card');
+    newJobCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px)';
+            this.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
+        });
+
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
+        });
+        
+        // Make cards clickable
+        card.addEventListener('click', function(e) {
+            // Don't trigger if clicking on a link or button inside the card
+            if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('a') || e.target.closest('button')) {
+                return;
+            }
+            
+            const jobId = this.getAttribute('data-job-id');
+            if (jobId) {
+                window.location.href = `job-detail.html?id=${jobId}`;
+            }
+        });
     });
     
     // Hide load more button when showing search results
@@ -602,6 +677,7 @@ function displaySearchResults(jobs) {
 function createJobCard(job) {
     const card = document.createElement('div');
     card.className = 'job-card';
+    card.setAttribute('data-job-id', job.id);
     
     // Get flag image based on country
     let flagImage = 'images/flags/russia.png'; // default
@@ -617,9 +693,20 @@ function createJobCard(job) {
         flagImage = 'images/flags/bulgaria.png';
     }
     
+    // Get proper job image - use local images for better reliability
+    let jobImage = job.image;
+    if (job.id === 1) {
+        jobImage = "images/jobs/nga-job-1.jpg";
+    } else if (job.id === 2) {
+        // Use local image for Đài Loan job
+        jobImage = "images/jobs/dai-loan-job-1.jpg";
+    } else if (job.id === 3) {
+        jobImage = "images/jobs/nga-job-1.jpg";
+    }
+    
     card.innerHTML = `
         <div class="job-image">
-            <img src="${job.image}" alt="Job Image">
+            <img src="${jobImage}" alt="Công việc tại ${job.countryName}">
             <div class="job-flag">
                 <img src="${flagImage}" alt="${job.countryName}">
             </div>
@@ -643,7 +730,7 @@ function createJobCard(job) {
                                 ${job.phone}
                             </div>
                             <div class="contact-icons">
-                                <a href="${job.zalo || '#'}" target="_blank" class="zalo-icon">Zalo</a>
+                                <a href="javascript:void(0)" onclick="showZaloQR('${job.phone}', '${job.consultant}')" class="zalo-icon">Zalo</a>
                                 <a href="${job.facebook || '#'}" target="_blank" class="facebook-icon">f</a>
                             </div>
                         </div>
@@ -658,6 +745,54 @@ function createJobCard(job) {
     `;
 
     return card;
+}
+
+// Show Zalo QR Code
+function showZaloQR(phone, consultant) {
+    // Create QR code URL using a QR code API
+    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://zalo.me/qr/p/${phone}`;
+    
+    // Create popup HTML
+    const popupHTML = `
+        <div class="zalo-popup-overlay" onclick="closeZaloQR()">
+            <div class="zalo-popup" onclick="event.stopPropagation()">
+                <div class="zalo-popup-header">
+                    <h3>Liên hệ Zalo</h3>
+                    <button class="close-btn" onclick="closeZaloQR()">&times;</button>
+                </div>
+                <div class="zalo-popup-content">
+                    <div class="consultant-info">
+                        <h4>Tư vấn viên: ${consultant}</h4>
+                        <p>Số điện thoại: ${phone}</p>
+                    </div>
+                    <div class="qr-code-container">
+                        <img src="${qrCodeUrl}" alt="Zalo QR Code" class="qr-code">
+                        <p>Quét mã QR để chat Zalo</p>
+                    </div>
+                    <div class="zalo-actions">
+                        <a href="https://zalo.me/qr/p/${phone}" target="_blank" class="zalo-direct-btn">
+                            Mở Zalo trực tiếp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Add popup to body
+    document.body.insertAdjacentHTML('beforeend', popupHTML);
+    
+    // Prevent body scroll
+    document.body.style.overflow = 'hidden';
+}
+
+// Close Zalo QR popup
+function closeZaloQR() {
+    const popup = document.querySelector('.zalo-popup-overlay');
+    if (popup) {
+        popup.remove();
+        document.body.style.overflow = 'auto';
+    }
 }
 
 // Registration Form Handler
