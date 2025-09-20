@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="300" height="150" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradient for globe -->
+    <radialGradient id="globeGradient" cx="0.3" cy="0.3" r="0.7">
+      <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#ed1c24;stop-opacity:1"/>
+    </radialGradient>
+    
+    <!-- Shadow filter -->
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Main globe circle -->
+  <circle cx="120" cy="50" r="35" fill="url(#globeGradient)" stroke="#ed1c24" stroke-width="2.5" filter="url(#shadow)"/>
+  
+  <!-- Globe grid lines - vertical -->
+  <ellipse cx="120" cy="50" rx="17" ry="35" fill="none" stroke="#ffffff" stroke-width="1.8" opacity="0.9"/>
+  <ellipse cx="120" cy="50" rx="28" ry="35" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.7"/>
+  <line x1="120" y1="15" x2="120" y2="85" stroke="#ffffff" stroke-width="1.8" opacity="0.9"/>
+  
+  <!-- Globe grid lines - horizontal -->
+  <ellipse cx="120" cy="50" rx="35" ry="12" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.7"/>
+  <ellipse cx="120" cy="50" rx="35" ry="22" fill="none" stroke="#ffffff" stroke-width="1.3" opacity="0.6"/>
+  <line x1="85" y1="50" x2="155" y2="50" stroke="#ffffff" stroke-width="1.8" opacity="0.9"/>
+  
+  <!-- Orbital ring around globe -->
+  <ellipse cx="120" cy="50" rx="45" ry="18" fill="none" stroke="#ed1c24" stroke-width="2.5" transform="rotate(-25 120 50)" opacity="0.8"/>
+  
+  <!-- Dynamic arrow pointing upward -->
+  <path d="M 160 30 L 180 15 L 175 20 L 190 8 L 180 25 L 175 20 L 160 35 Z" fill="#ed1c24" filter="url(#shadow)"/>
+  <path d="M 165 32 L 175 22 L 185 27" fill="none" stroke="#ff6b6b" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Company name with better typography -->
+  <text x="150" y="105" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="bold" fill="#ed1c24" text-anchor="middle" filter="url(#shadow)">
+    Duong Oanh
+  </text>
+  
+  <!-- Subtitle with letter spacing -->
+  <text x="150" y="125" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="600" fill="#ed1c24" text-anchor="middle" letter-spacing="3px" opacity="0.9">
+    LABOR EXPORT
+  </text>
+  
+  <!-- Decorative elements -->
+  <circle cx="80" cy="35" r="2" fill="#ff6b6b" opacity="0.6"/>
+  <circle cx="200" cy="40" r="1.5" fill="#ed1c24" opacity="0.5"/>
+  <circle cx="90" cy="75" r="1" fill="#ff6b6b" opacity="0.4"/>
+  <circle cx="210" cy="70" r="1.5" fill="#ed1c24" opacity="0.6"/>
+  
+  <!-- Subtle background pattern -->
+  <defs>
+    <pattern id="dots" patternUnits="userSpaceOnUse" width="20" height="20">
+      <circle cx="10" cy="10" r="0.5" fill="#ed1c24" opacity="0.1"/>
+    </pattern>
+  </defs>
+  <rect width="300" height="150" fill="url(#dots)"/>
+</svg>

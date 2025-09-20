@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Globe circle -->
+  <circle cx="80" cy="40" r="30" fill="none" stroke="#ed1c24" stroke-width="2"/>
+  
+  <!-- Globe lines - vertical -->
+  <ellipse cx="80" cy="40" rx="15" ry="30" fill="none" stroke="#ed1c24" stroke-width="1.5"/>
+  <ellipse cx="80" cy="40" rx="25" ry="30" fill="none" stroke="#ed1c24" stroke-width="1.5"/>
+  
+  <!-- Globe lines - horizontal -->
+  <line x1="50" y1="40" x2="110" y2="40" stroke="#ed1c24" stroke-width="1.5"/>
+  <ellipse cx="80" cy="40" rx="30" ry="10" fill="none" stroke="#ed1c24" stroke-width="1.5"/>
+  <ellipse cx="80" cy="40" rx="30" ry="20" fill="none" stroke="#ed1c24" stroke-width="1.5"/>
+  
+  <!-- Arrow -->
+  <path d="M 105 25 L 125 15 L 120 20 L 135 10 L 125 25 L 120 20 L 105 30 Z" fill="#ed1c24"/>
+  
+  <!-- Orbital ring -->
+  <ellipse cx="80" cy="40" rx="40" ry="15" fill="none" stroke="#ed1c24" stroke-width="2" transform="rotate(-20 80 40)"/>
+  
+  <!-- Company name -->
+  <text x="100" y="85" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#ed1c24" text-anchor="middle">Duong Oanh</text>
+  <text x="100" y="105" font-family="Arial, sans-serif" font-size="12" font-weight="normal" fill="#ed1c24" text-anchor="middle" letter-spacing="2px">LABOR EXPORT</text>
+</svg>
