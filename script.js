@@ -1000,26 +1000,26 @@ function showCountryFilterNotification(countryName) {
 // Candidate data for "Show more candidates" functionality
 const candidateData = [
     // Initial candidates (already displayed)
-    { name: "Vũ Ngọc Điệp", details: "1990 - Hà Nội", visible: true },
-    { name: "Đặng Thị Thanh Phương", details: "2004", visible: true },
-    { name: "Lê Hoài Việt", details: "1987 - Đà Nẵng", visible: true },
+    { id: 1, name: "Vũ Ngọc Điệp", details: "1990 - Hà Nội", visible: true },
+    { id: 2, name: "Đặng Thị Thanh Phương", details: "2004", visible: true },
+    { id: 3, name: "Lê Hoài Việt", details: "1987 - Đà Nẵng", visible: true },
     
     // Additional candidates to show when "Xem thêm" is clicked
-    { name: "Nguyễn Văn Minh", details: "1995 - TP.HCM", visible: false },
-    { name: "Trần Thị Lan", details: "1992 - Hải Phòng", visible: false },
-    { name: "Phạm Đức Anh", details: "1988 - Đà Nẵng", visible: false },
-    { name: "Lê Thị Mai", details: "1996 - Nghệ An", visible: false },
-    { name: "Hoàng Văn Tùng", details: "1990 - Thanh Hóa", visible: false },
-    { name: "Ngô Thị Hương", details: "1994 - Quảng Ninh", visible: false },
-    { name: "Đỗ Văn Hải", details: "1987 - Bắc Ninh", visible: false },
-    { name: "Bùi Thị Nga", details: "1993 - Thái Bình", visible: false },
-    { name: "Vương Văn Đức", details: "1991 - Nam Định", visible: false },
-    { name: "Đinh Thị Linh", details: "1989 - Hưng Yên", visible: false },
-    { name: "Trịnh Văn Khoa", details: "1995 - Vĩnh Phúc", visible: false },
-    { name: "Lý Thị Hoa", details: "1992 - Hà Nam", visible: false },
-    { name: "Phan Văn Long", details: "1986 - Ninh Bình", visible: false },
-    { name: "Chu Thị Yến", details: "1997 - Thái Nguyên", visible: false },
-    { name: "Dương Văn Phúc", details: "1990 - Lào Cai", visible: false }
+    { id: 4, name: "Nguyễn Thị Mai", details: "1995 - Hải Phòng", visible: false },
+    { id: 5, name: "Trần Văn Hùng", details: "1988 - Cần Thơ", visible: false },
+    { id: 6, name: "Phạm Đức Anh", details: "1988 - Đà Nẵng", visible: false },
+    { id: 7, name: "Lê Thị Mai", details: "1996 - Nghệ An", visible: false },
+    { id: 8, name: "Hoàng Văn Tùng", details: "1990 - Thanh Hóa", visible: false },
+    { id: 9, name: "Ngô Thị Hương", details: "1994 - Quảng Ninh", visible: false },
+    { id: 10, name: "Đỗ Văn Hải", details: "1987 - Bắc Ninh", visible: false },
+    { id: 11, name: "Bùi Thị Nga", details: "1993 - Thái Bình", visible: false },
+    { id: 12, name: "Vương Văn Đức", details: "1991 - Nam Định", visible: false },
+    { id: 13, name: "Đinh Thị Linh", details: "1989 - Hưng Yên", visible: false },
+    { id: 14, name: "Trịnh Văn Khoa", details: "1995 - Vĩnh Phúc", visible: false },
+    { id: 15, name: "Lý Thị Hoa", details: "1992 - Hà Nam", visible: false },
+    { id: 16, name: "Phan Văn Long", details: "1986 - Ninh Bình", visible: false },
+    { id: 17, name: "Chu Thị Yến", details: "1997 - Thái Nguyên", visible: false },
+    { id: 18, name: "Dương Văn Phúc", details: "1990 - Lào Cai", visible: false }
 ];
 
 let currentCandidateIndex = 3; // Start from index 3 (after initial 3 candidates)
@@ -1045,7 +1045,7 @@ function showMoreCandidates() {
             <div class="candidate-info">
                 <div class="candidate-name">${candidate.name}</div>
                 <div class="candidate-details">${candidate.details}</div>
-                <a href="#" class="candidate-link">Thông tin chi tiết</a>
+                <a href="#" class="candidate-link" onclick="showCandidateDetails(${candidate.id}); return false;">Thông tin chi tiết</a>
             </div>
         `;
         
@@ -1097,6 +1097,207 @@ function showMoreCandidates() {
 
 // Candidate functionality is now called directly from HTML onclick event
 
+// Detailed candidate data
+const detailedCandidateData = {
+    1: {
+        name: "Vũ Ngọc Điệp",
+        birthYear: "1990",
+        address: "Hà Nội",
+        gender: "Nam",
+        education: "Đại học",
+        experience: "5 năm kinh nghiệm làm việc trong ngành sản xuất",
+        language: "Tiếng Nhật N3, Tiếng Anh cơ bản",
+        desiredJob: "Vận hành máy móc, Sản xuất",
+        desiredCountry: "Nhật Bản, Đài Loan",
+        phone: "0987654321",
+        email: "vudiep1990@email.com"
+    },
+    2: {
+        name: "Đặng Thị Thanh Phương",
+        birthYear: "2004",
+        address: "Hồ Chí Minh",
+        gender: "Nữ",
+        education: "Trung cấp",
+        experience: "1 năm kinh nghiệm làm việc tại nhà máy may",
+        language: "Tiếng Anh cơ bản",
+        desiredJob: "May mặc, Điện tử",
+        desiredCountry: "Đài Loan, Singapore",
+        phone: "0912345678",
+        email: "phuong2004@email.com"
+    },
+    3: {
+        name: "Lê Hoài Việt",
+        birthYear: "1987",
+        address: "Đà Nẵng",
+        gender: "Nam",
+        education: "Cao đẳng",
+        experience: "8 năm kinh nghiệm trong ngành xây dựng",
+        language: "Tiếng Nhật N4, Tiếng Anh trung bình",
+        desiredJob: "Xây dựng, Hàn xì",
+        desiredCountry: "Nhật Bản, Nga",
+        phone: "0976543210",
+        email: "viet1987@email.com"
+    },
+    4: {
+        name: "Nguyễn Thị Mai",
+        birthYear: "1995",
+        address: "Hải Phòng",
+        gender: "Nữ",
+        education: "Đại học",
+        experience: "3 năm kinh nghiệm làm việc văn phòng",
+        language: "Tiếng Anh tốt, Tiếng Hàn cơ bản",
+        desiredJob: "Văn phòng, Dịch vụ",
+        desiredCountry: "Hàn Quốc, Singapore",
+        phone: "0965432109",
+        email: "mai1995@email.com"
+    },
+    5: {
+        name: "Trần Văn Hùng",
+        birthYear: "1988",
+        address: "Cần Thơ",
+        gender: "Nam",
+        education: "Trung cấp",
+        experience: "6 năm kinh nghiệm lái xe và vận chuyển",
+        language: "Tiếng Anh cơ bản",
+        desiredJob: "Lái xe, Vận chuyển",
+        desiredCountry: "Đài Loan, Nga",
+        phone: "0954321098",
+        email: "hung1988@email.com"
+    },
+    6: {
+        name: "Phạm Đức Anh",
+        birthYear: "1988",
+        address: "Đà Nẵng",
+        gender: "Nam",
+        education: "Cao đẳng",
+        experience: "4 năm kinh nghiệm trong ngành cơ khí",
+        language: "Tiếng Nhật N4",
+        desiredJob: "Cơ khí, Sản xuất",
+        desiredCountry: "Nhật Bản",
+        phone: "0943210987",
+        email: "anh1988@email.com"
+    },
+    7: {
+        name: "Lê Thị Mai",
+        birthYear: "1996",
+        address: "Nghệ An",
+        gender: "Nữ",
+        education: "Trung cấp",
+        experience: "2 năm kinh nghiệm làm việc tại nhà máy",
+        language: "Tiếng Anh cơ bản",
+        desiredJob: "Sản xuất, May mặc",
+        desiredCountry: "Đài Loan, Singapore",
+        phone: "0932109876",
+        email: "mai1996@email.com"
+    },
+    8: {
+        name: "Hoàng Văn Tùng",
+        birthYear: "1990",
+        address: "Thanh Hóa",
+        gender: "Nam",
+        education: "Đại học",
+        experience: "5 năm kinh nghiệm IT",
+        language: "Tiếng Anh tốt, Tiếng Nhật N3",
+        desiredJob: "IT, Kỹ thuật",
+        desiredCountry: "Nhật Bản, Singapore",
+        phone: "0921098765",
+        email: "tung1990@email.com"
+    },
+    9: {
+        name: "Ngô Thị Hương",
+        birthYear: "1994",
+        address: "Quảng Ninh",
+        gender: "Nữ",
+        education: "Cao đẳng",
+        experience: "3 năm kinh nghiệm dịch vụ khách hàng",
+        language: "Tiếng Anh trung bình",
+        desiredJob: "Dịch vụ, Văn phòng",
+        desiredCountry: "Singapore, Hàn Quốc",
+        phone: "0910987654",
+        email: "huong1994@email.com"
+    },
+    10: {
+        name: "Đỗ Văn Hải",
+        birthYear: "1987",
+        address: "Bắc Ninh",
+        gender: "Nam",
+        education: "Trung cấp",
+        experience: "7 năm kinh nghiệm hàn xì",
+        language: "Tiếng Nhật N4",
+        desiredJob: "Hàn xì, Xây dựng",
+        desiredCountry: "Nhật Bản, Nga",
+        phone: "0909876543",
+        email: "hai1987@email.com"
+    }
+};
+
+// Function to show candidate details
+function showCandidateDetails(candidateId) {
+    const candidate = detailedCandidateData[candidateId];
+    if (!candidate) {
+        alert('Không tìm thấy thông tin chi tiết của ứng viên này!');
+        return;
+    }
+
+    // Fill modal with candidate data
+    document.getElementById('candidateName').textContent = candidate.name;
+    document.getElementById('candidateBirthYear').textContent = candidate.birthYear;
+    document.getElementById('candidateAddress').textContent = candidate.address;
+    document.getElementById('candidateGender').textContent = candidate.gender;
+    document.getElementById('candidateEducation').textContent = candidate.education;
+    document.getElementById('candidateExperience').textContent = candidate.experience;
+    document.getElementById('candidateLanguage').textContent = candidate.language;
+    document.getElementById('candidateDesiredJob').textContent = candidate.desiredJob;
+    document.getElementById('candidateDesiredCountry').textContent = candidate.desiredCountry;
+    document.getElementById('candidatePhone').textContent = candidate.phone;
+    document.getElementById('candidateEmail').textContent = candidate.email;
+
+    // Show modal
+    const modal = document.getElementById('candidateModal');
+    modal.classList.add('show');
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+// Function to close candidate modal
+function closeCandidateModal() {
+    const modal = document.getElementById('candidateModal');
+    modal.classList.remove('show');
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+// Function to contact candidate
+function contactCandidate() {
+    const phone = document.getElementById('candidatePhone').textContent;
+    const name = document.getElementById('candidateName').textContent;
+    
+    if (confirm(`Bạn có muốn gọi điện cho ứng viên ${name} theo số ${phone}?`)) {
+        window.open(`tel:${phone}`, '_self');
+    }
+}
+
+// Function to recommend job to candidate
+function recommendJob() {
+    const name = document.getElementById('candidateName').textContent;
+    alert(`Chức năng giới thiệu việc làm cho ứng viên ${name} sẽ được phát triển sau!`);
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const modal = document.getElementById('candidateModal');
+    if (event.target === modal) {
+        closeCandidateModal();
+    }
+}
+
+// Close modal with Escape key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closeCandidateModal();
+    }
+});
+
 // Export functions for potential future use
 window.WebsiteUtils = {
     formatCurrency,
@@ -1109,5 +1310,9 @@ window.WebsiteUtils = {
     submitForm,
     showMessage,
     showCountryFilterNotification,
-    showMoreCandidates
+    showMoreCandidates,
+    showCandidateDetails,
+    closeCandidateModal,
+    contactCandidate,
+    recommendJob
 };

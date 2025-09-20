@@ -376,7 +376,7 @@
                                     <div class="candidate-info">
                                         <div class="candidate-name">Vũ Ngọc Điệp</div>
                                         <div class="candidate-details">1990 - Hà Nội</div>
-                                        <a href="#" class="candidate-link">Thông tin chi tiết</a>
+                                        <a href="#" class="candidate-link" onclick="showCandidateDetails(1); return false;">Thông tin chi tiết</a>
                                     </div>
                                 </li>
                                 <li>
@@ -384,7 +384,7 @@
                                     <div class="candidate-info">
                                         <div class="candidate-name">Đặng Thị Thanh Phương</div>
                                         <div class="candidate-details">2004</div>
-                                        <a href="#" class="candidate-link">Thông tin chi tiết</a>
+                                        <a href="#" class="candidate-link" onclick="showCandidateDetails(2); return false;">Thông tin chi tiết</a>
                                     </div>
                                 </li>
                                 <li>
@@ -392,7 +392,7 @@
                                     <div class="candidate-info">
                                         <div class="candidate-name">Lê Hoài Việt</div>
                                         <div class="candidate-details">1987 - Đà Nẵng</div>
-                                        <a href="#" class="candidate-link">Thông tin chi tiết</a>
+                                        <a href="#" class="candidate-link" onclick="showCandidateDetails(3); return false;">Thông tin chi tiết</a>
                                     </div>
                                 </li>
                             </ul>
@@ -1394,5 +1394,77 @@
             </div>
         </div>
     </div>
+
+    <!-- Candidate Detail Modal -->
+    <div id="candidateModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Thông tin chi tiết ứng viên</h2>
+                <span class="close" onclick="closeCandidateModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="candidate-detail-info">
+                    <div class="candidate-avatar-large">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="candidate-info-detail">
+                        <h3 id="candidateName">Tên ứng viên</h3>
+                        <div class="candidate-details-grid">
+                            <div class="detail-item">
+                                <strong>Năm sinh:</strong>
+                                <span id="candidateBirthYear">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <strong>Địa chỉ:</strong>
+                                <span id="candidateAddress">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <strong>Giới tính:</strong>
+                                <span id="candidateGender">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <strong>Trình độ học vấn:</strong>
+                                <span id="candidateEducation">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <strong>Kinh nghiệm làm việc:</strong>
+                                <span id="candidateExperience">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <strong>Ngoại ngữ:</strong>
+                                <span id="candidateLanguage">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <strong>Ngành nghề mong muốn:</strong>
+                                <span id="candidateDesiredJob">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <strong>Quốc gia mong muốn:</strong>
+                                <span id="candidateDesiredCountry">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <strong>Số điện thoại:</strong>
+                                <span id="candidatePhone">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <strong>Email:</strong>
+                                <span id="candidateEmail">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="candidate-actions">
+                    <button class="btn btn-primary" onclick="contactCandidate()">
+                        <i class="fas fa-phone"></i> Liên hệ ứng viên
+                    </button>
+                    <button class="btn btn-success" onclick="recommendJob()">
+                        <i class="fas fa-briefcase"></i> Giới thiệu việc làm
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
