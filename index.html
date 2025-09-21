@@ -1336,18 +1336,39 @@
                 const response = await fetch('/api/admin/content/header');
                 if (response.ok) {
                     const result = await response.json();
-                    if (result.success && result.data && result.data.logo) {
-                        // Update header logo
-                        const headerLogo = document.querySelector('.header-left .logo img');
-                        if (headerLogo) {
-                            headerLogo.src = result.data.logo;
+                    if (result.success && result.data) {
+                        const data = result.data;
+                        
+                        // Update logos if available
+                        if (data.logo) {
+                            const headerLogo = document.querySelector('.header-left .logo img');
+                            if (headerLogo) {
+                                headerLogo.src = data.logo;
+                            }
+                            
+                            const footerLogo = document.querySelector('.footer-logo img');
+                            if (footerLogo) {
+                                footerLogo.src = data.logo;
+                            }
                         }
                         
-                        // Update footer logo
-                        const footerLogo = document.querySelector('.footer-logo img');
-                        if (footerLogo) {
-                            footerLogo.src = result.data.logo;
+                        // Update company name in footer
+                        if (data.companyName) {
+                            const footerTitle = document.querySelector('.footer-title h2');
+                            if (footerTitle) {
+                                footerTitle.textContent = data.companyName;
+                            }
                         }
+                        
+                        // Update slogan in footer
+                        if (data.slogan) {
+                            const footerSlogan = document.querySelector('.footer-title p');
+                            if (footerSlogan) {
+                                footerSlogan.textContent = data.slogan;
+                            }
+                        }
+                        
+                        console.log('Header content loaded:', data);
                     }
                 }
             } catch (error) {
