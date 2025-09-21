@@ -564,7 +564,10 @@ function createJobCard(job) {
                 </div>
             </div>
             <div class="contact-icons">
-                <a href="https://zalo.me/${job.phone}" class="zalo-icon" target="_blank">Z</a>
+                <a href="https://zalo.me/${job.phone}" class="zalo-btn-new" target="_blank">
+                    <span class="zalo-z">Z</span>
+                    <span class="zalo-phone">${job.phone}</span>
+                </a>
                 <a href="#" class="facebook-icon" target="_blank">f</a>
             </div>
         </div>
@@ -600,7 +603,10 @@ function createJobCard(job) {
                     <div class="consultant-phone-small">${job.phone}</div>
                 </div>
                 <div class="contact-icons">
-                    <a href="https://zalo.me/${job.phone}" class="zalo-icon" target="_blank">Z</a>
+                    <a href="https://zalo.me/${job.phone}" class="zalo-btn-new" target="_blank">
+                        <span class="zalo-z">Z</span>
+                        <span class="zalo-phone">${job.phone}</span>
+                    </a>
                     <a href="#" class="facebook-icon" target="_blank">f</a>
                 </div>
             </div>

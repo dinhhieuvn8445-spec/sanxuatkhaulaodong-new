@@ -4215,6 +4215,52 @@ body {
     background: #0068ff;
 }
 
+/* New Zalo button style like in the image */
+.zalo-btn-new {
+    background: linear-gradient(135deg, #1E88E5 0%, #1976D2 100%);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 8px 15px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    box-shadow: 0 3px 8px rgba(30, 136, 229, 0.3);
+    transition: all 0.3s ease;
+    min-width: 120px;
+    justify-content: flex-start;
+}
+
+.zalo-btn-new:hover {
+    background: linear-gradient(135deg, #1976D2 0%, #1565C0 100%);
+    box-shadow: 0 4px 12px rgba(30, 136, 229, 0.4);
+    transform: translateY(-1px);
+    color: white;
+    text-decoration: none;
+}
+
+.zalo-btn-new .zalo-z {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+.zalo-btn-new .zalo-phone {
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    font-size: 13px;
+}
+
 .facebook-icon {
     background: #1877f2;
 }

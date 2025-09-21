@@ -256,6 +256,452 @@
                 filter: drop-shadow(0 0 15px rgba(0,132,255,1));
             }
         }
+
+        /* New Zalo button style like in the image */
+        .btn-zalo-new {
+            background: linear-gradient(135deg, #1E88E5 0%, #1976D2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 16px;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(30, 136, 229, 0.3);
+            transition: all 0.3s ease;
+            min-width: 180px;
+            justify-content: flex-start;
+        }
+
+        .btn-zalo-new:hover {
+            background: linear-gradient(135deg, #1976D2 0%, #1565C0 100%);
+            box-shadow: 0 6px 16px rgba(30, 136, 229, 0.4);
+            transform: translateY(-2px);
+            color: white;
+            text-decoration: none;
+        }
+
+        .zalo-z {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .zalo-phone {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* New Consultant Card Styles */
+        .consultant-card {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .consultant-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .consultant-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+            border: 3px solid #2196F3;
+        }
+
+        .consultant-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .consultant-details {
+            flex: 1;
+        }
+
+        .consultant-role {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .consultant-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2196F3;
+        }
+
+        .consultant-description {
+            margin-bottom: 20px;
+        }
+
+        .consultant-description p {
+            margin: 0 0 10px 0;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .view-more-link {
+            color: #2196F3;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .view-more-link:hover {
+            text-decoration: underline;
+        }
+
+        .contact-methods {
+            margin-bottom: 20px;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .contact-method i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .phone-contact {
+            background: #2196F3;
+            color: white;
+        }
+
+        .phone-contact:hover {
+            background: #1976D2;
+            color: white;
+            text-decoration: none;
+        }
+
+        .zalo-contact {
+            background: #0084FF;
+            color: white;
+        }
+
+        .zalo-contact:hover {
+            background: #0066CC;
+            color: white;
+            text-decoration: none;
+        }
+
+        .zalo-icon-small {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            padding: 2px 6px;
+            margin-right: 10px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .facebook-contact {
+            background: #1877F2;
+            color: white;
+        }
+
+        .facebook-contact:hover {
+            background: #166FE5;
+            color: white;
+            text-decoration: none;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .action-btn {
+            padding: 12px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .consult-btn {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .consult-btn:hover {
+            background: #45a049;
+            color: white;
+            text-decoration: none;
+        }
+
+        .info-btn {
+            background: #2196F3;
+            color: white;
+        }
+
+        .info-btn:hover {
+            background: #1976D2;
+            color: white;
+            text-decoration: none;
+        }
+
+        .warning-btn {
+            background: #f44336;
+            color: white;
+        }
+
+        .warning-btn:hover {
+            background: #d32f2f;
+            color: white;
+            text-decoration: none;
+        }
+
+        .report-btn {
+            background: #757575;
+            color: white;
+        }
+
+        .report-btn:hover {
+            background: #616161;
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px 12px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .close {
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close:hover {
+            opacity: 0.7;
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        .contact-info {
+            margin-bottom: 25px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .contact-item i {
+            margin-right: 12px;
+            width: 20px;
+            color: #2196F3;
+        }
+
+        .contact-item a {
+            color: #2196F3;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2196F3;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
+            transform: translateY(-2px);
+        }
+
+        .report-submit {
+            background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+        }
+
+        .report-submit:hover {
+            background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
+        }
+
+        .company-info h4 {
+            color: #2196F3;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .info-item {
+            margin-bottom: 15px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #2196F3;
+        }
+
+        .info-item strong {
+            color: #333;
+        }
+
+        .info-item a {
+            color: #2196F3;
+            text-decoration: none;
+        }
+
+        .info-item a:hover {
+            text-decoration: underline;
+        }
+
+        .warning-content {
+            margin-top: 15px;
+        }
+
+        .warning-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+        }
+
+        .warning-item i {
+            color: #f39c12;
+            margin-right: 15px;
+            margin-top: 3px;
+            font-size: 18px;
+        }
+
+        .warning-item p {
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { 
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
         
         .btn-facebook {
             background: linear-gradient(135deg, #1877f2 0%, #166fe5 100%);
@@ -843,46 +1289,208 @@
 
             <!-- Sidebar -->
             <div class="job-detail-sidebar">
-                <!-- Job Banner -->
-                <div class="job-banner">
-                    <img src="https://sanxuatkhaulaodong.com/upload/2024/09/nam-chau-ims-medium_large.png" alt="Job Banner" id="job-banner-img">
-                </div>
+                <!-- Consultant Info Card -->
+                <div class="consultant-card">
+                    <div class="consultant-header">
+                        <div class="consultant-avatar">
+                            <img src="https://sanxuatkhaulaodong.com/upload/gallery/7624/medium/250729224245-nga-2907.png" alt="Mr Hải" id="consultant-avatar">
+                        </div>
+                        <div class="consultant-details">
+                            <div class="consultant-role">Cán bộ tư vấn</div>
+                            <div class="consultant-name" id="consultant-name">Mr Hải</div>
+                        </div>
+                    </div>
+                    
+                    <div class="consultant-description">
+                        <p><em>Tư vấn xuất khẩu lao động Singapore, Nga, Đài Loan, Nhật Bản.</em></p>
+                        <a href="#" class="view-more-link">Xem thêm ></a>
+                    </div>
 
-                <!-- Contact Buttons -->
-                <div class="consultant-info">
-                    <div class="contact-buttons">
-                        <a href="tel:0981057683" class="contact-btn btn-phone">
-                            <i class="fas fa-phone"></i> 0981057683
+                    <div class="contact-methods">
+                        <a href="tel:0364370000" class="contact-method phone-contact">
+                            <i class="fas fa-phone"></i>
+                            <span>0364370000</span>
                         </a>
-                        <a href="https://zalo.me/0981057683" class="contact-btn btn-zalo" target="_blank">
-                            <div class="zalo-icon-official">
-                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                                    <rect width="24" height="24" rx="6" fill="#0068FF"/>
-                                    <path d="M6 8.5C6 7.67157 6.67157 7 7.5 7H16.5C17.3284 7 18 7.67157 18 8.5V15.5C18 16.3284 17.3284 17 16.5 17H10L7 19V8.5Z" fill="white"/>
-                                    <path d="M8.5 10.5H15.5M8.5 13H13" stroke="#0068FF" stroke-width="1.2" stroke-linecap="round"/>
-                                </svg>
-                            </div> 0981057683
+                        
+                        <a href="https://zalo.me/0364370000" class="contact-method zalo-contact" target="_blank">
+                            <div class="zalo-icon-small">
+                                <span>Zalo</span>
+                            </div>
+                            <span>0364370000</span>
                         </a>
-                        <a href="#" class="contact-btn btn-facebook" id="consultant-facebook">
-                            <i class="fab fa-facebook"></i> Xem trang cá nhân
+                        
+                        <a href="https://www.facebook.com/tran.anh.hai.195277" class="contact-method facebook-contact" target="_blank">
+                            <i class="fab fa-facebook-f"></i>
+                            <span>Xem trang cá nhân</span>
                         </a>
-                        <a href="#" class="contact-btn btn-consult">
-                            <i class="fas fa-user-tie"></i> TƯ VẤN GIÚP TÔI
+                    </div>
+
+                    <div class="action-buttons">
+                        <a href="#" class="action-btn consult-btn" onclick="openConsultModal()">
+                            TƯ VẤN GIÚP TÔI
                         </a>
-                        <a href="#" class="contact-btn btn-info">
-                            <i class="fas fa-building"></i> THÔNG TIN NHÀ TUYỂN DỤNG
+                        <a href="#" class="action-btn info-btn" onclick="openCompanyInfoModal()">
+                            THÔNG TIN NHÀ TUYỂN DỤNG
                         </a>
-                        <a href="#" class="contact-btn btn-save">
-                            <i class="fas fa-exclamation-triangle"></i> LƯU Ý DÀNH CHO ỨNG VIÊN
+                        <a href="#" class="action-btn warning-btn" onclick="openWarningModal()">
+                            LƯU Ý DÀNH CHO ỨNG VIÊN
                         </a>
-                        <a href="#" class="contact-btn btn-report">
-                            <i class="fas fa-flag"></i> BÁO CÁO NHÀ TUYỂN DỤNG
+                        <a href="#" class="action-btn report-btn" onclick="openReportModal()">
+                            BÁO CÁO NHÀ TUYỂN DỤNG
                         </a>
                     </div>
                 </div>
             </div>
         </div>
     </main>
+
+    <!-- Modals -->
+    <!-- Consult Modal -->
+    <div id="consultModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>TƯ VẤN GIÚP TÔI</h3>
+                <span class="close" onclick="closeModal('consultModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p><strong>Liên hệ tư vấn miễn phí:</strong></p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>Hotline: <a href="tel:0981057683">0981057683</a></span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-facebook-messenger"></i>
+                        <span>Zalo: <a href="https://zalo.me/0981057683" target="_blank">0981057683</a></span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-facebook"></i>
+                        <span>Facebook: <a href="https://www.facebook.com/profile.php?id=61558585135713" target="_blank">Xem trang cá nhân</a></span>
+                    </div>
+                </div>
+                <form class="consult-form">
+                    <div class="form-group">
+                        <label>Họ và tên:</label>
+                        <input type="text" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Số điện thoại:</label>
+                        <input type="tel" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nội dung tư vấn:</label>
+                        <textarea name="message" rows="4" placeholder="Nhập nội dung cần tư vấn..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">GỬI YÊU CẦU TƯ VẤN</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Company Info Modal -->
+    <div id="companyInfoModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>THÔNG TIN NHÀ TUYỂN DỤNG</h3>
+                <span class="close" onclick="closeModal('companyInfoModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="company-info">
+                    <h4>Công ty CP Đầu tư và Cung ứng Nhân lực Năm Châu (NAM CHAU IMS)</h4>
+                    <div class="info-item">
+                        <strong>Giấy phép hoạt động:</strong> 1192/LĐTBXH-GP
+                    </div>
+                    <div class="info-item">
+                        <strong>Cơ quan cấp phép:</strong> Bộ Lao động Thương binh & Xã hội
+                    </div>
+                    <div class="info-item">
+                        <strong>Lĩnh vực hoạt động:</strong> Dịch vụ đưa người lao động Việt Nam đi làm việc có thời hạn tại nước ngoài
+                    </div>
+                    <div class="info-item">
+                        <strong>Địa chỉ:</strong> Hà Nội, Việt Nam
+                    </div>
+                    <div class="info-item">
+                        <strong>Hotline:</strong> <a href="tel:0981057683">0981057683</a>
+                    </div>
+                    <div class="info-item">
+                        <strong>Website:</strong> <a href="https://sanxuatkhaulaodong.com" target="_blank">sanxuatkhaulaodong.com</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Warning Modal -->
+    <div id="warningModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>LƯU Ý DÀNH CHO ỨNG VIÊN</h3>
+                <span class="close" onclick="closeModal('warningModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="warning-content">
+                    <div class="warning-item">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p><strong>Kiểm tra giấy phép:</strong> Chỉ làm việc với các công ty có giấy phép hợp lệ từ Bộ LĐTB&XH.</p>
+                    </div>
+                    <div class="warning-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <p><strong>Không đóng phí trước:</strong> Không đóng bất kỳ khoản phí nào trước khi có hợp đồng chính thức.</p>
+                    </div>
+                    <div class="warning-item">
+                        <i class="fas fa-file-contract"></i>
+                        <p><strong>Đọc kỹ hợp đồng:</strong> Tìm hiểu kỹ các điều khoản trong hợp đồng lao động trước khi ký.</p>
+                    </div>
+                    <div class="warning-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <p><strong>Liên hệ cơ quan chức năng:</strong> Khi có thắc mắc, liên hệ Bộ LĐTB&XH hoặc cơ quan có thẩm quyền.</p>
+                    </div>
+                    <div class="warning-item">
+                        <i class="fas fa-info-circle"></i>
+                        <p><strong>Tham khảo thông tin:</strong> Các thông tin trên website chỉ mang tính chất tham khảo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report Modal -->
+    <div id="reportModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>BÁO CÁO NHÀ TUYỂN DỤNG</h3>
+                <span class="close" onclick="closeModal('reportModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p><strong>Báo cáo vi phạm hoặc thông tin không chính xác:</strong></p>
+                <form class="report-form">
+                    <div class="form-group">
+                        <label>Loại báo cáo:</label>
+                        <select name="reportType" required>
+                            <option value="">Chọn loại báo cáo</option>
+                            <option value="fake">Thông tin giả mạo</option>
+                            <option value="scam">Lừa đảo</option>
+                            <option value="illegal">Hoạt động bất hợp pháp</option>
+                            <option value="other">Khác</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Họ và tên:</label>
+                        <input type="text" name="reporterName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email liên hệ:</label>
+                        <input type="email" name="reporterEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nội dung báo cáo:</label>
+                        <textarea name="reportContent" rows="5" placeholder="Mô tả chi tiết vấn đề..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn report-submit">GỬI BÁO CÁO</button>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer id="footer">
@@ -1069,12 +1677,14 @@
                 }
                 
                 // Update consultant info
-                document.getElementById('consultant-name').textContent = job.consultant;
-                document.querySelector('.contact-btn.btn-phone').href = `tel:${job.phone}`;
-                document.querySelector('.contact-btn.btn-phone').innerHTML = `<i class="fas fa-phone"></i> ${job.phone}`;
-                document.querySelector('.contact-btn.btn-zalo').href = job.zalo;
-                document.querySelector('.contact-btn.btn-zalo').innerHTML = `<i class="fab fa-facebook-messenger"></i> ${job.phone}`;
-                document.getElementById('consultant-facebook').href = job.facebook;
+                // document.getElementById('consultant-name').textContent = job.consultant; // Keep default "Mr Hải"
+                
+                // Update contact methods
+                document.querySelector('.phone-contact').href = `tel:${job.phone}`;
+                document.querySelector('.phone-contact span').textContent = job.phone;
+                document.querySelector('.zalo-contact').href = `https://zalo.me/${job.phone}`;
+                document.querySelector('.zalo-contact span').textContent = job.phone;
+                document.querySelector('.facebook-contact').href = job.facebook;
                 
                 // Update job banner image
                 document.getElementById('job-banner-img').src = job.image;
@@ -1168,6 +1778,77 @@
             
             detailedContent.innerHTML = content;
         }
+
+        // Modal Functions
+        function openConsultModal() {
+            document.getElementById('consultModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function openCompanyInfoModal() {
+            document.getElementById('companyInfoModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function openWarningModal() {
+            document.getElementById('warningModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function openReportModal() {
+            document.getElementById('reportModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modals = ['consultModal', 'companyInfoModal', 'warningModal', 'reportModal'];
+            modals.forEach(modalId => {
+                const modal = document.getElementById(modalId);
+                if (event.target === modal) {
+                    closeModal(modalId);
+                }
+            });
+        }
+
+        // Handle form submissions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Consult form
+            const consultForm = document.querySelector('.consult-form');
+            if (consultForm) {
+                consultForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const formData = new FormData(this);
+                    const name = formData.get('name');
+                    const phone = formData.get('phone');
+                    const message = formData.get('message');
+                    
+                    alert(`Cảm ơn ${name}! Chúng tôi sẽ liên hệ với bạn qua số ${phone} trong thời gian sớm nhất.`);
+                    closeModal('consultModal');
+                    this.reset();
+                });
+            }
+
+            // Report form
+            const reportForm = document.querySelector('.report-form');
+            if (reportForm) {
+                reportForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const formData = new FormData(this);
+                    const reporterName = formData.get('reporterName');
+                    const reportType = formData.get('reportType');
+                    
+                    alert(`Cảm ơn ${reporterName}! Báo cáo của bạn đã được ghi nhận. Chúng tôi sẽ xem xét và phản hồi sớm nhất.`);
+                    closeModal('reportModal');
+                    this.reset();
+                });
+            }
+        });
     </script>
     <script src="job-detail.js"></script>
 </body>
