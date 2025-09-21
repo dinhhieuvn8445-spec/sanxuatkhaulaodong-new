@@ -145,53 +145,377 @@
         }
         
         .contact-btn {
-            padding: 10px 15px;
+            padding: 15px 25px;
             border: none;
-            border-radius: 5px;
+            border-radius: 30px;
             text-decoration: none;
             text-align: center;
             font-weight: bold;
             transition: all 0.3s ease;
-        }
-        
-        .btn-phone {
-            background: #007bff;
-            color: white;
-        }
-        
-        .btn-zalo {
-            background: #0084ff;
-            color: white;
-        }
-        
-        .btn-facebook {
-            background: #1877f2;
-            color: white;
-        }
-        
-        .btn-consult {
-            background: #28a745;
-            color: white;
-        }
-        
-        .btn-info {
-            background: #17a2b8;
-            color: white;
-        }
-        
-        .btn-save {
-            background: #dc3545;
-            color: white;
-        }
-        
-        .btn-report {
-            background: #6c757d;
-            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 16px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+            margin: 10px 5px;
         }
         
         .contact-btn:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+        }
+        
+        .contact-btn i {
+            font-size: 22px;
+            text-shadow: 0 0 15px rgba(255,255,255,0.8);
+            filter: drop-shadow(0 0 8px rgba(255,255,255,0.9));
+        }
+        
+        .contact-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .contact-btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn-phone {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            color: white;
+            border: 2px solid #0056b3;
+        }
+        
+        .btn-phone i {
+            font-size: 22px;
+            animation: phoneGlow 2s infinite;
+            text-shadow: 0 0 20px rgba(255,255,255,1);
+            filter: drop-shadow(0 0 10px rgba(0,123,255,0.8));
+        }
+        
+        @keyframes phoneGlow {
+            0%, 100% { 
+                transform: rotate(0deg) scale(1);
+                text-shadow: 0 0 20px rgba(255,255,255,1);
+                filter: drop-shadow(0 0 10px rgba(0,123,255,0.8));
+            }
+            25% { transform: rotate(-10deg) scale(1.1); }
+            50% { 
+                transform: rotate(10deg) scale(1.2);
+                text-shadow: 0 0 30px rgba(255,255,255,1);
+                filter: drop-shadow(0 0 15px rgba(0,123,255,1));
+            }
+            75% { transform: rotate(-5deg) scale(1.1); }
+        }
+        
+        .btn-zalo {
+            background: linear-gradient(135deg, #0084ff 0%, #0066cc 100%);
+            color: white;
+            border: 2px solid #0066cc;
+        }
+        
+        .btn-zalo i {
+            font-size: 22px;
+            animation: zaloGlow 2s infinite;
+            text-shadow: 0 0 20px rgba(255,255,255,1);
+            filter: drop-shadow(0 0 10px rgba(0,132,255,0.8));
+        }
+        
+        /* Official Zalo icon styling */
+        .zalo-icon-official {
+            display: inline-block;
+            margin-right: 8px;
+            vertical-align: middle;
+            filter: drop-shadow(0 0 10px rgba(0, 104, 255, 0.6));
+            animation: zaloGlow 2s ease-in-out infinite;
+        }
+        
+        .zalo-icon-official svg {
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0, 104, 255, 0.3);
+        }
+        
+        @keyframes zaloGlow {
+            0%, 100% { 
+                transform: scale(1);
+                text-shadow: 0 0 20px rgba(255,255,255,1);
+                filter: drop-shadow(0 0 10px rgba(0,132,255,0.8));
+            }
+            50% { 
+                transform: scale(1.2);
+                text-shadow: 0 0 30px rgba(255,255,255,1);
+                filter: drop-shadow(0 0 15px rgba(0,132,255,1));
+            }
+        }
+        
+        .btn-facebook {
+            background: linear-gradient(135deg, #1877f2 0%, #166fe5 100%);
+            color: white;
+            border: 2px solid #166fe5;
+        }
+        
+        .btn-facebook i {
+            font-size: 22px;
+            animation: facebookGlow 2s infinite;
+            text-shadow: 0 0 20px rgba(255,255,255,1);
+            filter: drop-shadow(0 0 10px rgba(24,119,242,0.8));
+        }
+        
+        @keyframes facebookGlow {
+            0%, 100% { 
+                transform: translateY(0) scale(1);
+                text-shadow: 0 0 20px rgba(255,255,255,1);
+                filter: drop-shadow(0 0 10px rgba(24,119,242,0.8));
+            }
+            50% { 
+                transform: translateY(-5px) scale(1.2);
+                text-shadow: 0 0 30px rgba(255,255,255,1);
+                filter: drop-shadow(0 0 15px rgba(24,119,242,1));
+            }
+        }
+        
+        .btn-consult {
+            background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+            color: white;
+            border: 2px solid #1e7e34;
+        }
+        
+        .btn-info {
+            background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+            color: white;
+            border: 2px solid #138496;
+        }
+        
+        .btn-save {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            border: 2px solid #c82333;
+        }
+        
+        .btn-report {
+            background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+            color: white;
+            border: 2px solid #5a6268;
+        }
+        
+        .contact-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+        }
+        
+        .contact-btn:active {
+            transform: translateY(0) scale(0.98);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        /* Modal Styles */
+        .consultation-modal-overlay,
+        .info-modal-overlay,
+        .notes-modal-overlay,
+        .report-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .consultation-modal,
+        .info-modal,
+        .notes-modal,
+        .report-modal {
+            background: white;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, #ed1c24 0%, #c41e3a 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px 12px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+        
+        .close-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .modal-body {
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ed1c24;
+            box-shadow: 0 0 0 3px rgba(237, 28, 36, 0.1);
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        }
+        
+        .report-submit {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        }
+        
+        .report-submit:hover {
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+        }
+        
+        .warning-box,
+        .requirements-box,
+        .contact-box {
+            background: #f8f9fa;
+            border-left: 4px solid #ed1c24;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .warning-box h4,
+        .requirements-box h4,
+        .contact-box h4 {
+            color: #ed1c24;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .warning-box ul,
+        .requirements-box ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .warning-box li,
+        .requirements-box li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        .employer-info h4 {
+            color: #ed1c24;
+            margin-bottom: 15px;
+        }
+        
+        .employer-benefits {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .employer-benefits h5 {
+            color: #28a745;
+            margin-bottom: 15px;
+        }
+        
+        .employer-benefits ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .employer-benefits li {
+            margin-bottom: 8px;
+            color: #555;
         }
         
         .section-title {
@@ -524,36 +848,35 @@
                     <img src="https://sanxuatkhaulaodong.com/upload/2024/09/nam-chau-ims-medium_large.png" alt="Job Banner" id="job-banner-img">
                 </div>
 
-                <!-- Consultant Info -->
+                <!-- Contact Buttons -->
                 <div class="consultant-info">
-                    <h3>Cần bộ tư vấn</h3>
-                    <div class="consultant-contact">
-                        <strong id="consultant-name">Năm Châu IMS</strong>
-                        <p id="consultant-description">Xuất khẩu lao động Nhật Bản, Đài Loan...</p>
-                        <a href="#" id="consultant-link">Xem thêm »</a>
-                    </div>
-                    
                     <div class="contact-buttons">
                         <a href="tel:0981057683" class="contact-btn btn-phone">
                             <i class="fas fa-phone"></i> 0981057683
                         </a>
                         <a href="https://zalo.me/0981057683" class="contact-btn btn-zalo" target="_blank">
-                            <i class="fab fa-facebook-messenger"></i> 0981057683
+                            <div class="zalo-icon-official">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                                    <rect width="24" height="24" rx="6" fill="#0068FF"/>
+                                    <path d="M6 8.5C6 7.67157 6.67157 7 7.5 7H16.5C17.3284 7 18 7.67157 18 8.5V15.5C18 16.3284 17.3284 17 16.5 17H10L7 19V8.5Z" fill="white"/>
+                                    <path d="M8.5 10.5H15.5M8.5 13H13" stroke="#0068FF" stroke-width="1.2" stroke-linecap="round"/>
+                                </svg>
+                            </div> 0981057683
                         </a>
                         <a href="#" class="contact-btn btn-facebook" id="consultant-facebook">
                             <i class="fab fa-facebook"></i> Xem trang cá nhân
                         </a>
                         <a href="#" class="contact-btn btn-consult">
-                            TƯ VẤN GIÚP TÔI
+                            <i class="fas fa-user-tie"></i> TƯ VẤN GIÚP TÔI
                         </a>
                         <a href="#" class="contact-btn btn-info">
-                            THÔNG TIN NHÀ TUYỂN DỤNG
+                            <i class="fas fa-building"></i> THÔNG TIN NHÀ TUYỂN DỤNG
                         </a>
                         <a href="#" class="contact-btn btn-save">
-                            LƯU Ý DÀNH CHO ỨNG VIÊN
+                            <i class="fas fa-exclamation-triangle"></i> LƯU Ý DÀNH CHO ỨNG VIÊN
                         </a>
                         <a href="#" class="contact-btn btn-report">
-                            BÁO CÁO NHÀ TUYỂN DỤNG
+                            <i class="fas fa-flag"></i> BÁO CÁO NHÀ TUYỂN DỤNG
                         </a>
                     </div>
                 </div>
@@ -846,5 +1169,6 @@
             detailedContent.innerHTML = content;
         }
     </script>
+    <script src="job-detail.js"></script>
 </body>
 </html>
