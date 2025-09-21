@@ -10,7 +10,7 @@ import sys
 import json
 import urllib.parse
 from pathlib import Path
-import psycopg2
+import sqlite3
 import bcrypt
 
 # Set the port
@@ -21,14 +21,10 @@ project_dir = Path(__file__).parent
 os.chdir(project_dir)
 
 def get_db_connection():
-    """Tạo kết nối đến PostgreSQL database"""
+    """Tạo kết nối đến SQLite database"""
     try:
-        conn = psycopg2.connect(
-            host="localhost",
-            database="sanxuatkhaulaodong",
-            user="postgres",
-            password="postgres"
-        )
+        conn = sqlite3.connect('admin_content.db')
+        conn.row_factory = sqlite3.Row  # Enable dict-like access to rows
         return conn
     except Exception as e:
         print(f"Database connection error: {e}")
@@ -42,19 +38,60 @@ def authenticate_user(username, password):
     
     try:
         cur = conn.cursor()
-        cur.execute("SELECT id, username, password_hash, is_admin FROM users WHERE username = %s", (username,))
+        cur.execute("SELECT id, username, password_hash, is_admin FROM users WHERE username = ?", (username,))
         user = cur.fetchone()
         
-        if user and bcrypt.checkpw(password.encode('utf-8'), user[2].encode('utf-8')):
+        if user and bcrypt.checkpw(password.encode('utf-8'), user['password_hash'].encode('utf-8')):
             return {
-                'id': user[0],
-                'username': user[1],
-                'is_admin': user[3]
+                'id': user['id'],
+                'username': user['username'],
+                'is_admin': user['is_admin']
             }
         return None
     except Exception as e:
         print(f"Authentication error: {e}")
         return None
+    finally:
+        conn.close()
+
+def get_page_content(page_name):
+    """Lấy nội dung trang"""
+    conn = get_db_connection()
+    if not conn:
+        return None
+    
+    try:
+        cur = conn.cursor()
+        cur.execute("SELECT content FROM page_content WHERE page_name = ?", (page_name,))
+        result = cur.fetchone()
+        
+        if result:
+            return json.loads(result['content'])
+        return None
+    except Exception as e:
+        print(f"Error getting page content: {e}")
+        return None
+    finally:
+        conn.close()
+
+def save_page_content(page_name, content):
+    """Lưu nội dung trang"""
+    conn = get_db_connection()
+    if not conn:
+        return False
+    
+    try:
+        cur = conn.cursor()
+        cur.execute("""
+            INSERT OR REPLACE INTO page_content (page_name, content, updated_at)
+            VALUES (?, ?, CURRENT_TIMESTAMP)
+        """, (page_name, json.dumps(content, ensure_ascii=False)))
+        
+        conn.commit()
+        return True
+    except Exception as e:
+        print(f"Error saving page content: {e}")
+        return False
     finally:
         conn.close()
 
@@ -74,11 +111,23 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.end_headers()
 
     def do_POST(self):
-        """Handle POST requests for login"""
+        """Handle POST requests"""
         if self.path == '/api/login':
             self.handle_login()
+        elif self.path.startswith('/api/admin/content/'):
+            self.handle_save_content()
         else:
             self.send_error(404)
+    
+    def do_GET(self):
+        """Handle GET requests"""
+        if self.path.startswith('/api/admin/content/'):
+            self.handle_get_content()
+        else:
+            # Serve index.html for root path
+            if self.path == '/':
+                self.path = '/index.html'
+            return super().do_GET()
 
     def handle_login(self):
         """Xử lý đăng nhập"""
@@ -112,18 +161,48 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             print(f"Login error: {e}")
             self.send_json_response({'success': False, 'message': 'Lỗi server'})
 
+    def handle_get_content(self):
+        """Xử lý lấy nội dung trang"""
+        try:
+            # Extract page name from URL
+            page_name = self.path.split('/')[-1]
+            
+            content = get_page_content(page_name)
+            
+            if content:
+                self.send_json_response({'success': True, 'data': content})
+            else:
+                self.send_json_response({'success': False, 'message': 'Không tìm thấy nội dung'})
+                
+        except Exception as e:
+            print(f"Get content error: {e}")
+            self.send_json_response({'success': False, 'message': 'Lỗi server'})
+    
+    def handle_save_content(self):
+        """Xử lý lưu nội dung trang"""
+        try:
+            # Extract page name from URL
+            page_name = self.path.split('/')[-1]
+            
+            content_length = int(self.headers['Content-Length'])
+            post_data = self.rfile.read(content_length)
+            data = json.loads(post_data.decode('utf-8'))
+            
+            if save_page_content(page_name, data):
+                self.send_json_response({'success': True, 'message': 'Lưu thành công'})
+            else:
+                self.send_json_response({'success': False, 'message': 'Lỗi khi lưu dữ liệu'})
+                
+        except Exception as e:
+            print(f"Save content error: {e}")
+            self.send_json_response({'success': False, 'message': 'Lỗi server'})
+
     def send_json_response(self, data):
         """Gửi response JSON"""
         self.send_response(200)
         self.send_header('Content-Type', 'application/json')
         self.end_headers()
         self.wfile.write(json.dumps(data, ensure_ascii=False).encode('utf-8'))
-
-    def do_GET(self):
-        # Serve index.html for root path
-        if self.path == '/':
-            self.path = '/index.html'
-        return super().do_GET()
 
 if __name__ == "__main__":
     try:

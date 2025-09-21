@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo - Nội dung được quản lý từ Admin</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .demo-section {
+            padding: 60px 0;
+            background: #f8f9fa;
+        }
+        
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .demo-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .demo-header h1 {
+            color: #2c3e50;
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+        
+        .demo-header p {
+            color: #7f8c8d;
+            font-size: 18px;
+        }
+        
+        .content-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #3498db;
+        }
+        
+        .content-card h2 {
+            color: #2c3e50;
+            font-size: 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .content-card h3 {
+            color: #34495e;
+            font-size: 18px;
+            margin: 20px 0 10px 0;
+        }
+        
+        .content-card p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+        
+        .loading i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .admin-link {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #3498db;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .admin-link:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-section">
+        <div class="demo-container">
+            <div class="demo-header">
+                <h1><i class="fas fa-magic"></i> Demo Nội Dung Động</h1>
+                <p>Nội dung dưới đây được lấy từ database và có thể chỉnh sửa qua Admin Dashboard</p>
+            </div>
+            
+            <div id="loading" class="loading">
+                <i class="fas fa-spinner"></i>
+                <p>Đang tải nội dung...</p>
+            </div>
+            
+            <div id="content" style="display: none;">
+                <!-- Home Content -->
+                <div class="content-card">
+                    <h2><i class="fas fa-home"></i> Trang Chủ</h2>
+                    <h3>Tiêu đề chính:</h3>
+                    <p id="home-title"></p>
+                    <h3>Phụ đề:</h3>
+                    <p id="home-subtitle"></p>
+                    <h3>Mô tả chi tiết:</h3>
+                    <p id="home-description"></p>
+                    <h3>Nút chính:</h3>
+                    <p id="home-buttonText"></p>
+                    <h3>Nút phụ:</h3>
+                    <p id="home-buttonLink"></p>
+                </div>
+                
+                <!-- About Content -->
+                <div class="content-card">
+                    <h2><i class="fas fa-info-circle"></i> Giới Thiệu</h2>
+                    <h3>Tiêu đề trang:</h3>
+                    <p id="about-title"></p>
+                    <h3>Đoạn giới thiệu:</h3>
+                    <p id="about-intro"></p>
+                    <h3>Lịch sử hình thành:</h3>
+                    <p id="about-history"></p>
+                    <h3>Sứ mệnh:</h3>
+                    <p id="about-mission"></p>
+                    <h3>Tầm nhìn:</h3>
+                    <p id="about-vision"></p>
+                </div>
+                
+                <!-- Guide Content -->
+                <div class="content-card">
+                    <h2><i class="fas fa-book"></i> Hướng Dẫn</h2>
+                    <h3>Tiêu đề trang:</h3>
+                    <p id="guide-title"></p>
+                    <h3>Giới thiệu chung:</h3>
+                    <p id="guide-intro"></p>
+                    <h3>Các bước thực hiện:</h3>
+                    <p id="guide-steps" style="white-space: pre-line;"></p>
+                    <h3>Yêu cầu hồ sơ:</h3>
+                    <p id="guide-requirements" style="white-space: pre-line;"></p>
+                    <h3>Lưu ý quan trọng:</h3>
+                    <p id="guide-notes"></p>
+                </div>
+                
+                <!-- Consultation Content -->
+                <div class="content-card">
+                    <h2><i class="fas fa-comments"></i> Tư Vấn XKLĐ</h2>
+                    <h3>Tiêu đề trang:</h3>
+                    <p id="consultation-title"></p>
+                    <h3>Giới thiệu dịch vụ:</h3>
+                    <p id="consultation-intro"></p>
+                    <h3>Các dịch vụ tư vấn:</h3>
+                    <p id="consultation-services" style="white-space: pre-line;"></p>
+                    <h3>Thông tin liên hệ:</h3>
+                    <p id="consultation-contact" style="white-space: pre-line;"></p>
+                    <h3>Câu hỏi thường gặp:</h3>
+                    <p id="consultation-faq" style="white-space: pre-line;"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <a href="admin.html" class="admin-link">
+        <i class="fas fa-cog"></i> Admin Dashboard
+    </a>
+    
+    <script>
+        // Load content from API
+        async function loadContent() {
+            const pages = ['home', 'about', 'guide', 'consultation'];
+            
+            try {
+                for (const page of pages) {
+                    const response = await fetch(`/api/admin/content/${page}`);
+                    if (response.ok) {
+                        const result = await response.json();
+                        if (result.success && result.data) {
+                            populateContent(page, result.data);
+                        }
+                    }
+                }
+                
+                // Hide loading and show content
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('content').style.display = 'block';
+                
+            } catch (error) {
+                console.error('Error loading content:', error);
+                document.getElementById('loading').innerHTML = `
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>Lỗi khi tải nội dung</p>
+                `;
+            }
+        }
+        
+        function populateContent(page, data) {
+            Object.keys(data).forEach(key => {
+                const element = document.getElementById(`${page}-${key}`);
+                if (element) {
+                    element.textContent = data[key] || 'Chưa có nội dung';
+                }
+            });
+        }
+        
+        // Load content when page loads
+        document.addEventListener('DOMContentLoaded', loadContent);
+        
+        // Auto refresh every 30 seconds to show updates
+        setInterval(loadContent, 30000);
+    </script>
+</body>
+</html>

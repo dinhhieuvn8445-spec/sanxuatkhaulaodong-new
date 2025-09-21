@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Quản trị - Dương Oanh XKLĐ</title>
+    <link rel="stylesheet" href="admin-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="header-left">
+                <i class="fas fa-tachometer-alt"></i>
+                <h1>Dashboard Quản trị</h1>
+            </div>
+            <div class="header-right">
+                <span>Xin chào, <strong id="adminUsername">admin</strong></span>
+                <button class="btn-logout" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                </button>
+            </div>
+        </header>
+
+        <div class="admin-body">
+            <!-- Sidebar -->
+            <aside class="admin-sidebar">
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li class="nav-item active" data-tab="home">
+                            <a href="#" onclick="switchTab('home')">
+                                <i class="fas fa-home"></i>
+                                <span>Trang chủ</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" data-tab="about">
+                            <a href="#" onclick="switchTab('about')">
+                                <i class="fas fa-info-circle"></i>
+                                <span>Giới thiệu</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" data-tab="guide">
+                            <a href="#" onclick="switchTab('guide')">
+                                <i class="fas fa-book"></i>
+                                <span>Hướng dẫn</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" data-tab="consultation">
+                            <a href="#" onclick="switchTab('consultation')">
+                                <i class="fas fa-comments"></i>
+                                <span>Tư vấn xklđ</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="admin-main">
+                <!-- Home Tab -->
+                <div id="home-tab" class="tab-content active">
+                    <div class="content-header">
+                        <h2><i class="fas fa-star"></i> Phần giới thiệu chính (Hero Section)</h2>
+                    </div>
+                    
+                    <form class="admin-form" id="homeForm">
+                        <div class="form-group">
+                            <label for="homeTitle">Tiêu đề chính:</label>
+                            <input type="text" id="homeTitle" name="title" class="form-control" placeholder="Nhập tiêu đề chính">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="homeSubtitle">Phụ đề:</label>
+                            <textarea id="homeSubtitle" name="subtitle" class="form-control" rows="3" placeholder="Nhập phụ đề mô tả dịch vụ"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="homeDescription">Mô tả chi tiết:</label>
+                            <textarea id="homeDescription" name="description" class="form-control" rows="5" placeholder="Nhập mô tả chi tiết về dịch vụ"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="homeButtonText">Nút chính:</label>
+                            <input type="text" id="homeButtonText" name="buttonText" class="form-control" placeholder="Văn bản nút call-to-action">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="homeButtonLink">Nút phụ:</label>
+                            <input type="text" id="homeButtonLink" name="buttonLink" class="form-control" placeholder="Văn bản nút phụ">
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Lưu thay đổi
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="resetForm('homeForm')">
+                                <i class="fas fa-undo"></i> Khôi phục
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- About Tab -->
+                <div id="about-tab" class="tab-content">
+                    <div class="content-header">
+                        <h2><i class="fas fa-info-circle"></i> Nội dung trang Giới thiệu</h2>
+                    </div>
+                    
+                    <form class="admin-form" id="aboutForm">
+                        <div class="form-group">
+                            <label for="aboutTitle">Tiêu đề trang:</label>
+                            <input type="text" id="aboutTitle" name="title" class="form-control" placeholder="Tiêu đề trang giới thiệu">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="aboutIntro">Đoạn giới thiệu:</label>
+                            <textarea id="aboutIntro" name="intro" class="form-control" rows="4" placeholder="Đoạn giới thiệu về công ty"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="aboutHistory">Lịch sử hình thành:</label>
+                            <textarea id="aboutHistory" name="history" class="form-control" rows="5" placeholder="Lịch sử hình thành và phát triển"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="aboutMission">Sứ mệnh:</label>
+                            <textarea id="aboutMission" name="mission" class="form-control" rows="3" placeholder="Sứ mệnh của công ty"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="aboutVision">Tầm nhìn:</label>
+                            <textarea id="aboutVision" name="vision" class="form-control" rows="3" placeholder="Tầm nhìn của công ty"></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Lưu thay đổi
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="resetForm('aboutForm')">
+                                <i class="fas fa-undo"></i> Khôi phục
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Guide Tab -->
+                <div id="guide-tab" class="tab-content">
+                    <div class="content-header">
+                        <h2><i class="fas fa-book"></i> Nội dung trang Hướng dẫn</h2>
+                    </div>
+                    
+                    <form class="admin-form" id="guideForm">
+                        <div class="form-group">
+                            <label for="guideTitle">Tiêu đề trang:</label>
+                            <input type="text" id="guideTitle" name="title" class="form-control" placeholder="Tiêu đề trang hướng dẫn">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="guideIntro">Giới thiệu chung:</label>
+                            <textarea id="guideIntro" name="intro" class="form-control" rows="3" placeholder="Giới thiệu về quy trình xuất khẩu lao động"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="guideSteps">Các bước thực hiện:</label>
+                            <textarea id="guideSteps" name="steps" class="form-control" rows="8" placeholder="Mô tả chi tiết các bước thực hiện (mỗi bước một dòng)"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="guideRequirements">Yêu cầu hồ sơ:</label>
+                            <textarea id="guideRequirements" name="requirements" class="form-control" rows="6" placeholder="Danh sách các giấy tờ cần thiết"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="guideNotes">Lưu ý quan trọng:</label>
+                            <textarea id="guideNotes" name="notes" class="form-control" rows="4" placeholder="Các lưu ý quan trọng cho ứng viên"></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Lưu thay đổi
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="resetForm('guideForm')">
+                                <i class="fas fa-undo"></i> Khôi phục
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Consultation Tab -->
+                <div id="consultation-tab" class="tab-content">
+                    <div class="content-header">
+                        <h2><i class="fas fa-comments"></i> Nội dung trang Tư vấn XKLĐ</h2>
+                    </div>
+                    
+                    <form class="admin-form" id="consultationForm">
+                        <div class="form-group">
+                            <label for="consultationTitle">Tiêu đề trang:</label>
+                            <input type="text" id="consultationTitle" name="title" class="form-control" placeholder="Tiêu đề trang tư vấn">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="consultationIntro">Giới thiệu dịch vụ:</label>
+                            <textarea id="consultationIntro" name="intro" class="form-control" rows="4" placeholder="Giới thiệu về dịch vụ tư vấn"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="consultationServices">Các dịch vụ tư vấn:</label>
+                            <textarea id="consultationServices" name="services" class="form-control" rows="6" placeholder="Danh sách các dịch vụ tư vấn cung cấp"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="consultationContact">Thông tin liên hệ:</label>
+                            <textarea id="consultationContact" name="contact" class="form-control" rows="5" placeholder="Thông tin liên hệ để được tư vấn"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="consultationFAQ">Câu hỏi thường gặp:</label>
+                            <textarea id="consultationFAQ" name="faq" class="form-control" rows="8" placeholder="Các câu hỏi thường gặp và câu trả lời"></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Lưu thay đổi
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="resetForm('consultationForm')">
+                                <i class="fas fa-undo"></i> Khôi phục
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Đang xử lý...</p>
+        </div>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div id="messageContainer" class="message-container"></div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
