@@ -1049,10 +1049,278 @@ function removeImage() {
     }
 }
 
-// Initialize image upload manager when DOM is loaded
+// ===== LOGO & BANNER UPLOAD MANAGERS =====
+class LogoUploadManager extends ImageUploadManager {
+    constructor() {
+        super();
+        this.dragDropArea = document.getElementById('logoDropArea');
+        this.fileInput = document.getElementById('logoFileInput');
+        this.imagePreview = document.getElementById('logoPreview');
+        this.uploadProgress = document.getElementById('logoUploadProgress');
+        this.hiddenInput = document.getElementById('headerLogo');
+        this.previewImg = document.getElementById('logoPreviewImg');
+        this.progressFill = document.getElementById('logoProgressFill');
+        this.progressText = document.getElementById('logoProgressText');
+        this.init();
+    }
+
+    init() {
+        if (!this.dragDropArea) return;
+        this.setupDragDropArea();
+        this.setupFileInput();
+    }
+
+    setupDragDropArea() {
+        // Drag and drop events
+        this.dragDropArea.addEventListener('dragover', this.handleDragOver.bind(this));
+        this.dragDropArea.addEventListener('dragenter', this.handleDragEnter.bind(this));
+        this.dragDropArea.addEventListener('dragleave', this.handleDragLeave.bind(this));
+        this.dragDropArea.addEventListener('drop', this.handleDrop.bind(this));
+        
+        // Click to browse
+        this.dragDropArea.addEventListener('click', this.handleClick.bind(this));
+        
+        // Browse link click
+        const browseLink = this.dragDropArea.querySelector('.browse-link');
+        if (browseLink) {
+            browseLink.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.openFileDialog();
+            });
+        }
+    }
+
+    async uploadFile(file) {
+        try {
+            this.showUploadProgress();
+            this.simulateUploadProgress();
+            
+            const formData = new FormData();
+            formData.append('image', file);
+            
+            const response = await fetch('/api/admin/upload-image', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                await this.completeUploadProgress();
+                this.showImagePreview(result.image_url);
+                
+                if (this.hiddenInput) {
+                    this.hiddenInput.value = result.image_url;
+                }
+                
+                this.currentImageUrl = result.image_url;
+                this.hideUploadProgress();
+                this.dragDropArea.classList.add('upload-success');
+                
+            } else {
+                throw new Error(result.message || 'Upload failed');
+            }
+            
+        } catch (error) {
+            console.error('Logo upload error:', error);
+            this.showError(error.message || 'Có lỗi xảy ra khi tải lên logo');
+            this.hideUploadProgress();
+        }
+    }
+
+    showImagePreview(imageUrl) {
+        const dragDropContent = this.dragDropArea.querySelector('.drag-drop-content');
+        
+        if (this.previewImg) {
+            this.previewImg.src = imageUrl;
+            this.previewImg.onload = () => {
+                dragDropContent.style.display = 'none';
+                this.imagePreview.style.display = 'block';
+            };
+            this.previewImg.onerror = () => {
+                this.showError('Không thể tải logo từ URL này');
+                this.hideImagePreview();
+            };
+        }
+    }
+
+    simulateUploadProgress() {
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += Math.random() * 15;
+            if (progress > 95) progress = 95;
+            
+            if (this.progressFill) this.progressFill.style.width = progress + '%';
+            if (this.progressText) this.progressText.textContent = Math.round(progress) + '%';
+            
+            if (progress >= 95) {
+                clearInterval(interval);
+            }
+        }, 100);
+    }
+
+    completeUploadProgress() {
+        return new Promise(resolve => {
+            if (this.progressFill) this.progressFill.style.width = '100%';
+            if (this.progressText) this.progressText.textContent = '100%';
+            setTimeout(resolve, 300);
+        });
+    }
+}
+
+class BannerUploadManager extends ImageUploadManager {
+    constructor() {
+        super();
+        this.dragDropArea = document.getElementById('bannerDropArea');
+        this.fileInput = document.getElementById('bannerFileInput');
+        this.imagePreview = document.getElementById('bannerPreview');
+        this.uploadProgress = document.getElementById('bannerUploadProgress');
+        this.hiddenInput = document.getElementById('headerBanner');
+        this.previewImg = document.getElementById('bannerPreviewImg');
+        this.progressFill = document.getElementById('bannerProgressFill');
+        this.progressText = document.getElementById('bannerProgressText');
+        this.init();
+    }
+
+    init() {
+        if (!this.dragDropArea) return;
+        this.setupDragDropArea();
+        this.setupFileInput();
+    }
+
+    setupDragDropArea() {
+        // Drag and drop events
+        this.dragDropArea.addEventListener('dragover', this.handleDragOver.bind(this));
+        this.dragDropArea.addEventListener('dragenter', this.handleDragEnter.bind(this));
+        this.dragDropArea.addEventListener('dragleave', this.handleDragLeave.bind(this));
+        this.dragDropArea.addEventListener('drop', this.handleDrop.bind(this));
+        
+        // Click to browse
+        this.dragDropArea.addEventListener('click', this.handleClick.bind(this));
+        
+        // Browse link click
+        const browseLink = this.dragDropArea.querySelector('.browse-link');
+        if (browseLink) {
+            browseLink.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.openFileDialog();
+            });
+        }
+    }
+
+    async uploadFile(file) {
+        try {
+            this.showUploadProgress();
+            this.simulateUploadProgress();
+            
+            const formData = new FormData();
+            formData.append('image', file);
+            
+            const response = await fetch('/api/admin/upload-image', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                await this.completeUploadProgress();
+                this.showImagePreview(result.image_url);
+                
+                if (this.hiddenInput) {
+                    this.hiddenInput.value = result.image_url;
+                }
+                
+                this.currentImageUrl = result.image_url;
+                this.hideUploadProgress();
+                this.dragDropArea.classList.add('upload-success');
+                
+            } else {
+                throw new Error(result.message || 'Upload failed');
+            }
+            
+        } catch (error) {
+            console.error('Banner upload error:', error);
+            this.showError(error.message || 'Có lỗi xảy ra khi tải lên banner');
+            this.hideUploadProgress();
+        }
+    }
+
+    showImagePreview(imageUrl) {
+        const dragDropContent = this.dragDropArea.querySelector('.drag-drop-content');
+        
+        if (this.previewImg) {
+            this.previewImg.src = imageUrl;
+            this.previewImg.onload = () => {
+                dragDropContent.style.display = 'none';
+                this.imagePreview.style.display = 'block';
+            };
+            this.previewImg.onerror = () => {
+                this.showError('Không thể tải banner từ URL này');
+                this.hideImagePreview();
+            };
+        }
+    }
+
+    simulateUploadProgress() {
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += Math.random() * 15;
+            if (progress > 95) progress = 95;
+            
+            if (this.progressFill) this.progressFill.style.width = progress + '%';
+            if (this.progressText) this.progressText.textContent = Math.round(progress) + '%';
+            
+            if (progress >= 95) {
+                clearInterval(interval);
+            }
+        }, 100);
+    }
+
+    completeUploadProgress() {
+        return new Promise(resolve => {
+            if (this.progressFill) this.progressFill.style.width = '100%';
+            if (this.progressText) this.progressText.textContent = '100%';
+            setTimeout(resolve, 300);
+        });
+    }
+}
+
+// Global functions for remove buttons
+function removeLogo() {
+    const logoManager = window.logoUploadManager;
+    if (logoManager) {
+        logoManager.hideImagePreview();
+        logoManager.dragDropArea.classList.remove('upload-success');
+        
+        const hiddenInput = document.getElementById('headerLogo');
+        if (hiddenInput) hiddenInput.value = '';
+        
+        const fileInput = document.getElementById('logoFileInput');
+        if (fileInput) fileInput.value = '';
+    }
+}
+
+function removeBanner() {
+    const bannerManager = window.bannerUploadManager;
+    if (bannerManager) {
+        bannerManager.hideImagePreview();
+        bannerManager.dragDropArea.classList.remove('upload-success');
+        
+        const hiddenInput = document.getElementById('headerBanner');
+        if (hiddenInput) hiddenInput.value = '';
+        
+        const fileInput = document.getElementById('bannerFileInput');
+        if (fileInput) fileInput.value = '';
+    }
+}
+
+// Initialize image upload managers when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize after a short delay to ensure all elements are rendered
     setTimeout(() => {
         window.imageUploadManager = new ImageUploadManager();
+        window.logoUploadManager = new LogoUploadManager();
+        window.bannerUploadManager = new BannerUploadManager();
     }, 500);
 });

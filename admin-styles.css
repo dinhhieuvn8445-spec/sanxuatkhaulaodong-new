@@ -979,3 +979,72 @@ textarea.form-control {
         height: 150px;
     }
 }
+
+/* ===== LOGO & BANNER SPECIFIC STYLES ===== */
+.logo-upload {
+    min-height: 120px;
+    border-radius: 12px;
+}
+
+.logo-upload .drag-icon {
+    font-size: 36px;
+    color: #f39c12;
+}
+
+.logo-upload .drag-text {
+    font-size: 16px;
+}
+
+.logo-upload .image-preview img {
+    height: 80px;
+    width: auto;
+    object-fit: contain;
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.banner-upload {
+    min-height: 140px;
+    border-radius: 12px;
+}
+
+.banner-upload .drag-icon {
+    font-size: 40px;
+    color: #9b59b6;
+}
+
+.banner-upload .drag-text {
+    font-size: 16px;
+}
+
+.banner-upload .image-preview img {
+    height: 100px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Logo and Banner hover effects */
+.logo-upload:hover .drag-icon {
+    color: #e67e22;
+    transform: scale(1.1);
+    transition: all 0.3s ease;
+}
+
+.banner-upload:hover .drag-icon {
+    color: #8e44ad;
+    transform: scale(1.1);
+    transition: all 0.3s ease;
+}
+
+/* Success states */
+.logo-upload.upload-success {
+    border-color: #27ae60;
+    background: rgba(39, 174, 96, 0.1);
+}
+
+.banner-upload.upload-success {
+    border-color: #27ae60;
+    background: rgba(39, 174, 96, 0.1);
+}

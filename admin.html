@@ -187,7 +187,32 @@
                     <form class="admin-form" id="headerForm">
                         <div class="form-group">
                             <label for="headerLogo">Logo công ty:</label>
-                            <input type="text" id="headerLogo" name="logo" class="form-control" placeholder="Đường dẫn logo">
+                            <!-- Logo Drag & Drop Upload Area -->
+                            <div class="image-upload-container">
+                                <div class="drag-drop-area logo-upload" id="logoDropArea">
+                                    <div class="drag-drop-content">
+                                        <i class="fas fa-image drag-icon"></i>
+                                        <p class="drag-text">Kéo thả logo vào đây</p>
+                                        <p class="drag-subtext">hoặc <span class="browse-link">chọn file logo</span></p>
+                                        <input type="file" id="logoFileInput" accept="image/*" style="display: none;">
+                                        <input type="hidden" id="headerLogo" name="logo" class="form-control">
+                                    </div>
+                                    <div class="image-preview" id="logoPreview" style="display: none;">
+                                        <img id="logoPreviewImg" src="" alt="Logo Preview">
+                                        <div class="image-actions">
+                                            <button type="button" class="btn-remove-image" onclick="removeLogo()">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="upload-progress" id="logoUploadProgress" style="display: none;">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="logoProgressFill"></div>
+                                    </div>
+                                    <span class="progress-text" id="logoProgressText">0%</span>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -217,7 +242,32 @@
 
                         <div class="form-group">
                             <label for="headerBanner">Banner quảng cáo:</label>
-                            <input type="text" id="headerBanner" name="banner" class="form-control" placeholder="Đường dẫn banner">
+                            <!-- Banner Drag & Drop Upload Area -->
+                            <div class="image-upload-container">
+                                <div class="drag-drop-area banner-upload" id="bannerDropArea">
+                                    <div class="drag-drop-content">
+                                        <i class="fas fa-panorama drag-icon"></i>
+                                        <p class="drag-text">Kéo thả banner vào đây</p>
+                                        <p class="drag-subtext">hoặc <span class="browse-link">chọn file banner</span></p>
+                                        <input type="file" id="bannerFileInput" accept="image/*" style="display: none;">
+                                        <input type="hidden" id="headerBanner" name="banner" class="form-control">
+                                    </div>
+                                    <div class="image-preview" id="bannerPreview" style="display: none;">
+                                        <img id="bannerPreviewImg" src="" alt="Banner Preview">
+                                        <div class="image-actions">
+                                            <button type="button" class="btn-remove-image" onclick="removeBanner()">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="upload-progress" id="bannerUploadProgress" style="display: none;">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="bannerProgressFill"></div>
+                                    </div>
+                                    <span class="progress-text" id="bannerProgressText">0%</span>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-actions">

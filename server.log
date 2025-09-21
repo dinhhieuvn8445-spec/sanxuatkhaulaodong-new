@@ -1,4 +1,15 @@
 /workspace/sanxuatkhaulaodong/server.py:17: DeprecationWarning: 'cgi' is deprecated and slated for removal in Python 3.13
   import cgi
-127.0.0.1 - - [21/Sep/2025 15:34:29] "GET / HTTP/1.1" 200 -
-127.0.0.1 - - [21/Sep/2025 15:34:52] "GET /test-drag-drop.html HTTP/1.1" 200 -
+10.2.29.11 - - [21/Sep/2025 15:52:09] "GET / HTTP/1.1" 200 -
+10.2.16.11 - - [21/Sep/2025 15:52:11] "GET / HTTP/1.1" 200 -
+10.2.16.11 - - [21/Sep/2025 15:52:11] "GET /styles.css HTTP/1.1" 304 -
+10.2.16.11 - - [21/Sep/2025 15:52:11] "GET /images/logos/duong-oanh-logo-new.svg HTTP/1.1" 304 -
+10.2.16.11 - - [21/Sep/2025 15:52:11] "GET /images/flags/taiwan.png HTTP/1.1" 304 -
+10.2.16.11 - - [21/Sep/2025 15:52:11] "GET /images/flags/russia.png HTTP/1.1" 304 -
+10.2.16.11 - - [21/Sep/2025 15:52:11] "GET /images/logos/suleco.png HTTP/1.1" 304 -
+10.2.16.11 - - [21/Sep/2025 15:52:11] "GET /images/logos/ecocom.png HTTP/1.1" 304 -
+10.2.16.11 - - [21/Sep/2025 15:52:11] "GET /images/logos/asia.png HTTP/1.1" 304 -
+10.2.16.11 - - [21/Sep/2025 15:52:11] "GET /images/logos/htd.png HTTP/1.1" 304 -
+10.2.16.11 - - [21/Sep/2025 15:52:11] "GET /script.js HTTP/1.1" 304 -
+127.0.0.1 - - [21/Sep/2025 15:52:15] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [21/Sep/2025 15:52:20] "GET /admin.html HTTP/1.1" 200 -
