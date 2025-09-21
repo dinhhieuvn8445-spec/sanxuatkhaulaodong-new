@@ -1330,9 +1330,35 @@
             }
         }
         
+        // Load header content from database
+        async function loadHeaderContent() {
+            try {
+                const response = await fetch('/api/admin/content/header');
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.success && result.data && result.data.logo) {
+                        // Update header logo
+                        const headerLogo = document.querySelector('.header-left .logo img');
+                        if (headerLogo) {
+                            headerLogo.src = result.data.logo;
+                        }
+                        
+                        // Update footer logo
+                        const footerLogo = document.querySelector('.footer-logo img');
+                        if (footerLogo) {
+                            footerLogo.src = result.data.logo;
+                        }
+                    }
+                }
+            } catch (error) {
+                console.log('Could not load header content:', error);
+            }
+        }
+
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
             checkLoginStatus();
+            loadHeaderContent();
         });
         
         // Close modal when clicking outside

@@ -17,7 +17,7 @@ import mimetypes
 import cgi
 
 # Set the port
-PORT = 12001
+PORT = 12000
 
 # Change to the project directory
 project_dir = Path(__file__).parent
@@ -89,6 +89,26 @@ def save_page_content(page_name, content):
             INSERT OR REPLACE INTO page_content (page_name, content, updated_at)
             VALUES (?, ?, CURRENT_TIMESTAMP)
         """, (page_name, json.dumps(content, ensure_ascii=False)))
+        
+        # Nếu đang lưu header và có logo, thì cũng cập nhật footer logo
+        if page_name == 'header' and 'logo' in content and content['logo']:
+            # Lấy nội dung footer hiện tại
+            cur.execute("SELECT content FROM page_content WHERE page_name = 'footer'")
+            footer_row = cur.fetchone()
+            
+            if footer_row:
+                footer_content = json.loads(footer_row[0])
+            else:
+                footer_content = {}
+            
+            # Cập nhật logo trong footer
+            footer_content['logo'] = content['logo']
+            
+            # Lưu lại footer với logo mới
+            cur.execute("""
+                INSERT OR REPLACE INTO page_content (page_name, content, updated_at)
+                VALUES (?, ?, CURRENT_TIMESTAMP)
+            """, ('footer', json.dumps(footer_content, ensure_ascii=False)))
         
         conn.commit()
         return True
