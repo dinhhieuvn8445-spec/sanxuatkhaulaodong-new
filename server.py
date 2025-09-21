@@ -17,7 +17,7 @@ import mimetypes
 import cgi
 
 # Set the port
-PORT = 12000
+PORT = 8080
 
 # Change to the project directory
 project_dir = Path(__file__).parent
