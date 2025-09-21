@@ -95,6 +95,155 @@ def save_page_content(page_name, content):
     finally:
         conn.close()
 
+def get_countries_data():
+    """Lấy dữ liệu quốc gia"""
+    conn = get_db_connection()
+    if not conn:
+        return []
+    
+    try:
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM countries ORDER BY name")
+        return [dict(row) for row in cur.fetchall()]
+    except Exception as e:
+        print(f"Error getting countries: {e}")
+        return []
+    finally:
+        conn.close()
+
+def get_jobs_data():
+    """Lấy dữ liệu việc làm"""
+    conn = get_db_connection()
+    if not conn:
+        return []
+    
+    try:
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT j.*, c.name as country_name 
+            FROM jobs j 
+            LEFT JOIN countries c ON j.country_id = c.id 
+            ORDER BY j.created_at DESC
+        """)
+        return [dict(row) for row in cur.fetchall()]
+    except Exception as e:
+        print(f"Error getting jobs: {e}")
+        return []
+    finally:
+        conn.close()
+
+def get_orders_data():
+    """Lấy dữ liệu đơn hàng"""
+    conn = get_db_connection()
+    if not conn:
+        return []
+    
+    try:
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM orders ORDER BY created_at DESC")
+        return [dict(row) for row in cur.fetchall()]
+    except Exception as e:
+        print(f"Error getting orders: {e}")
+        return []
+    finally:
+        conn.close()
+
+def get_applications_data():
+    """Lấy dữ liệu hồ sơ ứng tuyển"""
+    conn = get_db_connection()
+    if not conn:
+        return []
+    
+    try:
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT a.*, j.title as job_title 
+            FROM applications a 
+            LEFT JOIN jobs j ON a.job_id = j.id 
+            ORDER BY a.created_at DESC
+        """)
+        return [dict(row) for row in cur.fetchall()]
+    except Exception as e:
+        print(f"Error getting applications: {e}")
+        return []
+    finally:
+        conn.close()
+
+def get_partners_data():
+    """Lấy dữ liệu đối tác"""
+    conn = get_db_connection()
+    if not conn:
+        return []
+    
+    try:
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM partners ORDER BY name")
+        return [dict(row) for row in cur.fetchall()]
+    except Exception as e:
+        print(f"Error getting partners: {e}")
+        return []
+    finally:
+        conn.close()
+
+def get_users_data():
+    """Lấy dữ liệu người dùng"""
+    conn = get_db_connection()
+    if not conn:
+        return []
+    
+    try:
+        cur = conn.cursor()
+        cur.execute("SELECT id, username, email, is_admin, created_at FROM users ORDER BY created_at DESC")
+        users = []
+        for row in cur.fetchall():
+            user = dict(row)
+            user['role'] = 'Admin' if user['is_admin'] else 'User'
+            user['status'] = 'active'  # Mặc định active
+            users.append(user)
+        return users
+    except Exception as e:
+        print(f"Error getting users: {e}")
+        return []
+    finally:
+        conn.close()
+
+def get_dashboard_stats():
+    """Lấy thống kê dashboard"""
+    conn = get_db_connection()
+    if not conn:
+        return {}
+    
+    try:
+        cur = conn.cursor()
+        
+        # Đếm việc làm
+        cur.execute("SELECT COUNT(*) FROM jobs WHERE status = 'active'")
+        total_jobs = cur.fetchone()[0]
+        
+        # Đếm hồ sơ ứng tuyển
+        cur.execute("SELECT COUNT(*) FROM applications")
+        total_applications = cur.fetchone()[0]
+        
+        # Đếm quốc gia
+        cur.execute("SELECT COUNT(*) FROM countries WHERE status = 'active'")
+        total_countries = cur.fetchone()[0]
+        
+        # Đếm người dùng
+        cur.execute("SELECT COUNT(*) FROM users")
+        total_users = cur.fetchone()[0]
+        
+        return {
+            'totalJobs': total_jobs,
+            'totalApplications': total_applications,
+            'totalCountries': total_countries,
+            'totalUsers': total_users
+        }
+    except Exception as e:
+        print(f"Error getting dashboard stats: {e}")
+        return {}
+    finally:
+        conn.close()
+
 class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def end_headers(self):
         # Add CORS headers
@@ -123,6 +272,20 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         """Handle GET requests"""
         if self.path.startswith('/api/admin/content/'):
             self.handle_get_content()
+        elif self.path == '/api/admin/countries':
+            self.send_json_response(get_countries_data())
+        elif self.path == '/api/admin/jobs':
+            self.send_json_response(get_jobs_data())
+        elif self.path == '/api/admin/orders':
+            self.send_json_response(get_orders_data())
+        elif self.path == '/api/admin/applications':
+            self.send_json_response(get_applications_data())
+        elif self.path == '/api/admin/partners':
+            self.send_json_response(get_partners_data())
+        elif self.path == '/api/admin/users':
+            self.send_json_response(get_users_data())
+        elif self.path == '/api/admin/dashboard/stats':
+            self.send_json_response(get_dashboard_stats())
         else:
             # Serve index.html for root path
             if self.path == '/':

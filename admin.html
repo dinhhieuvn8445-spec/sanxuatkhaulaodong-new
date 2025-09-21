@@ -29,10 +29,46 @@
             <aside class="admin-sidebar">
                 <nav class="sidebar-nav">
                     <ul>
-                        <li class="nav-item active" data-tab="home">
+                        <li class="nav-item active" data-tab="dashboard">
+                            <a href="#" onclick="switchTab('dashboard')">
+                                <i class="fas fa-tachometer-alt"></i>
+                                <span>Tổng quan</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" data-tab="header">
+                            <a href="#" onclick="switchTab('header')">
+                                <i class="fas fa-window-maximize"></i>
+                                <span>Header</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" data-tab="home">
                             <a href="#" onclick="switchTab('home')">
                                 <i class="fas fa-home"></i>
                                 <span>Trang chủ</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" data-tab="countries">
+                            <a href="#" onclick="switchTab('countries')">
+                                <i class="fas fa-globe"></i>
+                                <span>Quốc gia</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" data-tab="jobs">
+                            <a href="#" onclick="switchTab('jobs')">
+                                <i class="fas fa-briefcase"></i>
+                                <span>Việc làm</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" data-tab="orders">
+                            <a href="#" onclick="switchTab('orders')">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span>Đơn hàng</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" data-tab="applications">
+                            <a href="#" onclick="switchTab('applications')">
+                                <i class="fas fa-file-alt"></i>
+                                <span>Hồ sơ ứng tuyển</span>
                             </a>
                         </li>
                         <li class="nav-item" data-tab="about">
@@ -53,14 +89,158 @@
                                 <span>Tư vấn xklđ</span>
                             </a>
                         </li>
+                        <li class="nav-item" data-tab="partners">
+                            <a href="#" onclick="switchTab('partners')">
+                                <i class="fas fa-handshake"></i>
+                                <span>Đối tác</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" data-tab="footer">
+                            <a href="#" onclick="switchTab('footer')">
+                                <i class="fas fa-window-minimize"></i>
+                                <span>Footer</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" data-tab="settings">
+                            <a href="#" onclick="switchTab('settings')">
+                                <i class="fas fa-cog"></i>
+                                <span>Cài đặt</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" data-tab="users">
+                            <a href="#" onclick="switchTab('users')">
+                                <i class="fas fa-users"></i>
+                                <span>Người dùng</span>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </aside>
 
             <!-- Main Content -->
             <main class="admin-main">
+                <!-- Dashboard Tab -->
+                <div id="dashboard-tab" class="tab-content active">
+                    <div class="content-header">
+                        <h2><i class="fas fa-tachometer-alt"></i> Tổng quan hệ thống</h2>
+                    </div>
+                    
+                    <div class="dashboard-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalJobs">0</h3>
+                                <p>Tổng việc làm</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalApplications">0</h3>
+                                <p>Hồ sơ ứng tuyển</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalCountries">0</h3>
+                                <p>Quốc gia</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalUsers">0</h3>
+                                <p>Người dùng</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-charts">
+                        <div class="chart-container">
+                            <h3>Thống kê ứng tuyển theo tháng</h3>
+                            <div class="chart-placeholder">
+                                <i class="fas fa-chart-line"></i>
+                                <p>Biểu đồ sẽ được hiển thị ở đây</p>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-container">
+                            <h3>Việc làm theo quốc gia</h3>
+                            <div class="chart-placeholder">
+                                <i class="fas fa-chart-pie"></i>
+                                <p>Biểu đồ sẽ được hiển thị ở đây</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Header Tab -->
+                <div id="header-tab" class="tab-content">
+                    <div class="content-header">
+                        <h2><i class="fas fa-window-maximize"></i> Quản lý Header</h2>
+                    </div>
+                    
+                    <form class="admin-form" id="headerForm">
+                        <div class="form-group">
+                            <label for="headerLogo">Logo công ty:</label>
+                            <input type="text" id="headerLogo" name="logo" class="form-control" placeholder="Đường dẫn logo">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="headerCompanyName">Tên công ty:</label>
+                            <input type="text" id="headerCompanyName" name="companyName" class="form-control" placeholder="Tên công ty">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="headerSlogan">Slogan:</label>
+                            <input type="text" id="headerSlogan" name="slogan" class="form-control" placeholder="Slogan công ty">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="headerHotline">Hotline:</label>
+                            <input type="text" id="headerHotline" name="hotline" class="form-control" placeholder="Số điện thoại hotline">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="headerEmail">Email:</label>
+                            <input type="email" id="headerEmail" name="email" class="form-control" placeholder="Email liên hệ">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="headerAddress">Địa chỉ:</label>
+                            <textarea id="headerAddress" name="address" class="form-control" rows="2" placeholder="Địa chỉ công ty"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="headerBanner">Banner quảng cáo:</label>
+                            <input type="text" id="headerBanner" name="banner" class="form-control" placeholder="Đường dẫn banner">
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Lưu thay đổi
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="resetForm('headerForm')">
+                                <i class="fas fa-undo"></i> Khôi phục
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
                 <!-- Home Tab -->
-                <div id="home-tab" class="tab-content active">
+                <div id="home-tab" class="tab-content">
                     <div class="content-header">
                         <h2><i class="fas fa-star"></i> Phần giới thiệu chính (Hero Section)</h2>
                     </div>
@@ -229,6 +409,303 @@
                             </button>
                         </div>
                     </form>
+                </div>
+
+                <!-- Countries Tab -->
+                <div id="countries-tab" class="tab-content">
+                    <div class="content-header">
+                        <h2><i class="fas fa-globe"></i> Quản lý Quốc gia</h2>
+                        <button class="btn btn-primary" onclick="addCountry()">
+                            <i class="fas fa-plus"></i> Thêm quốc gia
+                        </button>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="admin-table" id="countriesTable">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên quốc gia</th>
+                                    <th>Cờ</th>
+                                    <th>Số việc làm</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Jobs Tab -->
+                <div id="jobs-tab" class="tab-content">
+                    <div class="content-header">
+                        <h2><i class="fas fa-briefcase"></i> Quản lý Việc làm</h2>
+                        <button class="btn btn-primary" onclick="addJob()">
+                            <i class="fas fa-plus"></i> Thêm việc làm
+                        </button>
+                    </div>
+                    
+                    <div class="filter-bar">
+                        <select id="jobCountryFilter" class="form-control">
+                            <option value="">Tất cả quốc gia</option>
+                        </select>
+                        <select id="jobStatusFilter" class="form-control">
+                            <option value="">Tất cả trạng thái</option>
+                            <option value="active">Đang tuyển</option>
+                            <option value="inactive">Tạm dừng</option>
+                            <option value="closed">Đã đóng</option>
+                        </select>
+                        <input type="text" id="jobSearchInput" class="form-control" placeholder="Tìm kiếm việc làm...">
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="admin-table" id="jobsTable">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên công việc</th>
+                                    <th>Quốc gia</th>
+                                    <th>Lương</th>
+                                    <th>Hạn nộp</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Orders Tab -->
+                <div id="orders-tab" class="tab-content">
+                    <div class="content-header">
+                        <h2><i class="fas fa-shopping-cart"></i> Quản lý Đơn hàng</h2>
+                    </div>
+                    
+                    <div class="filter-bar">
+                        <select id="orderStatusFilter" class="form-control">
+                            <option value="">Tất cả trạng thái</option>
+                            <option value="pending">Chờ xử lý</option>
+                            <option value="processing">Đang xử lý</option>
+                            <option value="completed">Hoàn thành</option>
+                            <option value="cancelled">Đã hủy</option>
+                        </select>
+                        <input type="date" id="orderDateFilter" class="form-control">
+                        <input type="text" id="orderSearchInput" class="form-control" placeholder="Tìm kiếm đơn hàng...">
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="admin-table" id="ordersTable">
+                            <thead>
+                                <tr>
+                                    <th>Mã đơn</th>
+                                    <th>Khách hàng</th>
+                                    <th>Dịch vụ</th>
+                                    <th>Giá trị</th>
+                                    <th>Ngày tạo</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Applications Tab -->
+                <div id="applications-tab" class="tab-content">
+                    <div class="content-header">
+                        <h2><i class="fas fa-file-alt"></i> Hồ sơ Ứng tuyển</h2>
+                    </div>
+                    
+                    <div class="filter-bar">
+                        <select id="applicationStatusFilter" class="form-control">
+                            <option value="">Tất cả trạng thái</option>
+                            <option value="new">Mới</option>
+                            <option value="reviewing">Đang xem xét</option>
+                            <option value="approved">Đã duyệt</option>
+                            <option value="rejected">Từ chối</option>
+                        </select>
+                        <select id="applicationJobFilter" class="form-control">
+                            <option value="">Tất cả việc làm</option>
+                        </select>
+                        <input type="text" id="applicationSearchInput" class="form-control" placeholder="Tìm kiếm ứng viên...">
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="admin-table" id="applicationsTable">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Họ tên</th>
+                                    <th>Việc làm</th>
+                                    <th>Ngày ứng tuyển</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Partners Tab -->
+                <div id="partners-tab" class="tab-content">
+                    <div class="content-header">
+                        <h2><i class="fas fa-handshake"></i> Quản lý Đối tác</h2>
+                        <button class="btn btn-primary" onclick="addPartner()">
+                            <i class="fas fa-plus"></i> Thêm đối tác
+                        </button>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="admin-table" id="partnersTable">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Logo</th>
+                                    <th>Tên đối tác</th>
+                                    <th>Website</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Footer Tab -->
+                <div id="footer-tab" class="tab-content">
+                    <div class="content-header">
+                        <h2><i class="fas fa-window-minimize"></i> Quản lý Footer</h2>
+                    </div>
+                    
+                    <form class="admin-form" id="footerForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="footerCompanyInfo">Thông tin công ty:</label>
+                                <textarea id="footerCompanyInfo" name="companyInfo" class="form-control" rows="4" placeholder="Thông tin về công ty"></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="footerContact">Thông tin liên hệ:</label>
+                                <textarea id="footerContact" name="contact" class="form-control" rows="4" placeholder="Địa chỉ, điện thoại, email"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="footerServices">Dịch vụ:</label>
+                                <textarea id="footerServices" name="services" class="form-control" rows="4" placeholder="Danh sách dịch vụ"></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="footerSocial">Mạng xã hội:</label>
+                                <textarea id="footerSocial" name="social" class="form-control" rows="4" placeholder="Links mạng xã hội (JSON format)"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="footerCopyright">Bản quyền:</label>
+                            <input type="text" id="footerCopyright" name="copyright" class="form-control" placeholder="Thông tin bản quyền">
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Lưu thay đổi
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="resetForm('footerForm')">
+                                <i class="fas fa-undo"></i> Khôi phục
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Settings Tab -->
+                <div id="settings-tab" class="tab-content">
+                    <div class="content-header">
+                        <h2><i class="fas fa-cog"></i> Cài đặt hệ thống</h2>
+                    </div>
+                    
+                    <form class="admin-form" id="settingsForm">
+                        <div class="form-group">
+                            <label for="siteName">Tên website:</label>
+                            <input type="text" id="siteName" name="siteName" class="form-control" placeholder="Tên website">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="siteDescription">Mô tả website:</label>
+                            <textarea id="siteDescription" name="siteDescription" class="form-control" rows="3" placeholder="Mô tả website cho SEO"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="siteKeywords">Từ khóa SEO:</label>
+                            <input type="text" id="siteKeywords" name="siteKeywords" class="form-control" placeholder="Từ khóa SEO, cách nhau bởi dấu phẩy">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="maintenanceMode">Chế độ bảo trì:</label>
+                            <select id="maintenanceMode" name="maintenanceMode" class="form-control">
+                                <option value="0">Tắt</option>
+                                <option value="1">Bật</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="analyticsCode">Mã Google Analytics:</label>
+                            <textarea id="analyticsCode" name="analyticsCode" class="form-control" rows="3" placeholder="Mã Google Analytics"></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Lưu cài đặt
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="resetForm('settingsForm')">
+                                <i class="fas fa-undo"></i> Khôi phục
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Users Tab -->
+                <div id="users-tab" class="tab-content">
+                    <div class="content-header">
+                        <h2><i class="fas fa-users"></i> Quản lý Người dùng</h2>
+                        <button class="btn btn-primary" onclick="addUser()">
+                            <i class="fas fa-plus"></i> Thêm người dùng
+                        </button>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="admin-table" id="usersTable">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên đăng nhập</th>
+                                    <th>Email</th>
+                                    <th>Quyền</th>
+                                    <th>Ngày tạo</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </main>
         </div>
