@@ -35,12 +35,6 @@
                                 <span>Tổng quan</span>
                             </a>
                         </li>
-                        <li class="nav-item" data-tab="header">
-                            <a href="#" onclick="switchTab('header')">
-                                <i class="fas fa-window-maximize"></i>
-                                <span>Header</span>
-                            </a>
-                        </li>
                         <li class="nav-item" data-tab="home">
                             <a href="#" onclick="switchTab('home')">
                                 <i class="fas fa-home"></i>
@@ -95,12 +89,7 @@
                                 <span>Đối tác</span>
                             </a>
                         </li>
-                        <li class="nav-item" data-tab="footer">
-                            <a href="#" onclick="switchTab('footer')">
-                                <i class="fas fa-window-minimize"></i>
-                                <span>Footer</span>
-                            </a>
-                        </li>
+
                         <li class="nav-item" data-tab="settings">
                             <a href="#" onclick="switchTab('settings')">
                                 <i class="fas fa-cog"></i>
@@ -186,8 +175,11 @@
                     </div>
                 </div>
 
-                <!-- Header Tab -->
-                <div id="header-tab" class="tab-content">
+
+
+                <!-- Home Tab -->
+                <div id="home-tab" class="tab-content">
+                    <!-- Header Section -->
                     <div class="content-header">
                         <h2><i class="fas fa-window-maximize"></i> Quản lý Header</h2>
                     </div>
@@ -230,17 +222,18 @@
 
                         <div class="form-actions">
                             <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> Lưu thay đổi
+                                <i class="fas fa-save"></i> Lưu thay đổi Header
                             </button>
                             <button type="button" class="btn btn-secondary" onclick="resetForm('headerForm')">
                                 <i class="fas fa-undo"></i> Khôi phục
                             </button>
                         </div>
                     </form>
-                </div>
 
-                <!-- Home Tab -->
-                <div id="home-tab" class="tab-content">
+                    <!-- Divider -->
+                    <hr style="margin: 30px 0; border: 1px solid #e0e0e0;">
+
+                    <!-- Hero Section -->
                     <div class="content-header">
                         <h2><i class="fas fa-star"></i> Phần giới thiệu chính (Hero Section)</h2>
                     </div>
@@ -273,9 +266,57 @@
 
                         <div class="form-actions">
                             <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> Lưu thay đổi
+                                <i class="fas fa-save"></i> Lưu thay đổi Hero Section
                             </button>
                             <button type="button" class="btn btn-secondary" onclick="resetForm('homeForm')">
+                                <i class="fas fa-undo"></i> Khôi phục
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Divider -->
+                    <hr style="margin: 30px 0; border: 1px solid #e0e0e0;">
+
+                    <!-- Footer Section -->
+                    <div class="content-header">
+                        <h2><i class="fas fa-window-minimize"></i> Quản lý Footer</h2>
+                    </div>
+
+                    <form class="admin-form" id="footerForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="footerCompanyInfo">Thông tin công ty:</label>
+                                <textarea id="footerCompanyInfo" name="companyInfo" class="form-control" rows="4" placeholder="Thông tin về công ty"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="footerContact">Thông tin liên hệ:</label>
+                                <textarea id="footerContact" name="contact" class="form-control" rows="4" placeholder="Địa chỉ, điện thoại, email"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="footerServices">Dịch vụ:</label>
+                                <textarea id="footerServices" name="services" class="form-control" rows="4" placeholder="Danh sách dịch vụ"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="footerSocial">Mạng xã hội:</label>
+                                <textarea id="footerSocial" name="social" class="form-control" rows="4" placeholder="Links mạng xã hội (JSON format)"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="footerCopyright">Bản quyền:</label>
+                            <input type="text" id="footerCopyright" name="copyright" class="form-control" placeholder="Thông tin bản quyền">
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Lưu thay đổi Footer
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="resetForm('footerForm')">
                                 <i class="fas fa-undo"></i> Khôi phục
                             </button>
                         </div>
@@ -442,34 +483,42 @@
                 <!-- Jobs Tab -->
                 <div id="jobs-tab" class="tab-content">
                     <div class="content-header">
-                        <h2><i class="fas fa-briefcase"></i> Quản lý Việc làm</h2>
-                        <button class="btn btn-primary" onclick="addJob()">
-                            <i class="fas fa-plus"></i> Thêm việc làm
+                        <h2><i class="fas fa-briefcase"></i> Quản lý Đơn hàng Việc làm</h2>
+                        <button class="btn btn-primary" onclick="showJobForm()">
+                            <i class="fas fa-plus"></i> Thêm đơn hàng
                         </button>
                     </div>
                     
                     <div class="filter-bar">
                         <select id="jobCountryFilter" class="form-control">
                             <option value="">Tất cả quốc gia</option>
+                            <option value="Nga">Nga</option>
+                            <option value="Đài Loan">Đài Loan</option>
+                            <option value="Nhật Bản">Nhật Bản</option>
+                            <option value="Hàn Quốc">Hàn Quốc</option>
+                            <option value="Singapore">Singapore</option>
                         </select>
                         <select id="jobStatusFilter" class="form-control">
                             <option value="">Tất cả trạng thái</option>
-                            <option value="active">Đang tuyển</option>
-                            <option value="inactive">Tạm dừng</option>
-                            <option value="closed">Đã đóng</option>
+                            <option value="HOT">HOT</option>
+                            <option value="ĐƠN MIỄN PHÍ">Đơn miễn phí</option>
+                            <option value="PHÍ THẤP">Phí thấp</option>
                         </select>
-                        <input type="text" id="jobSearchInput" class="form-control" placeholder="Tìm kiếm việc làm...">
+                        <input type="text" id="jobSearchInput" class="form-control" placeholder="Tìm kiếm đơn hàng...">
                     </div>
                     
                     <div class="table-container">
                         <table class="admin-table" id="jobsTable">
                             <thead>
                                 <tr>
-                                    <th>STT</th>
-                                    <th>Tên công việc</th>
+                                    <th>ID</th>
+                                    <th>Tiêu đề</th>
                                     <th>Quốc gia</th>
                                     <th>Lương</th>
-                                    <th>Hạn nộp</th>
+                                    <th>Yêu cầu</th>
+                                    <th>Hạn tuyển</th>
+                                    <th>Tư vấn viên</th>
+                                    <th>Lượt xem</th>
                                     <th>Trạng thái</th>
                                     <th>Thao tác</th>
                                 </tr>
@@ -478,6 +527,143 @@
                                 <!-- Data will be loaded here -->
                             </tbody>
                         </table>
+                    </div>
+
+                    <!-- Job Form Modal -->
+                    <div id="jobFormModal" class="modal" style="display: none;">
+                        <div class="modal-content large-modal">
+                            <div class="modal-header">
+                                <h3 id="jobFormTitle">Thêm đơn hàng việc làm</h3>
+                                <span class="close" onclick="hideJobForm()">&times;</span>
+                            </div>
+                            <div class="modal-body">
+                                <form id="jobForm">
+                                    <input type="hidden" id="jobId" name="jobId">
+                                    
+                                    <div class="form-row">
+                                        <div class="form-group full-width">
+                                            <label for="jobTitle">Tiêu đề công việc *</label>
+                                            <input type="text" id="jobTitle" name="title" class="form-control" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="jobCountry">Quốc gia *</label>
+                                            <select id="jobCountry" name="country" class="form-control" required>
+                                                <option value="">Chọn quốc gia</option>
+                                                <option value="Nga">Nga</option>
+                                                <option value="Đài Loan">Đài Loan</option>
+                                                <option value="Nhật Bản">Nhật Bản</option>
+                                                <option value="Hàn Quốc">Hàn Quốc</option>
+                                                <option value="Singapore">Singapore</option>
+                                                <option value="Malaysia">Malaysia</option>
+                                                <option value="Thái Lan">Thái Lan</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="jobCountryFlag">Đường dẫn cờ quốc gia</label>
+                                            <input type="text" id="jobCountryFlag" name="country_flag" class="form-control" placeholder="/images/flags/russia.png">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="jobSalaryAmount">Mức lương *</label>
+                                            <input type="number" id="jobSalaryAmount" name="salary_amount" class="form-control" step="0.01" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="jobSalaryCurrency">Đơn vị tiền tệ *</label>
+                                            <select id="jobSalaryCurrency" name="salary_currency" class="form-control" required>
+                                                <option value="">Chọn đơn vị</option>
+                                                <option value="USD">USD</option>
+                                                <option value="Đài tệ">Đài tệ</option>
+                                                <option value="Yên">Yên</option>
+                                                <option value="Won">Won</option>
+                                                <option value="SGD">SGD</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="jobSalaryPeriod">Chu kỳ lương</label>
+                                            <select id="jobSalaryPeriod" name="salary_period" class="form-control">
+                                                <option value="tháng">Tháng</option>
+                                                <option value="năm">Năm</option>
+                                                <option value="giờ">Giờ</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="jobRequirements">Yêu cầu ứng viên</label>
+                                            <input type="text" id="jobRequirements" name="requirements" class="form-control" placeholder="Nam, Nữ (1990-2005)">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="jobDeadline">Hạn tuyển</label>
+                                            <input type="text" id="jobDeadline" name="deadline" class="form-control" placeholder="30/09/2025 hoặc Liên tục">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="jobImageUrl">Hình ảnh đơn hàng</label>
+                                            <input type="url" id="jobImageUrl" name="image_url" class="form-control" placeholder="https://example.com/image.jpg">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="jobStatusBadge">Nhãn trạng thái</label>
+                                            <select id="jobStatusBadge" name="status_badge" class="form-control">
+                                                <option value="">Không có</option>
+                                                <option value="HOT">HOT</option>
+                                                <option value="ĐƠN MIỄN PHÍ">Đơn miễn phí</option>
+                                                <option value="PHÍ THẤP">Phí thấp</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-section">
+                                        <h4>Thông tin tư vấn viên</h4>
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="consultantName">Tên tư vấn viên *</label>
+                                                <input type="text" id="consultantName" name="consultant_name" class="form-control" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="consultantPhone">Số điện thoại *</label>
+                                                <input type="tel" id="consultantPhone" name="consultant_phone" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="consultantZalo">Zalo</label>
+                                                <input type="text" id="consultantZalo" name="consultant_zalo" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="consultantFacebook">Facebook</label>
+                                                <input type="url" id="consultantFacebook" name="consultant_facebook" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="jobViewCount">Số lượt xem</label>
+                                            <input type="number" id="jobViewCount" name="view_count" class="form-control" value="0">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="jobIsActive">Trạng thái hoạt động</label>
+                                            <select id="jobIsActive" name="is_active" class="form-control">
+                                                <option value="1">Hoạt động</option>
+                                                <option value="0">Tạm dừng</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" onclick="hideJobForm()">Hủy</button>
+                                <button type="button" class="btn btn-primary" onclick="saveJob()">Lưu</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -586,52 +772,7 @@
                     </div>
                 </div>
 
-                <!-- Footer Tab -->
-                <div id="footer-tab" class="tab-content">
-                    <div class="content-header">
-                        <h2><i class="fas fa-window-minimize"></i> Quản lý Footer</h2>
-                    </div>
-                    
-                    <form class="admin-form" id="footerForm">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="footerCompanyInfo">Thông tin công ty:</label>
-                                <textarea id="footerCompanyInfo" name="companyInfo" class="form-control" rows="4" placeholder="Thông tin về công ty"></textarea>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="footerContact">Thông tin liên hệ:</label>
-                                <textarea id="footerContact" name="contact" class="form-control" rows="4" placeholder="Địa chỉ, điện thoại, email"></textarea>
-                            </div>
-                        </div>
 
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="footerServices">Dịch vụ:</label>
-                                <textarea id="footerServices" name="services" class="form-control" rows="4" placeholder="Danh sách dịch vụ"></textarea>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="footerSocial">Mạng xã hội:</label>
-                                <textarea id="footerSocial" name="social" class="form-control" rows="4" placeholder="Links mạng xã hội (JSON format)"></textarea>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="footerCopyright">Bản quyền:</label>
-                            <input type="text" id="footerCopyright" name="copyright" class="form-control" placeholder="Thông tin bản quyền">
-                        </div>
-
-                        <div class="form-actions">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> Lưu thay đổi
-                            </button>
-                            <button type="button" class="btn btn-secondary" onclick="resetForm('footerForm')">
-                                <i class="fas fa-undo"></i> Khôi phục
-                            </button>
-                        </div>
-                    </form>
-                </div>
 
                 <!-- Settings Tab -->
                 <div id="settings-tab" class="tab-content">
@@ -721,6 +862,133 @@
 
     <!-- Success/Error Messages -->
     <div id="messageContainer" class="message-container"></div>
+
+    <!-- Job Modal -->
+    <div id="jobModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="jobModalTitle">Thêm đơn hàng mới</h3>
+                <span class="close" onclick="closeJobModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="jobForm">
+                    <input type="hidden" id="jobId" name="jobId">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="jobTitle">Tiêu đề đơn hàng *</label>
+                            <input type="text" id="jobTitle" name="jobTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="jobCountry">Quốc gia *</label>
+                            <input type="text" id="jobCountry" name="jobCountry" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="jobCountryFlag">Cờ quốc gia (emoji)</label>
+                            <input type="text" id="jobCountryFlag" name="jobCountryFlag" placeholder="🇷🇺">
+                        </div>
+                        <div class="form-group">
+                            <label for="jobStatusBadge">Trạng thái</label>
+                            <select id="jobStatusBadge" name="jobStatusBadge">
+                                <option value="">Không có</option>
+                                <option value="HOT">HOT</option>
+                                <option value="ĐƠN MIỄN PHÍ">Đơn miễn phí</option>
+                                <option value="PHÍ THẤP">Phí thấp</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="jobSalaryAmount">Mức lương</label>
+                            <input type="number" id="jobSalaryAmount" name="jobSalaryAmount" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label for="jobSalaryCurrency">Đơn vị tiền tệ</label>
+                            <select id="jobSalaryCurrency" name="jobSalaryCurrency">
+                                <option value="USD">USD</option>
+                                <option value="EUR">EUR</option>
+                                <option value="RUB">RUB</option>
+                                <option value="TWD">TWD</option>
+                                <option value="JPY">JPY</option>
+                                <option value="KRW">KRW</option>
+                                <option value="SGD">SGD</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="jobSalaryPeriod">Chu kỳ lương</label>
+                            <select id="jobSalaryPeriod" name="jobSalaryPeriod">
+                                <option value="tháng">Tháng</option>
+                                <option value="năm">Năm</option>
+                                <option value="giờ">Giờ</option>
+                                <option value="ngày">Ngày</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="jobDeadline">Hạn tuyển</label>
+                            <input type="text" id="jobDeadline" name="jobDeadline" placeholder="30/09/2025">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="jobRequirements">Yêu cầu công việc</label>
+                        <textarea id="jobRequirements" name="jobRequirements" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="jobImageUrl">URL hình ảnh</label>
+                        <input type="url" id="jobImageUrl" name="jobImageUrl">
+                    </div>
+                    
+                    <h4>Thông tin tư vấn viên</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="jobConsultantName">Tên tư vấn viên</label>
+                            <input type="text" id="jobConsultantName" name="jobConsultantName">
+                        </div>
+                        <div class="form-group">
+                            <label for="jobConsultantPhone">Số điện thoại</label>
+                            <input type="tel" id="jobConsultantPhone" name="jobConsultantPhone">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="jobConsultantZalo">Zalo</label>
+                            <input type="text" id="jobConsultantZalo" name="jobConsultantZalo">
+                        </div>
+                        <div class="form-group">
+                            <label for="jobConsultantFacebook">Facebook</label>
+                            <input type="text" id="jobConsultantFacebook" name="jobConsultantFacebook">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="jobViewCount">Lượt xem</label>
+                            <input type="number" id="jobViewCount" name="jobViewCount" value="0" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="jobIsActive" name="jobIsActive" checked>
+                                Kích hoạt
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeJobModal()">Hủy</button>
+                <button type="button" class="btn btn-primary" onclick="saveJob()">Lưu</button>
+            </div>
+        </div>
+    </div>
 
     <script src="admin.js"></script>
 </body>

@@ -120,15 +120,101 @@ def get_jobs_data():
     try:
         cur = conn.cursor()
         cur.execute("""
-            SELECT j.*, c.name as country_name 
-            FROM jobs j 
-            LEFT JOIN countries c ON j.country_id = c.id 
-            ORDER BY j.created_at DESC
+            SELECT * FROM jobs 
+            WHERE is_active = 1
+            ORDER BY created_at DESC
         """)
         return [dict(row) for row in cur.fetchall()]
     except Exception as e:
         print(f"Error getting jobs: {e}")
         return []
+    finally:
+        conn.close()
+
+def get_job_by_id(job_id):
+    """Lấy thông tin job theo ID"""
+    conn = get_db_connection()
+    if not conn:
+        return None
+    
+    try:
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM jobs WHERE id = ?", (job_id,))
+        row = cur.fetchone()
+        return dict(row) if row else None
+    except Exception as e:
+        print(f"Error getting job by ID: {e}")
+        return None
+    finally:
+        conn.close()
+
+def save_job(job_data):
+    """Lưu thông tin job (thêm mới hoặc cập nhật)"""
+    conn = get_db_connection()
+    if not conn:
+        return False
+    
+    try:
+        cur = conn.cursor()
+        
+        if 'id' in job_data and job_data['id']:
+            # Cập nhật job hiện có
+            cur.execute("""
+                UPDATE jobs SET
+                    title = ?, country = ?, country_flag = ?, salary_amount = ?,
+                    salary_currency = ?, salary_period = ?, requirements = ?,
+                    deadline = ?, image_url = ?, status_badge = ?,
+                    consultant_name = ?, consultant_phone = ?, consultant_zalo = ?,
+                    consultant_facebook = ?, view_count = ?, is_active = ?,
+                    updated_at = CURRENT_TIMESTAMP
+                WHERE id = ?
+            """, (
+                job_data.get('title'), job_data.get('country'), job_data.get('country_flag'),
+                job_data.get('salary_amount'), job_data.get('salary_currency'), job_data.get('salary_period'),
+                job_data.get('requirements'), job_data.get('deadline'), job_data.get('image_url'),
+                job_data.get('status_badge'), job_data.get('consultant_name'), job_data.get('consultant_phone'),
+                job_data.get('consultant_zalo'), job_data.get('consultant_facebook'), job_data.get('view_count'),
+                job_data.get('is_active', 1), job_data['id']
+            ))
+        else:
+            # Thêm job mới
+            cur.execute("""
+                INSERT INTO jobs (
+                    title, country, country_flag, salary_amount, salary_currency, salary_period,
+                    requirements, deadline, image_url, status_badge, consultant_name,
+                    consultant_phone, consultant_zalo, consultant_facebook, view_count, is_active
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """, (
+                job_data.get('title'), job_data.get('country'), job_data.get('country_flag'),
+                job_data.get('salary_amount'), job_data.get('salary_currency'), job_data.get('salary_period'),
+                job_data.get('requirements'), job_data.get('deadline'), job_data.get('image_url'),
+                job_data.get('status_badge'), job_data.get('consultant_name'), job_data.get('consultant_phone'),
+                job_data.get('consultant_zalo'), job_data.get('consultant_facebook'), 
+                job_data.get('view_count', 0), job_data.get('is_active', 1)
+            ))
+        
+        conn.commit()
+        return True
+    except Exception as e:
+        print(f"Error saving job: {e}")
+        return False
+    finally:
+        conn.close()
+
+def delete_job(job_id):
+    """Xóa job (soft delete - đặt is_active = 0)"""
+    conn = get_db_connection()
+    if not conn:
+        return False
+    
+    try:
+        cur = conn.cursor()
+        cur.execute("UPDATE jobs SET is_active = 0, updated_at = CURRENT_TIMESTAMP WHERE id = ?", (job_id,))
+        conn.commit()
+        return True
+    except Exception as e:
+        print(f"Error deleting job: {e}")
+        return False
     finally:
         conn.close()
 
@@ -265,6 +351,8 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.handle_login()
         elif self.path.startswith('/api/admin/content/'):
             self.handle_save_content()
+        elif self.path == '/api/admin/jobs':
+            self.handle_save_job()
         else:
             self.send_error(404)
     
@@ -276,6 +364,18 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.send_json_response(get_countries_data())
         elif self.path == '/api/admin/jobs':
             self.send_json_response(get_jobs_data())
+        elif self.path.startswith('/api/admin/jobs/'):
+            # Get job by ID: /api/admin/jobs/123
+            job_id = self.path.split('/')[-1]
+            try:
+                job_id = int(job_id)
+                job = get_job_by_id(job_id)
+                if job:
+                    self.send_json_response(job)
+                else:
+                    self.send_json_response({'error': 'Job not found'}, 404)
+            except ValueError:
+                self.send_json_response({'error': 'Invalid job ID'}, 400)
         elif self.path == '/api/admin/orders':
             self.send_json_response(get_orders_data())
         elif self.path == '/api/admin/applications':
@@ -291,6 +391,22 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             if self.path == '/':
                 self.path = '/index.html'
             return super().do_GET()
+
+    def do_DELETE(self):
+        """Handle DELETE requests"""
+        if self.path.startswith('/api/admin/jobs/'):
+            # Delete job by ID: /api/admin/jobs/123
+            job_id = self.path.split('/')[-1]
+            try:
+                job_id = int(job_id)
+                if delete_job(job_id):
+                    self.send_json_response({'success': True, 'message': 'Job deleted successfully'})
+                else:
+                    self.send_json_response({'success': False, 'message': 'Failed to delete job'}, 500)
+            except ValueError:
+                self.send_json_response({'error': 'Invalid job ID'}, 400)
+        else:
+            self.send_error(404)
 
     def handle_login(self):
         """Xử lý đăng nhập"""
@@ -360,9 +476,25 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             print(f"Save content error: {e}")
             self.send_json_response({'success': False, 'message': 'Lỗi server'})
 
-    def send_json_response(self, data):
+    def handle_save_job(self):
+        """Xử lý lưu thông tin job"""
+        try:
+            content_length = int(self.headers['Content-Length'])
+            post_data = self.rfile.read(content_length)
+            data = json.loads(post_data.decode('utf-8'))
+            
+            if save_job(data):
+                self.send_json_response({'success': True, 'message': 'Lưu đơn hàng thành công'})
+            else:
+                self.send_json_response({'success': False, 'message': 'Lỗi khi lưu đơn hàng'})
+                
+        except Exception as e:
+            print(f"Save job error: {e}")
+            self.send_json_response({'success': False, 'message': 'Lỗi server'})
+
+    def send_json_response(self, data, status_code=200):
         """Gửi response JSON"""
-        self.send_response(200)
+        self.send_response(status_code)
         self.send_header('Content-Type', 'application/json')
         self.end_headers()
         self.wfile.write(json.dumps(data, ensure_ascii=False).encode('utf-8'))

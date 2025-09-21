@@ -50,6 +50,39 @@ class AdminDashboard {
             return;
         }
         
+        // Special handling for home tab - load header, home, and footer data
+        if (tabName === 'home') {
+            this.showLoading();
+            try {
+                // Load header data
+                const headerResponse = await fetch('/api/admin/content/header');
+                if (headerResponse.ok) {
+                    const headerData = await headerResponse.json();
+                    this.populateForm('header', headerData);
+                }
+                
+                // Load home data
+                const homeResponse = await fetch('/api/admin/content/home');
+                if (homeResponse.ok) {
+                    const homeData = await homeResponse.json();
+                    this.populateForm('home', homeData);
+                }
+                
+                // Load footer data
+                const footerResponse = await fetch('/api/admin/content/footer');
+                if (footerResponse.ok) {
+                    const footerData = await footerResponse.json();
+                    this.populateForm('footer', footerData);
+                }
+            } catch (error) {
+                console.error('Error loading home tab content:', error);
+                this.showMessage('Lỗi khi tải nội dung', 'error');
+            } finally {
+                this.hideLoading();
+            }
+            return;
+        }
+        
         this.showLoading();
         
         try {
@@ -313,13 +346,34 @@ AdminDashboard.prototype.createTableRow = function(tableName, item, index) {
             `;
             break;
         case 'jobs':
+            // Format salary display
+            let salaryDisplay = 'Chưa cập nhật';
+            if (item.salary_amount && item.salary_currency) {
+                salaryDisplay = `${item.salary_amount} ${item.salary_currency}/${item.salary_period || 'tháng'}`;
+            }
+            
+            // Format country display
+            let countryDisplay = item.country || 'Chưa cập nhật';
+            if (item.country_flag) {
+                countryDisplay = `${item.country_flag} ${item.country}`;
+            }
+            
+            // Format consultant display
+            let consultantDisplay = item.consultant_name || 'Chưa cập nhật';
+            if (item.consultant_phone) {
+                consultantDisplay += ` (${item.consultant_phone})`;
+            }
+            
             row.innerHTML = `
-                <td>${index}</td>
+                <td>${item.id}</td>
                 <td>${item.title}</td>
-                <td>${item.country_name || 'N/A'}</td>
-                <td>${item.salary_range}</td>
-                <td>${item.deadline}</td>
-                <td><span class="status-badge status-${item.status}">${item.status === 'active' ? 'Đang tuyển' : 'Tạm dừng'}</span></td>
+                <td>${countryDisplay}</td>
+                <td>${salaryDisplay}</td>
+                <td>${item.requirements || 'Chưa cập nhật'}</td>
+                <td>${item.deadline || 'Chưa cập nhật'}</td>
+                <td>${consultantDisplay}</td>
+                <td>${item.view_count || 0}</td>
+                <td><span class="status-badge status-${item.is_active ? 'active' : 'inactive'}">${item.status_badge || (item.is_active ? 'Đang tuyển' : 'Tạm dừng')}</span></td>
                 <td>
                     <button class="btn-sm btn-view" onclick="viewJob(${item.id})">Xem</button>
                     <button class="btn-sm btn-edit" onclick="editJob(${item.id})">Sửa</button>
@@ -419,21 +473,184 @@ function deleteCountry(id) {
 }
 
 function addJob() {
-    alert('Chức năng thêm việc làm sẽ được phát triển');
+    showJobForm();
 }
 
-function viewJob(id) {
-    alert(`Xem chi tiết việc làm ID: ${id}`);
-}
-
-function editJob(id) {
-    alert(`Chỉnh sửa việc làm ID: ${id}`);
-}
-
-function deleteJob(id) {
-    if (confirm('Bạn có chắc chắn muốn xóa việc làm này?')) {
-        alert(`Đã xóa việc làm ID: ${id}`);
+async function viewJob(id) {
+    try {
+        const response = await fetch(`/api/admin/jobs/${id}`);
+        const job = await response.json();
+        
+        if (job.error) {
+            alert('Không tìm thấy đơn hàng');
+            return;
+        }
+        
+        showJobForm(job, true); // true = view mode
+    } catch (error) {
+        console.error('Error viewing job:', error);
+        alert('Lỗi khi tải thông tin đơn hàng');
     }
+}
+
+async function editJob(id) {
+    try {
+        const response = await fetch(`/api/admin/jobs/${id}`);
+        const job = await response.json();
+        
+        if (job.error) {
+            alert('Không tìm thấy đơn hàng');
+            return;
+        }
+        
+        showJobForm(job, false); // false = edit mode
+    } catch (error) {
+        console.error('Error loading job for edit:', error);
+        alert('Lỗi khi tải thông tin đơn hàng');
+    }
+}
+
+async function deleteJob(id) {
+    if (confirm('Bạn có chắc chắn muốn xóa đơn hàng này?')) {
+        try {
+            const response = await fetch(`/api/admin/jobs/${id}`, {
+                method: 'DELETE'
+            });
+            const result = await response.json();
+            
+            if (result.success) {
+                alert('Đã xóa đơn hàng thành công');
+                // Reload jobs table
+                adminDashboard.loadTableData('jobs');
+            } else {
+                alert('Lỗi khi xóa đơn hàng: ' + result.message);
+            }
+        } catch (error) {
+            console.error('Error deleting job:', error);
+            alert('Lỗi khi xóa đơn hàng');
+        }
+    }
+}
+
+function showJobForm(jobData = null, viewMode = false) {
+    const modal = document.getElementById('jobModal');
+    const form = document.getElementById('jobForm');
+    const modalTitle = document.getElementById('jobModalTitle');
+    
+    // Set modal title
+    if (viewMode) {
+        modalTitle.textContent = 'Chi tiết đơn hàng';
+    } else if (jobData) {
+        modalTitle.textContent = 'Chỉnh sửa đơn hàng';
+    } else {
+        modalTitle.textContent = 'Thêm đơn hàng mới';
+    }
+    
+    // Reset form
+    form.reset();
+    
+    // Fill form if editing
+    if (jobData) {
+        document.getElementById('jobId').value = jobData.id || '';
+        document.getElementById('jobTitle').value = jobData.title || '';
+        document.getElementById('jobCountry').value = jobData.country || '';
+        document.getElementById('jobCountryFlag').value = jobData.country_flag || '';
+        document.getElementById('jobSalaryAmount').value = jobData.salary_amount || '';
+        document.getElementById('jobSalaryCurrency').value = jobData.salary_currency || '';
+        document.getElementById('jobSalaryPeriod').value = jobData.salary_period || '';
+        document.getElementById('jobRequirements').value = jobData.requirements || '';
+        document.getElementById('jobDeadline').value = jobData.deadline || '';
+        document.getElementById('jobImageUrl').value = jobData.image_url || '';
+        document.getElementById('jobStatusBadge').value = jobData.status_badge || '';
+        document.getElementById('jobConsultantName').value = jobData.consultant_name || '';
+        document.getElementById('jobConsultantPhone').value = jobData.consultant_phone || '';
+        document.getElementById('jobConsultantZalo').value = jobData.consultant_zalo || '';
+        document.getElementById('jobConsultantFacebook').value = jobData.consultant_facebook || '';
+        document.getElementById('jobViewCount').value = jobData.view_count || 0;
+        document.getElementById('jobIsActive').checked = jobData.is_active == 1;
+    }
+    
+    // Disable form if view mode
+    const formElements = form.querySelectorAll('input, textarea, select');
+    formElements.forEach(element => {
+        element.disabled = viewMode;
+    });
+    
+    // Show/hide save button
+    const saveButton = document.querySelector('#jobModal .btn-primary');
+    if (saveButton) {
+        saveButton.style.display = viewMode ? 'none' : 'inline-block';
+    }
+    
+    // Show modal
+    modal.style.display = 'block';
+}
+
+async function saveJob() {
+    const form = document.getElementById('jobForm');
+    const formData = new FormData(form);
+    
+    // Convert FormData to JSON with proper field mapping
+    const jobData = {};
+    const fieldMapping = {
+        'jobId': 'id',
+        'jobTitle': 'title',
+        'jobCountry': 'country',
+        'jobCountryFlag': 'country_flag',
+        'jobSalaryAmount': 'salary_amount',
+        'jobSalaryCurrency': 'salary_currency',
+        'jobSalaryPeriod': 'salary_period',
+        'jobRequirements': 'requirements',
+        'jobDeadline': 'deadline',
+        'jobImageUrl': 'image_url',
+        'jobStatusBadge': 'status_badge',
+        'jobConsultantName': 'consultant_name',
+        'jobConsultantPhone': 'consultant_phone',
+        'jobConsultantZalo': 'consultant_zalo',
+        'jobConsultantFacebook': 'consultant_facebook',
+        'jobViewCount': 'view_count'
+    };
+    
+    for (let [key, value] of formData.entries()) {
+        if (key === 'jobIsActive') {
+            jobData['is_active'] = value === 'on' ? 1 : 0;
+        } else if (fieldMapping[key]) {
+            jobData[fieldMapping[key]] = value;
+        }
+    }
+    
+    // Handle checkbox for is_active
+    if (!formData.has('jobIsActive')) {
+        jobData['is_active'] = 0;
+    }
+    
+    try {
+        const response = await fetch('/api/admin/jobs', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(jobData)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert('Lưu đơn hàng thành công');
+            closeJobModal();
+            // Reload jobs table
+            adminDashboard.loadTableData('jobs');
+        } else {
+            alert('Lỗi khi lưu đơn hàng: ' + result.message);
+        }
+    } catch (error) {
+        console.error('Error saving job:', error);
+        alert('Lỗi khi lưu đơn hàng');
+    }
+}
+
+function closeJobModal() {
+    document.getElementById('jobModal').style.display = 'none';
 }
 
 function viewOrder(id) {
