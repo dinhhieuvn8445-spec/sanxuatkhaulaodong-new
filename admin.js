@@ -704,3 +704,355 @@ function deleteUser(id) {
         alert(`Đã xóa người dùng ID: ${id}`);
     }
 }
+
+// ===== DRAG & DROP IMAGE UPLOAD FUNCTIONALITY =====
+class ImageUploadManager {
+    constructor() {
+        this.dragDropArea = null;
+        this.fileInput = null;
+        this.imagePreview = null;
+        this.uploadProgress = null;
+        this.currentImageUrl = '';
+        this.init();
+    }
+
+    init() {
+        this.setupDragDropArea();
+        this.setupFileInput();
+        this.setupUrlInput();
+    }
+
+    setupDragDropArea() {
+        this.dragDropArea = document.getElementById('dragDropArea');
+        this.imagePreview = document.getElementById('imagePreview');
+        this.uploadProgress = document.getElementById('uploadProgress');
+
+        if (!this.dragDropArea) return;
+
+        // Drag and drop events
+        this.dragDropArea.addEventListener('dragover', this.handleDragOver.bind(this));
+        this.dragDropArea.addEventListener('dragenter', this.handleDragEnter.bind(this));
+        this.dragDropArea.addEventListener('dragleave', this.handleDragLeave.bind(this));
+        this.dragDropArea.addEventListener('drop', this.handleDrop.bind(this));
+        
+        // Click to browse
+        this.dragDropArea.addEventListener('click', this.handleClick.bind(this));
+        
+        // Browse link click
+        const browseLink = this.dragDropArea.querySelector('.browse-link');
+        if (browseLink) {
+            browseLink.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.openFileDialog();
+            });
+        }
+    }
+
+    setupFileInput() {
+        this.fileInput = document.getElementById('imageFileInput');
+        if (!this.fileInput) return;
+
+        this.fileInput.addEventListener('change', this.handleFileSelect.bind(this));
+    }
+
+    setupUrlInput() {
+        const urlInput = document.getElementById('jobImageUrl');
+        if (!urlInput) return;
+
+        urlInput.addEventListener('input', this.handleUrlInput.bind(this));
+        urlInput.addEventListener('blur', this.validateUrl.bind(this));
+    }
+
+    handleDragOver(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    handleDragEnter(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.dragDropArea.classList.add('drag-over');
+    }
+
+    handleDragLeave(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Only remove drag-over if we're leaving the drag area completely
+        if (!this.dragDropArea.contains(e.relatedTarget)) {
+            this.dragDropArea.classList.remove('drag-over');
+        }
+    }
+
+    handleDrop(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.dragDropArea.classList.remove('drag-over');
+
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            this.handleFiles(files);
+        }
+    }
+
+    handleClick(e) {
+        // Don't trigger file dialog if clicking on input or buttons
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+            return;
+        }
+        this.openFileDialog();
+    }
+
+    openFileDialog() {
+        if (this.fileInput) {
+            this.fileInput.click();
+        }
+    }
+
+    handleFileSelect(e) {
+        const files = e.target.files;
+        if (files.length > 0) {
+            this.handleFiles(files);
+        }
+    }
+
+    handleFiles(files) {
+        const file = files[0];
+        
+        // Validate file type
+        if (!this.isValidImageFile(file)) {
+            this.showError('Vui lòng chọn file hình ảnh hợp lệ (JPG, PNG, GIF, WebP)');
+            return;
+        }
+
+        // Validate file size (max 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            this.showError('Kích thước file không được vượt quá 5MB');
+            return;
+        }
+
+        this.uploadFile(file);
+    }
+
+    isValidImageFile(file) {
+        const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+        return validTypes.includes(file.type);
+    }
+
+    async uploadFile(file) {
+        try {
+            // Show upload progress
+            this.showUploadProgress();
+            
+            // Create FormData for file upload
+            const formData = new FormData();
+            formData.append('image', file);
+            
+            // Start upload progress animation
+            this.simulateUploadProgress();
+            
+            // Upload to server
+            const response = await fetch('/api/admin/upload-image', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                // Complete progress animation
+                await this.completeUploadProgress();
+                
+                // Show preview with server URL
+                this.showImagePreview(result.image_url);
+                
+                // Update the URL input
+                const urlInput = document.getElementById('jobImageUrl');
+                if (urlInput) {
+                    urlInput.value = result.image_url;
+                }
+                
+                this.currentImageUrl = result.image_url;
+                this.hideUploadProgress();
+                
+            } else {
+                throw new Error(result.message || 'Upload failed');
+            }
+            
+        } catch (error) {
+            console.error('Upload error:', error);
+            this.showError(error.message || 'Có lỗi xảy ra khi tải lên hình ảnh');
+            this.hideUploadProgress();
+        }
+    }
+
+    simulateUploadProgress() {
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += Math.random() * 15;
+            if (progress > 95) progress = 95;
+            
+            if (progressFill) progressFill.style.width = progress + '%';
+            if (progressText) progressText.textContent = Math.round(progress) + '%';
+            
+            if (progress >= 95) {
+                clearInterval(interval);
+            }
+        }, 100);
+    }
+
+    completeUploadProgress() {
+        return new Promise(resolve => {
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            
+            if (progressFill) progressFill.style.width = '100%';
+            if (progressText) progressText.textContent = '100%';
+            
+            setTimeout(resolve, 300);
+        });
+    }
+
+    waitForUpload() {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                const progressFill = document.getElementById('progressFill');
+                const progressText = document.getElementById('progressText');
+                
+                if (progressFill) progressFill.style.width = '100%';
+                if (progressText) progressText.textContent = '100%';
+                
+                setTimeout(resolve, 300);
+            }, 1500);
+        });
+    }
+
+    handleUrlInput(e) {
+        const url = e.target.value.trim();
+        if (url && this.isValidUrl(url)) {
+            this.showImagePreview(url);
+            this.currentImageUrl = url;
+        } else if (!url) {
+            this.hideImagePreview();
+        }
+    }
+
+    validateUrl(e) {
+        const url = e.target.value.trim();
+        if (url && !this.isValidUrl(url)) {
+            this.showError('URL hình ảnh không hợp lệ');
+            e.target.focus();
+        }
+    }
+
+    isValidUrl(string) {
+        try {
+            const url = new URL(string);
+            return url.protocol === 'http:' || url.protocol === 'https:';
+        } catch (_) {
+            return false;
+        }
+    }
+
+    showImagePreview(imageUrl) {
+        const dragDropContent = this.dragDropArea.querySelector('.drag-drop-content');
+        const previewImg = document.getElementById('previewImg');
+        
+        if (previewImg) {
+            previewImg.src = imageUrl;
+            previewImg.onload = () => {
+                dragDropContent.style.display = 'none';
+                this.imagePreview.style.display = 'block';
+            };
+            previewImg.onerror = () => {
+                this.showError('Không thể tải hình ảnh từ URL này');
+                this.hideImagePreview();
+            };
+        }
+    }
+
+    hideImagePreview() {
+        const dragDropContent = this.dragDropArea.querySelector('.drag-drop-content');
+        if (dragDropContent) dragDropContent.style.display = 'block';
+        if (this.imagePreview) this.imagePreview.style.display = 'none';
+        this.currentImageUrl = '';
+    }
+
+    showUploadProgress() {
+        if (this.uploadProgress) {
+            this.uploadProgress.style.display = 'block';
+        }
+    }
+
+    hideUploadProgress() {
+        if (this.uploadProgress) {
+            this.uploadProgress.style.display = 'none';
+        }
+    }
+
+    showError(message) {
+        // Remove any existing error state
+        this.dragDropArea.classList.remove('drag-error');
+        
+        // Add error state
+        this.dragDropArea.classList.add('drag-error');
+        
+        // Show error message
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'upload-error';
+        errorDiv.style.cssText = `
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #e74c3c;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 12px;
+            z-index: 1000;
+        `;
+        errorDiv.textContent = message;
+        
+        this.dragDropArea.appendChild(errorDiv);
+        
+        // Remove error after 3 seconds
+        setTimeout(() => {
+            this.dragDropArea.classList.remove('drag-error');
+            if (errorDiv.parentNode) {
+                errorDiv.parentNode.removeChild(errorDiv);
+            }
+        }, 3000);
+    }
+}
+
+// Global function to remove image
+function removeImage() {
+    const imageUploadManager = window.imageUploadManager;
+    if (imageUploadManager) {
+        imageUploadManager.hideImagePreview();
+        
+        // Clear the URL input
+        const urlInput = document.getElementById('jobImageUrl');
+        if (urlInput) {
+            urlInput.value = '';
+        }
+        
+        // Clear file input
+        const fileInput = document.getElementById('imageFileInput');
+        if (fileInput) {
+            fileInput.value = '';
+        }
+    }
+}
+
+// Initialize image upload manager when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize after a short delay to ensure all elements are rendered
+    setTimeout(() => {
+        window.imageUploadManager = new ImageUploadManager();
+    }, 500);
+});

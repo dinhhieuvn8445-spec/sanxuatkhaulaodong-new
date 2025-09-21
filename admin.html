@@ -607,7 +607,32 @@
                                     <div class="form-row">
                                         <div class="form-group">
                                             <label for="jobImageUrl">Hình ảnh đơn hàng</label>
-                                            <input type="url" id="jobImageUrl" name="image_url" class="form-control" placeholder="https://example.com/image.jpg">
+                                            <!-- Drag & Drop Upload Area -->
+                                            <div class="image-upload-container">
+                                                <div class="drag-drop-area" id="dragDropArea">
+                                                    <div class="drag-drop-content">
+                                                        <i class="fas fa-cloud-upload-alt drag-icon"></i>
+                                                        <p class="drag-text">Kéo thả hình ảnh vào đây</p>
+                                                        <p class="drag-subtext">hoặc <span class="browse-link">chọn file</span></p>
+                                                        <input type="file" id="imageFileInput" accept="image/*" style="display: none;">
+                                                        <input type="url" id="jobImageUrl" name="image_url" class="form-control image-url-input" placeholder="hoặc nhập URL hình ảnh">
+                                                    </div>
+                                                    <div class="image-preview" id="imagePreview" style="display: none;">
+                                                        <img id="previewImg" src="" alt="Preview">
+                                                        <div class="image-actions">
+                                                            <button type="button" class="btn-remove-image" onclick="removeImage()">
+                                                                <i class="fas fa-times"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="upload-progress" id="uploadProgress" style="display: none;">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill" id="progressFill"></div>
+                                                    </div>
+                                                    <span class="progress-text" id="progressText">0%</span>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="jobStatusBadge">Nhãn trạng thái</label>

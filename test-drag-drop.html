@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Drag & Drop Upload</title>
+    <link rel="stylesheet" href="admin-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            padding: 20px;
+            background: #1a1d29;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+        }
+        .test-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #2c3e50;
+            padding: 30px;
+            border-radius: 10px;
+        }
+        h1 {
+            text-align: center;
+            color: #3498db;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1><i class="fas fa-cloud-upload-alt"></i> Test Drag & Drop Upload</h1>
+        
+        <div class="form-group">
+            <label for="jobImageUrl">Hình ảnh đơn hàng</label>
+            <!-- Drag & Drop Upload Area -->
+            <div class="image-upload-container">
+                <div class="drag-drop-area" id="dragDropArea">
+                    <div class="drag-drop-content">
+                        <i class="fas fa-cloud-upload-alt drag-icon"></i>
+                        <p class="drag-text">Kéo thả hình ảnh vào đây</p>
+                        <p class="drag-subtext">hoặc <span class="browse-link">chọn file</span></p>
+                        <input type="file" id="imageFileInput" accept="image/*" style="display: none;">
+                        <input type="url" id="jobImageUrl" name="image_url" class="form-control image-url-input" placeholder="hoặc nhập URL hình ảnh">
+                    </div>
+                    <div class="image-preview" id="imagePreview" style="display: none;">
+                        <img id="previewImg" src="" alt="Preview">
+                        <div class="image-actions">
+                            <button type="button" class="btn-remove-image" onclick="removeImage()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="upload-progress" id="uploadProgress" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span class="progress-text" id="progressText">0%</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 30px; padding: 20px; background: #34495e; border-radius: 8px;">
+            <h3><i class="fas fa-info-circle"></i> Hướng dẫn sử dụng:</h3>
+            <ul style="margin-left: 20px; line-height: 1.6;">
+                <li>Kéo và thả file hình ảnh vào vùng upload</li>
+                <li>Hoặc click vào vùng upload để chọn file</li>
+                <li>Hoặc nhập URL hình ảnh trực tiếp</li>
+                <li>Hỗ trợ các định dạng: JPG, PNG, GIF, WebP</li>
+                <li>Kích thước tối đa: 5MB</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
