@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test All Drag & Drop Uploads</title>
+    <link rel="stylesheet" href="admin-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            padding: 20px;
+            background: #1a1d29;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #2c3e50;
+            padding: 30px;
+            border-radius: 10px;
+        }
+        h1 {
+            text-align: center;
+            color: #3498db;
+            margin-bottom: 30px;
+        }
+        .upload-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #34495e;
+            border-radius: 8px;
+        }
+        .upload-section h3 {
+            color: #ecf0f1;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .info-box {
+            background: #2c3e50;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            margin-top: 20px;
+        }
+        .info-box h4 {
+            color: #3498db;
+            margin-bottom: 10px;
+        }
+        .info-box ul {
+            margin-left: 20px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1><i class="fas fa-cloud-upload-alt"></i> Test All Drag & Drop Uploads</h1>
+        
+        <!-- Logo Upload Section -->
+        <div class="upload-section">
+            <h3><i class="fas fa-image" style="color: #f39c12;"></i> Logo Upload Test</h3>
+            <div class="form-group">
+                <label for="headerLogo">Logo công ty:</label>
+                <div class="image-upload-container">
+                    <div class="drag-drop-area logo-upload" id="logoDropArea">
+                        <div class="drag-drop-content">
+                            <i class="fas fa-image drag-icon"></i>
+                            <p class="drag-text">Kéo thả logo vào đây</p>
+                            <p class="drag-subtext">hoặc <span class="browse-link">chọn file logo</span></p>
+                            <input type="file" id="logoFileInput" accept="image/*" style="display: none;">
+                            <input type="hidden" id="headerLogo" name="logo" class="form-control">
+                        </div>
+                        <div class="image-preview" id="logoPreview" style="display: none;">
+                            <img id="logoPreviewImg" src="" alt="Logo Preview">
+                            <div class="image-actions">
+                                <button type="button" class="btn-remove-image" onclick="removeLogo()">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="upload-progress" id="logoUploadProgress" style="display: none;">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="logoProgressFill"></div>
+                        </div>
+                        <span class="progress-text" id="logoProgressText">0%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Banner Upload Section -->
+        <div class="upload-section">
+            <h3><i class="fas fa-panorama" style="color: #9b59b6;"></i> Banner Upload Test</h3>
+            <div class="form-group">
+                <label for="headerBanner">Banner quảng cáo:</label>
+                <div class="image-upload-container">
+                    <div class="drag-drop-area banner-upload" id="bannerDropArea">
+                        <div class="drag-drop-content">
+                            <i class="fas fa-panorama drag-icon"></i>
+                            <p class="drag-text">Kéo thả banner vào đây</p>
+                            <p class="drag-subtext">hoặc <span class="browse-link">chọn file banner</span></p>
+                            <input type="file" id="bannerFileInput" accept="image/*" style="display: none;">
+                            <input type="hidden" id="headerBanner" name="banner" class="form-control">
+                        </div>
+                        <div class="image-preview" id="bannerPreview" style="display: none;">
+                            <img id="bannerPreviewImg" src="" alt="Banner Preview">
+                            <div class="image-actions">
+                                <button type="button" class="btn-remove-image" onclick="removeBanner()">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="upload-progress" id="bannerUploadProgress" style="display: none;">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="bannerProgressFill"></div>
+                        </div>
+                        <span class="progress-text" id="bannerProgressText">0%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Job Image Upload Section -->
+        <div class="upload-section">
+            <h3><i class="fas fa-briefcase" style="color: #3498db;"></i> Job Image Upload Test</h3>
+            <div class="form-group">
+                <label for="jobImageUrl">Hình ảnh đơn hàng:</label>
+                <div class="image-upload-container">
+                    <div class="drag-drop-area" id="dragDropArea">
+                        <div class="drag-drop-content">
+                            <i class="fas fa-cloud-upload-alt drag-icon"></i>
+                            <p class="drag-text">Kéo thả hình ảnh vào đây</p>
+                            <p class="drag-subtext">hoặc <span class="browse-link">chọn file</span></p>
+                            <input type="file" id="imageFileInput" accept="image/*" style="display: none;">
+                            <input type="url" id="jobImageUrl" name="image_url" class="form-control image-url-input" placeholder="hoặc nhập URL hình ảnh">
+                        </div>
+                        <div class="image-preview" id="imagePreview" style="display: none;">
+                            <img id="previewImg" src="" alt="Preview">
+                            <div class="image-actions">
+                                <button type="button" class="btn-remove-image" onclick="removeImage()">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="upload-progress" id="uploadProgress" style="display: none;">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <span class="progress-text" id="progressText">0%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Box -->
+        <div class="info-box">
+            <h4><i class="fas fa-info-circle"></i> Hướng dẫn sử dụng</h4>
+            <ul>
+                <li><strong>Logo Upload:</strong> Icon màu cam, preview nhỏ gọn với nền trắng</li>
+                <li><strong>Banner Upload:</strong> Icon màu tím, preview full-width</li>
+                <li><strong>Job Image Upload:</strong> Icon màu xanh, có thể nhập URL</li>
+                <li><strong>Tất cả:</strong> Hỗ trợ kéo thả, click chọn file, validation tự động</li>
+                <li><strong>Định dạng:</strong> JPG, PNG, GIF, WebP (tối đa 5MB)</li>
+            </ul>
+        </div>
+
+        <div class="info-box" style="border-left-color: #27ae60;">
+            <h4><i class="fas fa-check-circle" style="color: #27ae60;"></i> Tính năng đã hoàn thành</h4>
+            <ul>
+                <li>✅ Drag & drop với visual feedback</li>
+                <li>✅ Progress bar với animation</li>
+                <li>✅ Image preview với remove option</li>
+                <li>✅ File validation (type & size)</li>
+                <li>✅ Error handling với thông báo</li>
+                <li>✅ Responsive design cho mobile</li>
+                <li>✅ Server-side upload API</li>
+                <li>✅ Unique filename generation</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
