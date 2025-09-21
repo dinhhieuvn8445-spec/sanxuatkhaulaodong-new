@@ -27,7 +27,39 @@
                     <button class="btn btn-search" data-toggle="modal" data-target="#searchModal">
                         <i class="fa fa-search"></i> Tìm kiếm
                     </button>
-                    <button class="btn btn-primary" onclick="openLoginModal()">
+                    
+                    <!-- Admin Dropdown (hidden by default) -->
+                    <div id="adminDropdown" class="admin-dropdown" style="display: none;">
+                        <button class="btn btn-admin dropdown-toggle" onclick="toggleAdminDropdown()">
+                            <i class="fas fa-cog"></i> Admin
+                        </button>
+                        <div class="dropdown-menu" id="adminDropdownMenu">
+                            <a href="#" class="dropdown-item" onclick="manageUsers()">
+                                <i class="fas fa-users"></i> Quản lý người dùng
+                            </a>
+                            <a href="#" class="dropdown-item" onclick="manageJobs()">
+                                <i class="fas fa-briefcase"></i> Quản lý công việc
+                            </a>
+                            <a href="#" class="dropdown-item" onclick="viewReports()">
+                                <i class="fas fa-chart-bar"></i> Báo cáo
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item" onclick="adminSettings()">
+                                <i class="fas fa-cogs"></i> Cài đặt hệ thống
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- User Info (hidden by default) -->
+                    <div id="userInfo" class="user-info" style="display: none;">
+                        <span id="welcomeText" class="welcome-text"></span>
+                        <button class="btn btn-secondary" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                        </button>
+                    </div>
+                    
+                    <!-- Login Button (shown by default) -->
+                    <button id="loginButton" class="btn btn-primary" onclick="openLoginModal()">
                         <i class="fas fa-user"></i> Đăng nhập
                     </button>
                 </div>
@@ -1179,14 +1211,44 @@
             document.getElementById('forgotPasswordForm').style.display = 'none';
         }
         
-        function handleLogin(event) {
+        async function handleLogin(event) {
             event.preventDefault();
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             const remember = document.getElementById('remember').checked;
             
-            alert('Đăng nhập thành công!\nTên đăng nhập: ' + username + '\nGhi nhớ: ' + (remember ? 'Có' : 'Không'));
-            closeLoginModal();
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Lưu thông tin người dùng
+                    if (remember) {
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                    } else {
+                        sessionStorage.setItem('user', JSON.stringify(data.user));
+                    }
+                    
+                    alert('Đăng nhập thành công!\nChào mừng ' + data.user.username);
+                    closeLoginModal();
+                    updateNavigation(data.user);
+                } else {
+                    alert('Lỗi: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('Lỗi kết nối đến server');
+            }
         }
         
         function handleForgotPassword(event) {
@@ -1197,6 +1259,79 @@
             showLoginForm();
         }
         
+        // Navigation and User Management Functions
+        function updateNavigation(user) {
+            const loginButton = document.getElementById('loginButton');
+            const userInfo = document.getElementById('userInfo');
+            const adminDropdown = document.getElementById('adminDropdown');
+            const welcomeText = document.getElementById('welcomeText');
+            
+            // Hide login button
+            loginButton.style.display = 'none';
+            
+            // Show user info
+            userInfo.style.display = 'inline-block';
+            welcomeText.textContent = 'Chào ' + user.username;
+            
+            // Show admin dropdown if user is admin
+            if (user.is_admin) {
+                adminDropdown.style.display = 'inline-block';
+            }
+        }
+        
+        function logout() {
+            // Clear user data
+            localStorage.removeItem('user');
+            sessionStorage.removeItem('user');
+            
+            // Reset navigation
+            document.getElementById('loginButton').style.display = 'inline-block';
+            document.getElementById('userInfo').style.display = 'none';
+            document.getElementById('adminDropdown').style.display = 'none';
+            
+            alert('Đã đăng xuất thành công!');
+        }
+        
+        function toggleAdminDropdown() {
+            const dropdownMenu = document.getElementById('adminDropdownMenu');
+            dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+        }
+        
+        // Admin Functions
+        function manageUsers() {
+            alert('Chức năng quản lý người dùng - Sẽ được phát triển sau!');
+            toggleAdminDropdown();
+        }
+        
+        function manageJobs() {
+            alert('Chức năng quản lý công việc - Sẽ được phát triển sau!');
+            toggleAdminDropdown();
+        }
+        
+        function viewReports() {
+            alert('Chức năng báo cáo - Sẽ được phát triển sau!');
+            toggleAdminDropdown();
+        }
+        
+        function adminSettings() {
+            alert('Chức năng cài đặt hệ thống - Sẽ được phát triển sau!');
+            toggleAdminDropdown();
+        }
+        
+        // Check if user is already logged in on page load
+        function checkLoginStatus() {
+            const user = localStorage.getItem('user') || sessionStorage.getItem('user');
+            if (user) {
+                const userData = JSON.parse(user);
+                updateNavigation(userData);
+            }
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkLoginStatus();
+        });
+        
         // Close modal when clicking outside
         window.onclick = function(event) {
             const modal = document.getElementById('loginModal');
@@ -1206,6 +1341,13 @@
             const jobModal = document.getElementById('jobListModal');
             if (event.target === jobModal) {
                 closeJobListModal();
+            }
+            
+            // Close admin dropdown when clicking outside
+            const adminDropdown = document.getElementById('adminDropdown');
+            const adminDropdownMenu = document.getElementById('adminDropdownMenu');
+            if (adminDropdown && !adminDropdown.contains(event.target)) {
+                adminDropdownMenu.style.display = 'none';
             }
         }
     </script>
