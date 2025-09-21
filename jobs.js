@@ -431,17 +431,84 @@ function filterJobs() {
         birth_year: formData.get('birth_year')
     };
 
-    filteredJobs = jobsData.filter(job => {
-        if (filters.country && job.country !== filters.country) return false;
-        if (filters.gender && filters.gender === 'male' && !job.gender.includes('Nam')) return false;
-        if (filters.gender && filters.gender === 'female' && !job.gender.includes('Nữ')) return false;
-        return true;
-    });
+    // Build URL parameters for homepage redirect
+    const params = new URLSearchParams();
+    
+    if (filters.country && filters.country !== '') {
+        // Convert jobs.html country values to homepage format
+        let countryValue = filters.country;
+        if (countryValue === 'japan') countryValue = 'nhat-ban';
+        else if (countryValue === 'taiwan') countryValue = 'dai-loan';
+        else if (countryValue === 'singapore') countryValue = 'singapore';
+        else if (countryValue === 'russia') countryValue = 'nga';
+        else if (countryValue === 'romania') countryValue = 'rumani';
+        else if (countryValue === 'bulgaria') countryValue = 'bulgaria';
+        
+        params.append('country', countryValue);
+        
+        // Get country name for display
+        let countryName = getCountryDisplayName(countryValue);
+        if (countryName) {
+            params.append('name', countryName);
+        }
+    }
+    
+    if (filters.industry && filters.industry !== '') {
+        params.append('industry', filters.industry);
+    }
+    
+    if (filters.location && filters.location !== '') {
+        params.append('location', filters.location);
+    }
+    
+    if (filters.gender && filters.gender !== '') {
+        params.append('gender', filters.gender);
+    }
+    
+    if (filters.birth_year && filters.birth_year !== '') {
+        params.append('year', filters.birth_year);
+    }
+    
+    // Redirect to homepage with search parameters
+    const searchUrl = params.toString() ? `index.html?${params.toString()}` : 'index.html';
+    window.location.href = searchUrl;
+}
 
-    currentPage = 1;
-    loadJobs();
-    updateJobsCount();
-    updatePagination();
+// Helper function to get country display name
+function getCountryDisplayName(countryValue) {
+    const countryMap = {
+        'nhat-ban': 'TTS Nhật Bản',
+        'ky-su-nhat-ban': 'Kỹ sư Nhật Bản',
+        'dai-loan': 'Đài Loan',
+        'singapore': 'Singapore',
+        'tokutei-nhat': 'Tokutei Nhật',
+        'nga': 'Nga',
+        'rumani': 'Rumani',
+        'bulgaria': 'Bulgaria',
+        'serbia': 'Serbia',
+        'hungary': 'Hungary',
+        'phap': 'Pháp',
+        'algeria': 'Algeria',
+        'hy-lap': 'Hy Lạp',
+        'ba-lan': 'Ba Lan',
+        'latvia': 'Latvia',
+        'litva': 'Litva',
+        'tay-ban-nha': 'Tây Ban Nha',
+        'ky-su-dai-loan': 'Kỹ sư Đài Loan',
+        'ireland': 'Ireland',
+        'ao': 'Áo',
+        'croatia': 'Croatia',
+        'slovakia': 'Slovakia',
+        'dan-mach': 'Đan Mạch',
+        'a-rap-xe-ut': 'Ả rập xê út',
+        'albania': 'Albania',
+        'dubai': 'Dubai',
+        'trung-quoc': 'Trung Quốc',
+        'na-uy': 'Na Uy',
+        'nuoc-khac': 'Nước khác'
+    };
+    
+    return countryMap[countryValue] || '';
 }
 
 function filterByCountry(country) {
