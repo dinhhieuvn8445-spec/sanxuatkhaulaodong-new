@@ -406,6 +406,10 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.handle_save_job()
         elif self.path == '/api/admin/upload-image':
             self.handle_image_upload_request()
+        elif self.path == '/api/admin/upload-logo':
+            self.handle_logo_upload_request()
+        elif self.path == '/api/admin/upload-banner':
+            self.handle_banner_upload_request()
         else:
             self.send_error(404)
     
@@ -618,6 +622,158 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         except Exception as e:
             print(f"Image upload error: {e}")
             self.send_json_response({'success': False, 'message': 'Lỗi server'}, 500)
+
+    def handle_logo_upload_request(self):
+        """Xử lý upload logo riêng biệt"""
+        try:
+            # Parse multipart form data
+            content_type = self.headers.get('Content-Type', '')
+            if not content_type.startswith('multipart/form-data'):
+                self.send_json_response({'success': False, 'message': 'Invalid content type'}, 400)
+                return
+
+            # Get content length
+            content_length = int(self.headers.get('Content-Length', 0))
+            if content_length == 0:
+                self.send_json_response({'success': False, 'message': 'No data received'}, 400)
+                return
+
+            # Read the form data
+            form_data = self.rfile.read(content_length)
+
+            # Parse multipart data
+            boundary = content_type.split('boundary=')[1].encode()
+            parts = form_data.split(b'--' + boundary)
+
+            for part in parts:
+                if b'Content-Disposition: form-data' in part and b'filename=' in part:
+                    # Extract filename
+                    lines = part.split(b'\r\n')
+                    for line in lines:
+                        if b'Content-Disposition' in line:
+                            filename_start = line.find(b'filename="') + 10
+                            filename_end = line.find(b'"', filename_start)
+                            filename = line[filename_start:filename_end].decode('utf-8')
+                            break
+
+                    # Validate file type
+                    if not is_valid_image_type(filename):
+                        self.send_json_response({
+                            'success': False,
+                            'message': 'Loại file không hợp lệ. Chỉ chấp nhận JPG, PNG, GIF, WebP'
+                        }, 400)
+                        return
+
+                    # Extract file data
+                    file_data_start = part.find(b'\r\n\r\n') + 4
+                    file_data = part[file_data_start:-2]  # Remove trailing \r\n
+
+                    # Check file size (max 5MB)
+                    if len(file_data) > 5 * 1024 * 1024:
+                        self.send_json_response({
+                            'success': False,
+                            'message': 'Kích thước file không được vượt quá 5MB'
+                        }, 400)
+                        return
+
+                    # Upload logo với prefix đặc biệt
+                    logo_filename = f"logo_{filename}"
+                    image_url = handle_image_upload(file_data, logo_filename)
+                    if image_url:
+                        self.send_json_response({
+                            'success': True,
+                            'message': 'Upload logo thành công',
+                            'image_url': image_url,
+                            'type': 'logo'
+                        })
+                    else:
+                        self.send_json_response({
+                            'success': False,
+                            'message': 'Lỗi khi lưu logo'
+                        }, 500)
+                    return
+
+            self.send_json_response({'success': False, 'message': 'Không tìm thấy file logo'}, 400)
+
+        except Exception as e:
+            print(f"Logo upload error: {e}")
+            self.send_json_response({'success': False, 'message': 'Lỗi server khi upload logo'}, 500)
+
+    def handle_banner_upload_request(self):
+        """Xử lý upload banner riêng biệt"""
+        try:
+            # Parse multipart form data
+            content_type = self.headers.get('Content-Type', '')
+            if not content_type.startswith('multipart/form-data'):
+                self.send_json_response({'success': False, 'message': 'Invalid content type'}, 400)
+                return
+
+            # Get content length
+            content_length = int(self.headers.get('Content-Length', 0))
+            if content_length == 0:
+                self.send_json_response({'success': False, 'message': 'No data received'}, 400)
+                return
+
+            # Read the form data
+            form_data = self.rfile.read(content_length)
+
+            # Parse multipart data
+            boundary = content_type.split('boundary=')[1].encode()
+            parts = form_data.split(b'--' + boundary)
+
+            for part in parts:
+                if b'Content-Disposition: form-data' in part and b'filename=' in part:
+                    # Extract filename
+                    lines = part.split(b'\r\n')
+                    for line in lines:
+                        if b'Content-Disposition' in line:
+                            filename_start = line.find(b'filename="') + 10
+                            filename_end = line.find(b'"', filename_start)
+                            filename = line[filename_start:filename_end].decode('utf-8')
+                            break
+
+                    # Validate file type
+                    if not is_valid_image_type(filename):
+                        self.send_json_response({
+                            'success': False,
+                            'message': 'Loại file không hợp lệ. Chỉ chấp nhận JPG, PNG, GIF, WebP'
+                        }, 400)
+                        return
+
+                    # Extract file data
+                    file_data_start = part.find(b'\r\n\r\n') + 4
+                    file_data = part[file_data_start:-2]  # Remove trailing \r\n
+
+                    # Check file size (max 5MB)
+                    if len(file_data) > 5 * 1024 * 1024:
+                        self.send_json_response({
+                            'success': False,
+                            'message': 'Kích thước file không được vượt quá 5MB'
+                        }, 400)
+                        return
+
+                    # Upload banner với prefix đặc biệt
+                    banner_filename = f"banner_{filename}"
+                    image_url = handle_image_upload(file_data, banner_filename)
+                    if image_url:
+                        self.send_json_response({
+                            'success': True,
+                            'message': 'Upload banner thành công',
+                            'image_url': image_url,
+                            'type': 'banner'
+                        })
+                    else:
+                        self.send_json_response({
+                            'success': False,
+                            'message': 'Lỗi khi lưu banner'
+                        }, 500)
+                    return
+
+            self.send_json_response({'success': False, 'message': 'Không tìm thấy file banner'}, 400)
+
+        except Exception as e:
+            print(f"Banner upload error: {e}")
+            self.send_json_response({'success': False, 'message': 'Lỗi server khi upload banner'}, 500)
 
     def send_json_response(self, data, status_code=200):
         """Gửi response JSON"""

@@ -1098,7 +1098,7 @@ class LogoUploadManager extends ImageUploadManager {
             const formData = new FormData();
             formData.append('image', file);
             
-            const response = await fetch('/api/admin/upload-image', {
+            const response = await fetch('/api/admin/upload-logo', {
                 method: 'POST',
                 body: formData
             });
@@ -1216,7 +1216,7 @@ class BannerUploadManager extends ImageUploadManager {
             const formData = new FormData();
             formData.append('image', file);
             
-            const response = await fetch('/api/admin/upload-image', {
+            const response = await fetch('/api/admin/upload-banner', {
                 method: 'POST',
                 body: formData
             });
