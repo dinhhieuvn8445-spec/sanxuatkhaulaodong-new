@@ -76,7 +76,7 @@ class AdminDashboard {
             return;
         }
         
-        if (['countries', 'jobs', 'orders', 'applications', 'partners', 'users'].includes(tabName)) {
+        if (['countries', 'jobs', 'applications', 'partners', 'users'].includes(tabName)) {
             this.loadTableData(tabName);
             return;
         }
@@ -568,20 +568,7 @@ AdminDashboard.prototype.createTableRow = function(tableName, item, index) {
                 </td>
             `;
             break;
-        case 'orders':
-            row.innerHTML = `
-                <td>${item.id}</td>
-                <td>${item.customer_name}</td>
-                <td>${item.service_type}</td>
-                <td>${new Intl.NumberFormat('vi-VN').format(item.amount)} VNĐ</td>
-                <td>${new Date(item.created_at).toLocaleDateString('vi-VN')}</td>
-                <td><span class="status-badge status-${item.status}">${this.getStatusText(item.status)}</span></td>
-                <td>
-                    <button class="btn-sm btn-view" onclick="viewOrder('${item.id}')">Xem</button>
-                    <button class="btn-sm btn-edit" onclick="editOrder('${item.id}')">Sửa</button>
-                </td>
-            `;
-            break;
+
         case 'applications':
             row.innerHTML = `
                 <td>${index}</td>

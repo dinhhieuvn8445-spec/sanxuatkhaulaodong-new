@@ -53,12 +53,7 @@
                                 <span>Việc làm</span>
                             </a>
                         </li>
-                        <li class="nav-item" data-tab="orders">
-                            <a href="#" onclick="switchTab('orders')">
-                                <i class="fas fa-shopping-cart"></i>
-                                <span>Đơn hàng</span>
-                            </a>
-                        </li>
+
                         <li class="nav-item" data-tab="applications">
                             <a href="#" onclick="switchTab('applications')">
                                 <i class="fas fa-file-alt"></i>
@@ -770,43 +765,7 @@
                     </div>
                 </div>
 
-                <!-- Orders Tab -->
-                <div id="orders-tab" class="tab-content">
-                    <div class="content-header">
-                        <h2><i class="fas fa-shopping-cart"></i> Quản lý Đơn hàng</h2>
-                    </div>
-                    
-                    <div class="filter-bar">
-                        <select id="orderStatusFilter" class="form-control">
-                            <option value="">Tất cả trạng thái</option>
-                            <option value="pending">Chờ xử lý</option>
-                            <option value="processing">Đang xử lý</option>
-                            <option value="completed">Hoàn thành</option>
-                            <option value="cancelled">Đã hủy</option>
-                        </select>
-                        <input type="date" id="orderDateFilter" class="form-control">
-                        <input type="text" id="orderSearchInput" class="form-control" placeholder="Tìm kiếm đơn hàng...">
-                    </div>
-                    
-                    <div class="table-container">
-                        <table class="admin-table" id="ordersTable">
-                            <thead>
-                                <tr>
-                                    <th>Mã đơn</th>
-                                    <th>Khách hàng</th>
-                                    <th>Dịch vụ</th>
-                                    <th>Giá trị</th>
-                                    <th>Ngày tạo</th>
-                                    <th>Trạng thái</th>
-                                    <th>Thao tác</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Data will be loaded here -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+
 
                 <!-- Applications Tab -->
                 <div id="applications-tab" class="tab-content">
