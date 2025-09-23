@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Logo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .upload-area {
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .upload-area.dragover {
+            border-color: #007bff;
+            background-color: #f8f9fa;
+        }
+        input[type="file"] {
+            margin: 20px 0;
+        }
+        .preview {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .preview img {
+            max-width: 300px;
+            max-height: 200px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Upload Logo Mới</h1>
+    <p>Kéo thả file logo vào khu vực bên dưới hoặc click để chọn file:</p>
+    
+    <div class="upload-area" id="uploadArea">
+        <i class="fas fa-cloud-upload-alt" style="font-size: 48px; color: #ccc;"></i>
+        <p>Kéo thả logo vào đây hoặc click để chọn</p>
+        <input type="file" id="logoFile" accept="image/*" style="display: none;">
+        <button class="btn" onclick="document.getElementById('logoFile').click()">Chọn File</button>
+    </div>
+    
+    <div class="preview" id="preview" style="display: none;">
+        <h3>Preview:</h3>
+        <img id="previewImg" src="" alt="Logo preview">
+        <br><br>
+        <button class="btn" onclick="uploadLogo()">Upload Logo</button>
+    </div>
+    
+    <div id="message"></div>
+    
+    <script>
+        const uploadArea = document.getElementById('uploadArea');
+        const logoFile = document.getElementById('logoFile');
+        const preview = document.getElementById('preview');
+        const previewImg = document.getElementById('previewImg');
+        const message = document.getElementById('message');
+        
+        // Drag and drop functionality
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
+            }
+        });
+        
+        logoFile.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFile(e.target.files[0]);
+            }
+        });
+        
+        function handleFile(file) {
+            if (!file.type.startsWith('image/')) {
+                showMessage('Vui lòng chọn file hình ảnh!', 'error');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewImg.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        async function uploadLogo() {
+            const file = logoFile.files[0];
+            if (!file) {
+                showMessage('Vui lòng chọn file logo!', 'error');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('logo', file);
+            
+            try {
+                showMessage('Đang upload...', '');
+                
+                const response = await fetch('/api/admin/upload-logo', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showMessage('Upload logo thành công! Logo đã được cập nhật trên trang chủ.', 'success');
+                    setTimeout(() => {
+                        window.location.href = '/index.html';
+                    }, 2000);
+                } else {
+                    showMessage('Lỗi: ' + result.message, 'error');
+                }
+            } catch (error) {
+                showMessage('Lỗi kết nối: ' + error.message, 'error');
+            }
+        }
+        
+        function showMessage(text, type) {
+            message.innerHTML = `<p class="${type}">${text}</p>`;
+        }
+    </script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</body>
+</html>
