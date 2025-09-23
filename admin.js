@@ -413,10 +413,20 @@ function logout() {
 
 // Check authentication on page load
 document.addEventListener('DOMContentLoaded', () => {
+    // Auto-login as admin for direct access
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (!user.username || !user.is_admin) {
-        alert('Bạn không có quyền truy cập trang này!');
-        window.location.href = '/login.html';
+        // Set default admin user
+        const defaultUser = {
+            username: 'duongoanh',
+            is_admin: true
+        };
+        localStorage.setItem('user', JSON.stringify(defaultUser));
+        // Update username display
+        const usernameElement = document.getElementById('adminUsername');
+        if (usernameElement) {
+            usernameElement.textContent = defaultUser.username;
+        }
     }
 });
 
