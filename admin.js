@@ -701,14 +701,17 @@ async function viewJob(id) {
 
 async function editJob(id) {
     try {
+        console.log('Editing job ID:', id);
         const response = await fetch(`/api/admin/jobs/${id}`);
         const job = await response.json();
+        console.log('Job data for edit:', job);
         
         if (job.error) {
             alert('Không tìm thấy đơn hàng');
             return;
         }
         
+        console.log('Calling showJobForm...');
         showJobForm(job, false); // false = edit mode
     } catch (error) {
         console.error('Error loading job for edit:', error);
@@ -811,10 +814,40 @@ function closeCountryModal() {
     modal.style.display = 'none';
 }
 
+// Job Form Tab Switching
+function switchJobTab(tabName) {
+    // Hide all tab contents
+    const tabContents = document.querySelectorAll('.job-tab-content');
+    tabContents.forEach(tab => {
+        tab.classList.remove('active');
+    });
+    
+    // Remove active class from all tab buttons
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    tabButtons.forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    // Show selected tab content
+    const selectedTab = document.getElementById(tabName + '-tab');
+    if (selectedTab) {
+        selectedTab.classList.add('active');
+    }
+    
+    // Add active class to clicked button
+    const clickedButton = event.target;
+    clickedButton.classList.add('active');
+}
+
 function showJobForm(jobData = null, viewMode = false) {
-    const modal = document.getElementById('jobModal');
+    console.log('showJobForm called with:', jobData, viewMode);
+    const modal = document.getElementById('jobFormModal');
     const form = document.getElementById('jobForm');
-    const modalTitle = document.getElementById('jobModalTitle');
+    const modalTitle = document.getElementById('jobFormTitle');
+    
+    console.log('Modal element:', modal);
+    console.log('Form element:', form);
+    console.log('Title element:', modalTitle);
     
     // Set modal title
     if (viewMode) {
@@ -830,23 +863,51 @@ function showJobForm(jobData = null, viewMode = false) {
     
     // Fill form if editing
     if (jobData) {
+        // Basic info
         document.getElementById('jobId').value = jobData.id || '';
+        document.getElementById('jobCode').value = jobData.job_code || '';
         document.getElementById('jobTitle').value = jobData.title || '';
         document.getElementById('jobCountry').value = jobData.country || '';
-        document.getElementById('jobCountryFlag').value = jobData.country_flag || '';
+        document.getElementById('jobLocation').value = jobData.location || '';
+        document.getElementById('jobCompany').value = jobData.company || '';
+        document.getElementById('jobQuantity').value = jobData.quantity || '';
+        document.getElementById('jobGender').value = jobData.gender_requirement || '';
+        document.getElementById('jobAgeMin').value = jobData.age_min || '';
+        document.getElementById('jobAgeMax').value = jobData.age_max || '';
         document.getElementById('jobSalaryAmount').value = jobData.salary_amount || '';
         document.getElementById('jobSalaryCurrency').value = jobData.salary_currency || '';
         document.getElementById('jobSalaryPeriod').value = jobData.salary_period || '';
-        document.getElementById('jobRequirements').value = jobData.requirements || '';
         document.getElementById('jobDeadline').value = jobData.deadline || '';
-        document.getElementById('jobImageUrl').value = jobData.image_url || '';
         document.getElementById('jobStatusBadge').value = jobData.status_badge || '';
+        document.getElementById('jobImageUrl').value = jobData.image_url || '';
+        document.getElementById('jobCountryFlag').value = jobData.country_flag || '';
+        
+        // Job details
+        document.getElementById('jobDescription').value = jobData.job_description || '';
+        document.getElementById('jobRequirements').value = jobData.job_requirements || '';
+        document.getElementById('jobWorkHours').value = jobData.work_hours || '';
+        document.getElementById('jobContractDuration').value = jobData.contract_duration || '';
+        document.getElementById('jobLanguageRequirement').value = jobData.language_requirement || '';
+        document.getElementById('jobTrainingProvided').value = jobData.training_provided || '';
+        
+        // Benefits & conditions
+        document.getElementById('jobBenefits').value = jobData.benefits || '';
+        document.getElementById('jobOvertimePay').value = jobData.overtime_pay || '';
+        document.getElementById('jobInsurance').value = jobData.insurance || '';
+        document.getElementById('jobAccommodation').value = jobData.accommodation || '';
+        document.getElementById('jobMeals').value = jobData.meals || '';
+        document.getElementById('jobWorkingConditions').value = jobData.working_conditions || '';
+        document.getElementById('jobApplicationProcess').value = jobData.application_process || '';
+        document.getElementById('jobDocumentsRequired').value = jobData.documents_required || '';
+        document.getElementById('jobAdditionalNotes').value = jobData.additional_notes || '';
+        
+        // Consultant info
         document.getElementById('jobConsultantName').value = jobData.consultant_name || '';
         document.getElementById('jobConsultantPhone').value = jobData.consultant_phone || '';
         document.getElementById('jobConsultantZalo').value = jobData.consultant_zalo || '';
         document.getElementById('jobConsultantFacebook').value = jobData.consultant_facebook || '';
         document.getElementById('jobViewCount').value = jobData.view_count || 0;
-        document.getElementById('jobIsActive').checked = jobData.is_active == 1;
+        document.getElementById('jobIsActive').value = jobData.is_active || 1;
     }
     
     // Disable form if view mode
@@ -856,13 +917,26 @@ function showJobForm(jobData = null, viewMode = false) {
     });
     
     // Show/hide save button
-    const saveButton = document.querySelector('#jobModal .btn-primary');
+    const saveButton = document.querySelector('#jobFormModal .btn-primary');
     if (saveButton) {
         saveButton.style.display = viewMode ? 'none' : 'inline-block';
     }
     
+    // Reset to first tab
+    switchJobTab('basic');
+    
     // Show modal
+    console.log('Setting modal display to block...');
     modal.style.display = 'block';
+    modal.style.visibility = 'visible';
+    modal.style.opacity = '1';
+    console.log('Modal display after setting:', modal.style.display);
+    console.log('Modal computed style:', window.getComputedStyle(modal).display);
+}
+
+function hideJobForm() {
+    const modal = document.getElementById('jobFormModal');
+    modal.style.display = 'none';
 }
 
 async function saveJob() {

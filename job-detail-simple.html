@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết công việc</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .job-info { background: #f5f5f5; padding: 20px; margin: 20px 0; }
+        .job-details { background: #fff; padding: 20px; border: 1px solid #ddd; }
+        h1, h2, h3, h4 { color: #333; }
+        .loading { color: #666; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1 id="job-title">Đang tải...</h1>
+    
+    <div class="job-info">
+        <h2>Thông tin cơ bản</h2>
+        <p><strong>Mã công việc:</strong> <span id="job-code">-</span></p>
+        <p><strong>Quốc gia:</strong> <span id="job-country">-</span></p>
+        <p><strong>Công ty:</strong> <span id="job-company">-</span></p>
+        <p><strong>Lương:</strong> <span id="job-salary">-</span></p>
+        <p><strong>Địa điểm:</strong> <span id="job-location">-</span></p>
+        <p><strong>Số lượng:</strong> <span id="job-quantity">-</span></p>
+        <p><strong>Yêu cầu giới tính:</strong> <span id="job-gender">-</span></p>
+        <p><strong>Độ tuổi:</strong> <span id="job-age">-</span></p>
+    </div>
+    
+    <div class="job-details">
+        <h2>Chi tiết công việc</h2>
+        <div id="job-detailed-content">
+            <p class="loading">Đang tải chi tiết...</p>
+        </div>
+    </div>
+    
+    <script>
+        async function loadJobDetail(jobId) {
+            try {
+                console.log('Loading job details for ID:', jobId);
+                
+                // Fetch job details from API
+                const response = await fetch(`/api/admin/jobs/${jobId}`);
+                console.log('Response status:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const job = await response.json();
+                console.log('Job data received:', job);
+
+                if (job && !job.error) {
+                    // Update basic info
+                    document.title = `${job.title} - Chi tiết công việc`;
+                    document.getElementById('job-title').textContent = job.title;
+                    document.getElementById('job-code').textContent = job.job_code || job.id;
+                    document.getElementById('job-country').textContent = job.country;
+                    document.getElementById('job-company').textContent = job.company || 'Chưa cập nhật';
+                    document.getElementById('job-salary').textContent = `${job.salary_amount} ${job.salary_currency}/${job.salary_period || 'tháng'}`;
+                    document.getElementById('job-location').textContent = job.location || 'Chưa cập nhật';
+                    document.getElementById('job-quantity').textContent = job.quantity || 'Chưa cập nhật';
+                    document.getElementById('job-gender').textContent = job.gender_requirement || 'Không yêu cầu';
+                    
+                    // Age range
+                    let ageRange = '';
+                    if (job.age_min && job.age_max) {
+                        ageRange = `${job.age_min}-${job.age_max} tuổi`;
+                    } else if (job.age_min) {
+                        ageRange = `Từ ${job.age_min} tuổi`;
+                    } else if (job.age_max) {
+                        ageRange = `Dưới ${job.age_max} tuổi`;
+                    } else {
+                        ageRange = 'Không yêu cầu';
+                    }
+                    document.getElementById('job-age').textContent = ageRange;
+                    
+                    // Update detailed content
+                    updateDetailedContent(job);
+                    
+                } else {
+                    throw new Error('Job not found or invalid data');
+                }
+            } catch (error) {
+                console.error('Error loading job details:', error);
+                document.getElementById('job-title').textContent = 'Lỗi tải dữ liệu';
+                document.getElementById('job-detailed-content').innerHTML = `
+                    <p class="error">Không thể tải thông tin công việc: ${error.message}</p>
+                `;
+            }
+        }
+        
+        function updateDetailedContent(job) {
+            const detailedContent = document.getElementById('job-detailed-content');
+            
+            let content = `<p><strong>Thông tin chi tiết về công việc tại ${job.country}</strong></p>`;
+            
+            if (job.job_description) {
+                content += `<h4>Mô tả công việc:</h4><p>${job.job_description}</p>`;
+            }
+            
+            if (job.job_requirements) {
+                content += `<h4>Yêu cầu công việc:</h4><p>${job.job_requirements}</p>`;
+            }
+            
+            if (job.benefits) {
+                content += `<h4>Quyền lợi:</h4><p>${job.benefits}</p>`;
+            }
+            
+            if (job.working_conditions) {
+                content += `<h4>Điều kiện làm việc:</h4><p>${job.working_conditions}</p>`;
+            }
+            
+            if (job.accommodation) {
+                content += `<h4>Chỗ ở:</h4><p>${job.accommodation}</p>`;
+            }
+            
+            if (job.meals) {
+                content += `<h4>Ăn uống:</h4><p>${job.meals}</p>`;
+            }
+            
+            if (job.insurance) {
+                content += `<h4>Bảo hiểm:</h4><p>${job.insurance}</p>`;
+            }
+            
+            if (job.application_process) {
+                content += `<h4>Quy trình ứng tuyển:</h4><p>${job.application_process}</p>`;
+            }
+            
+            if (job.documents_required) {
+                content += `<h4>Hồ sơ yêu cầu:</h4><p>${job.documents_required}</p>`;
+            }
+            
+            if (job.training_provided) {
+                content += `<h4>Đào tạo cung cấp:</h4><p>${job.training_provided}</p>`;
+            }
+            
+            if (job.language_requirement) {
+                content += `<h4>Yêu cầu ngoại ngữ:</h4><p>${job.language_requirement}</p>`;
+            }
+            
+            if (job.additional_notes) {
+                content += `<h4>Ghi chú thêm:</h4><p>${job.additional_notes}</p>`;
+            }
+            
+            detailedContent.innerHTML = content;
+        }
+        
+        // Load job details when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const jobId = urlParams.get('id') || '1';
+            loadJobDetail(jobId);
+        });
+    </script>
+</body>
+</html>

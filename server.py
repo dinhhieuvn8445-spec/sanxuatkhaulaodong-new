@@ -224,7 +224,7 @@ def get_job_by_id(job_id):
         conn.close()
 
 def save_job(job_data):
-    """Lưu thông tin job (thêm mới hoặc cập nhật)"""
+    """Lưu thông tin job (thêm mới hoặc cập nhật) với đầy đủ các trường chi tiết"""
     conn = get_db_connection()
     if not conn:
         return False
@@ -241,7 +241,13 @@ def save_job(job_data):
                     deadline = ?, image_url = ?, status_badge = ?,
                     consultant_name = ?, consultant_phone = ?, consultant_zalo = ?,
                     consultant_facebook = ?, view_count = ?, is_active = ?,
-                    updated_at = CURRENT_TIMESTAMP
+                    job_code = ?, location = ?, company = ?, quantity = ?,
+                    gender_requirement = ?, age_min = ?, age_max = ?, work_hours = ?,
+                    overtime_pay = ?, accommodation = ?, meals = ?, insurance = ?,
+                    contract_duration = ?, job_description = ?, job_requirements = ?,
+                    benefits = ?, working_conditions = ?, application_process = ?,
+                    documents_required = ?, training_provided = ?, language_requirement = ?,
+                    additional_notes = ?, updated_at = CURRENT_TIMESTAMP
                 WHERE id = ?
             """, (
                 job_data.get('title'), job_data.get('country'), job_data.get('country_flag'),
@@ -249,7 +255,16 @@ def save_job(job_data):
                 job_data.get('requirements'), job_data.get('deadline'), job_data.get('image_url'),
                 job_data.get('status_badge'), job_data.get('consultant_name'), job_data.get('consultant_phone'),
                 job_data.get('consultant_zalo'), job_data.get('consultant_facebook'), job_data.get('view_count'),
-                job_data.get('is_active', 1), job_data['id']
+                job_data.get('is_active', 1),
+                # New detailed fields
+                job_data.get('job_code'), job_data.get('location'), job_data.get('company'), 
+                job_data.get('quantity'), job_data.get('gender_requirement'), job_data.get('age_min'),
+                job_data.get('age_max'), job_data.get('work_hours'), job_data.get('overtime_pay'),
+                job_data.get('accommodation'), job_data.get('meals'), job_data.get('insurance'),
+                job_data.get('contract_duration'), job_data.get('job_description'), job_data.get('job_requirements'),
+                job_data.get('benefits'), job_data.get('working_conditions'), job_data.get('application_process'),
+                job_data.get('documents_required'), job_data.get('training_provided'), job_data.get('language_requirement'),
+                job_data.get('additional_notes'), job_data['id']
             ))
         else:
             # Thêm job mới
@@ -257,15 +272,28 @@ def save_job(job_data):
                 INSERT INTO jobs (
                     title, country, country_flag, salary_amount, salary_currency, salary_period,
                     requirements, deadline, image_url, status_badge, consultant_name,
-                    consultant_phone, consultant_zalo, consultant_facebook, view_count, is_active
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    consultant_phone, consultant_zalo, consultant_facebook, view_count, is_active,
+                    job_code, location, company, quantity, gender_requirement, age_min, age_max,
+                    work_hours, overtime_pay, accommodation, meals, insurance, contract_duration,
+                    job_description, job_requirements, benefits, working_conditions, application_process,
+                    documents_required, training_provided, language_requirement, additional_notes
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (
                 job_data.get('title'), job_data.get('country'), job_data.get('country_flag'),
                 job_data.get('salary_amount'), job_data.get('salary_currency'), job_data.get('salary_period'),
                 job_data.get('requirements'), job_data.get('deadline'), job_data.get('image_url'),
                 job_data.get('status_badge'), job_data.get('consultant_name'), job_data.get('consultant_phone'),
                 job_data.get('consultant_zalo'), job_data.get('consultant_facebook'), 
-                job_data.get('view_count', 0), job_data.get('is_active', 1)
+                job_data.get('view_count', 0), job_data.get('is_active', 1),
+                # New detailed fields
+                job_data.get('job_code'), job_data.get('location'), job_data.get('company'), 
+                job_data.get('quantity'), job_data.get('gender_requirement'), job_data.get('age_min'),
+                job_data.get('age_max'), job_data.get('work_hours'), job_data.get('overtime_pay'),
+                job_data.get('accommodation'), job_data.get('meals'), job_data.get('insurance'),
+                job_data.get('contract_duration'), job_data.get('job_description'), job_data.get('job_requirements'),
+                job_data.get('benefits'), job_data.get('working_conditions'), job_data.get('application_process'),
+                job_data.get('documents_required'), job_data.get('training_provided'), job_data.get('language_requirement'),
+                job_data.get('additional_notes')
             ))
         
         conn.commit()
@@ -539,6 +567,38 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                     self.send_json_response({'success': False, 'message': 'Failed to delete job'}, 500)
             except ValueError:
                 self.send_json_response({'error': 'Invalid job ID'}, 400)
+        else:
+            self.send_error(404)
+
+    def do_PUT(self):
+        """Xử lý PUT requests"""
+        if self.path.startswith('/api/admin/jobs/'):
+            # Update job by ID: /api/admin/jobs/123
+            job_id = self.path.split('/')[-1]
+            try:
+                job_id = int(job_id)
+                
+                # Read request body
+                content_length = int(self.headers['Content-Length'])
+                post_data = self.rfile.read(content_length)
+                job_data = json.loads(post_data.decode('utf-8'))
+                
+                # Add job ID to data
+                job_data['id'] = job_id
+                
+                # Save job
+                if save_job(job_data):
+                    self.send_json_response({'success': True, 'message': 'Job updated successfully'})
+                else:
+                    self.send_json_response({'success': False, 'message': 'Failed to update job'}, 500)
+                    
+            except ValueError:
+                self.send_json_response({'error': 'Invalid job ID'}, 400)
+            except json.JSONDecodeError:
+                self.send_json_response({'error': 'Invalid JSON data'}, 400)
+            except Exception as e:
+                print(f"Error updating job: {e}")
+                self.send_json_response({'error': 'Internal server error'}, 500)
         else:
             self.send_error(404)
 

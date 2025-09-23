@@ -1602,102 +1602,171 @@
             }
         });
 
-        function loadJobDetail(jobId) {
-            // Find job from allJobs array (defined in script.js)
-            const job = allJobs.find(j => j.id == jobId);
-            
-            if (job) {
-                // Update page title and breadcrumb
-                document.title = `${job.title} - Dương Oanh Xuất Khẩu Lao Động`;
-                document.getElementById('job-breadcrumb-title').textContent = job.title;
-                document.getElementById('job-main-title').innerHTML = `${job.flag} ${job.title}`;
+        async function loadJobDetail(jobId) {
+            try {
+                console.log('Loading job details for ID:', jobId);
                 
-                // Update job information table
-                document.getElementById('job-id').textContent = job.id;
-                document.getElementById('job-country').textContent = job.countryName;
-                document.getElementById('job-salary').textContent = `${job.salary} ${job.currency}/tháng`;
-                document.getElementById('job-gender').textContent = job.gender;
-                document.getElementById('job-birth-year').textContent = job.ageRange.replace(/[()]/g, '');
+                // Fetch job details from API
+                const response = await fetch(`/api/admin/jobs/${jobId}`);
+                console.log('Response status:', response.status);
                 
-                // Update additional job details based on available data
+                const job = await response.json();
+                console.log('Job data received:', job);
+
+                if (job && !job.error) {
+                    try {
+                        // Update page title and breadcrumb
+                        document.title = `${job.title} - Dương Oanh Xuất Khẩu Lao Động`;
+                        
+                        const breadcrumbTitle = document.getElementById('job-breadcrumb-title');
+                        if (breadcrumbTitle) breadcrumbTitle.textContent = job.title;
+                        
+                        const mainTitle = document.getElementById('job-main-title');
+                        if (mainTitle) mainTitle.innerHTML = `${job.country_flag || '🌍'} ${job.title}`;
+                        
+                        // Update job information table
+                        const jobId = document.getElementById('job-id');
+                        if (jobId) jobId.textContent = job.job_code || job.id;
+                        
+                        const jobCountry = document.getElementById('job-country');
+                        if (jobCountry) jobCountry.textContent = job.country;
+                        
+                        const jobSalary = document.getElementById('job-salary');
+                        if (jobSalary) jobSalary.textContent = `${job.salary_amount} ${job.salary_currency}/${job.salary_period || 'tháng'}`;
+                
+                // Update location
                 if (job.location) {
                     document.getElementById('job-location').textContent = job.location;
+                } else {
+                    document.getElementById('job-location').textContent = 'Toàn quốc';
                 }
                 
+                // Update company
                 if (job.company) {
                     document.getElementById('job-company').textContent = job.company;
                 } else {
-                    document.getElementById('job-company').textContent = `Công ty tuyển dụng tại ${job.countryName}`;
+                    document.getElementById('job-company').textContent = `Công ty tuyển dụng tại ${job.country}`;
                 }
                 
-                if (job.industry) {
-                    document.getElementById('job-industry').textContent = job.industry;
+                // Update gender and age requirements
+                let genderAge = '';
+                if (job.gender_requirement) {
+                    genderAge += job.gender_requirement;
+                }
+                if (job.age_min && job.age_max) {
+                    genderAge += ` (${job.age_min}-${job.age_max} tuổi)`;
+                } else if (job.age_min) {
+                    genderAge += ` (từ ${job.age_min} tuổi)`;
+                } else if (job.age_max) {
+                    genderAge += ` (dưới ${job.age_max} tuổi)`;
+                }
+                document.getElementById('job-gender').textContent = genderAge || 'Không yêu cầu';
+                
+                // Update birth year (calculate from age)
+                const currentYear = new Date().getFullYear();
+                let birthYear = '';
+                if (job.age_min && job.age_max) {
+                    const maxBirthYear = currentYear - job.age_min;
+                    const minBirthYear = currentYear - job.age_max;
+                    birthYear = `${minBirthYear}-${maxBirthYear}`;
+                } else if (job.age_min) {
+                    birthYear = `Trước ${currentYear - job.age_min}`;
+                } else if (job.age_max) {
+                    birthYear = `Sau ${currentYear - job.age_max}`;
+                }
+                document.getElementById('job-birth-year').textContent = birthYear || 'Không yêu cầu';
+                
+                // Update industry (use job description or default)
+                if (job.job_description) {
+                    document.getElementById('job-industry').textContent = job.job_description.substring(0, 50) + '...';
                 } else {
                     document.getElementById('job-industry').textContent = 'Đa ngành nghề';
                 }
                 
-                if (job.workDescription) {
-                    document.getElementById('job-specific').textContent = job.workDescription;
+                // Update specific work
+                if (job.job_requirements) {
+                    document.getElementById('job-specific').textContent = job.job_requirements.substring(0, 100) + '...';
                 } else {
-                    document.getElementById('job-specific').textContent = `Làm việc tại ${job.countryName} theo yêu cầu công ty.`;
+                    document.getElementById('job-specific').textContent = `Làm việc tại ${job.country} theo yêu cầu công ty.`;
                 }
                 
-                if (job.workingTime) {
-                    document.getElementById('job-working-time').textContent = job.workingTime;
+                // Update working time
+                if (job.work_hours) {
+                    document.getElementById('job-working-time').textContent = job.work_hours;
                 } else {
                     document.getElementById('job-working-time').textContent = '08h/ngày - 22 ngày/tháng';
                 }
                 
-                if (job.overtime) {
-                    document.getElementById('job-overtime').textContent = job.overtime;
+                // Update overtime info
+                if (job.overtime_pay) {
+                    document.getElementById('job-overtime').textContent = job.overtime_pay;
                 } else {
                     document.getElementById('job-overtime').textContent = 'Có làm thêm';
                 }
                 
-                if (job.expectedIncome) {
-                    document.getElementById('job-expected-income').textContent = job.expectedIncome;
+                // Calculate expected income based on salary
+                const salaryNum = parseFloat(job.salary_amount || 0);
+                let expectedIncome = '';
+                if (job.salary_currency === 'USD') {
+                    expectedIncome = `${Math.round(salaryNum * 25 / 1000)} Triệu/tháng`;
+                } else if (job.salary_currency === 'Yên') {
+                    expectedIncome = `${Math.round(salaryNum / 10000)} Man/tháng`;
+                } else if (job.salary_currency === 'Đài tệ') {
+                    expectedIncome = `${Math.round(salaryNum * 0.8 / 1000)} Triệu/tháng`;
+                } else if (job.salary_currency === 'RUB') {
+                    expectedIncome = `${Math.round(salaryNum * 0.3 / 1000)} Triệu/tháng`;
                 } else {
-                    // Calculate expected income based on salary
-                    const salaryNum = parseFloat(job.salary.replace(/[,\.]/g, ''));
-                    let expectedIncome = '';
-                    if (job.currency === 'Usd') {
-                        expectedIncome = `${Math.round(salaryNum * 25 / 1000)} Triệu/tháng`;
-                    } else if (job.currency === 'Yên') {
-                        expectedIncome = `${Math.round(salaryNum / 10000)} Man/tháng`;
-                    } else if (job.currency === 'Đài tệ') {
-                        expectedIncome = `${Math.round(salaryNum * 0.8 / 1000)} Triệu/tháng`;
-                    } else {
-                        expectedIncome = `${Math.round(salaryNum * 1.2)} ${job.currency}/tháng`;
-                    }
-                    document.getElementById('job-expected-income').textContent = expectedIncome;
+                    expectedIncome = `${salaryNum} ${job.salary_currency}/${job.salary_period || 'tháng'}`;
                 }
+                document.getElementById('job-expected-income').textContent = expectedIncome;
                 
+                // Update departure date
                 if (job.deadline) {
                     document.getElementById('job-departure').textContent = job.deadline;
+                } else {
+                    document.getElementById('job-departure').textContent = 'Liên tục';
                 }
                 
                 // Update consultant info
-                // document.getElementById('consultant-name').textContent = job.consultant; // Keep default "Mr Hải"
+                if (job.consultant_name) {
+                    document.getElementById('consultant-name').textContent = job.consultant_name;
+                }
                 
                 // Update contact methods
-                document.querySelector('.phone-contact').href = `tel:${job.phone}`;
-                document.querySelector('.phone-contact span').textContent = job.phone;
-                document.querySelector('.zalo-contact').href = `https://zalo.me/${job.phone}`;
-                document.querySelector('.zalo-contact span').textContent = job.phone;
-                document.querySelector('.facebook-contact').href = job.facebook;
+                if (job.consultant_phone) {
+                    document.querySelector('.phone-contact').href = `tel:${job.consultant_phone}`;
+                    document.querySelector('.phone-contact span').textContent = job.consultant_phone;
+                    document.querySelector('.zalo-contact').href = `https://zalo.me/${job.consultant_phone}`;
+                    document.querySelector('.zalo-contact span').textContent = job.consultant_phone;
+                }
+                
+                if (job.consultant_facebook) {
+                    document.querySelector('.facebook-contact').href = job.consultant_facebook;
+                }
                 
                 // Update job banner image
-                document.getElementById('job-banner-img').src = job.image;
+                if (job.image_url) {
+                    document.getElementById('job-banner-img').src = job.image_url;
+                }
                 
                 // Update detailed content based on country
                 updateDetailedContent(job);
                 
-            } else {
-                // Job not found, show error message
-                document.getElementById('job-main-title').textContent = 'Không tìm thấy thông tin công việc';
+                } else {
+                    // Job not found, show error message
+                    document.getElementById('job-main-title').textContent = 'Không tìm thấy thông tin công việc';
+                    document.querySelector('.job-detail-main').innerHTML = `
+                        <h1 class="job-title">Không tìm thấy công việc</h1>
+                        <p>Công việc với ID ${jobId} không tồn tại hoặc đã bị xóa.</p>
+                        <a href="index.html" class="contact-btn btn-consult">Quay lại trang chủ</a>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error loading job details:', error);
+                document.getElementById('job-main-title').textContent = 'Lỗi tải thông tin công việc';
                 document.querySelector('.job-detail-main').innerHTML = `
-                    <h1 class="job-title">Không tìm thấy công việc</h1>
-                    <p>Công việc với ID ${jobId} không tồn tại hoặc đã bị xóa.</p>
+                    <h1 class="job-title">Lỗi tải dữ liệu</h1>
+                    <p>Không thể tải thông tin công việc. Vui lòng thử lại sau.</p>
                     <a href="index.html" class="contact-btn btn-consult">Quay lại trang chủ</a>
                 `;
             }
@@ -1706,40 +1775,121 @@
         function updateDetailedContent(job) {
             const detailedContent = document.getElementById('job-detailed-content');
             
-            // Create detailed content based on country and job type
+            // Create detailed content using real database data
             let content = `
-                <p><strong>Thông tin chi tiết về công việc tại ${job.countryName}</strong></p>
-                <p>Công ty tuyển dụng: ${job.company || 'Công ty uy tín tại ' + job.countryName}</p>
-                
-                <h4>Mô tả công việc:</h4>
-                <ul>
-                    <li>Làm việc tại ${job.countryName} theo hợp đồng lao động chính thức</li>
-                    <li>Tuân thủ quy định pháp luật và nội quy công ty</li>
-                    <li>Được đào tạo và hướng dẫn kỹ thuật cần thiết</li>
-                    <li>Môi trường làm việc an toàn, chuyên nghiệp</li>
-                </ul>
-                
-                <h4>Quyền lợi:</h4>
-                <ul>
-                    <li>Lương cơ bản: ${job.salary} ${job.currency}/tháng</li>
-                    <li>Được cung cấp chỗ ở hoặc hỗ trợ tiền nhà</li>
-                    <li>Bảo hiểm y tế và tai nạn lao động</li>
-                    <li>Hỗ trợ vé máy bay khứ hồi</li>
-                    <li>Cơ hội gia hạn hợp đồng</li>
-                </ul>
-                
-                <h4>Yêu cầu:</h4>
-                <ul>
-                    <li>Giới tính: ${job.gender}</li>
-                    <li>Năm sinh: ${job.ageRange.replace(/[()]/g, '')}</li>
-                    <li>Sức khỏe tốt, không có bệnh truyền nhiễm</li>
-                    <li>Có tinh thần trách nhiệm và kỷ luật cao</li>
-                    <li>Sẵn sàng làm việc xa nhà trong thời gian dài</li>
-                </ul>
+                <p><strong>Thông tin chi tiết về công việc tại ${job.country}</strong></p>
+                <p>Công ty tuyển dụng: ${job.company || 'Công ty uy tín tại ' + job.country}</p>
             `;
             
+            // Job Description
+            if (job.job_description) {
+                content += `
+                    <h4>Mô tả công việc:</h4>
+                    <p>${job.job_description}</p>
+                `;
+            }
+            
+            // Job Requirements
+            if (job.job_requirements) {
+                content += `
+                    <h4>Yêu cầu công việc:</h4>
+                    <p>${job.job_requirements}</p>
+                `;
+            }
+            
+            // Benefits
+            if (job.benefits) {
+                content += `
+                    <h4>Quyền lợi:</h4>
+                    <p>${job.benefits}</p>
+                `;
+            } else {
+                content += `
+                    <h4>Quyền lợi:</h4>
+                    <ul>
+                        <li>Lương cơ bản: ${job.salary_amount} ${job.salary_currency}/${job.salary_period || 'tháng'}</li>
+                        <li>Được cung cấp chỗ ở hoặc hỗ trợ tiền nhà</li>
+                        <li>Bảo hiểm y tế và tai nạn lao động</li>
+                        <li>Hỗ trợ vé máy bay khứ hồi</li>
+                        <li>Cơ hội gia hạn hợp đồng</li>
+                    </ul>
+                `;
+            }
+            
+            // Working Conditions
+            if (job.working_conditions) {
+                content += `
+                    <h4>Điều kiện làm việc:</h4>
+                    <p>${job.working_conditions}</p>
+                `;
+            }
+            
+            // Accommodation
+            if (job.accommodation) {
+                content += `
+                    <h4>Chỗ ở:</h4>
+                    <p>${job.accommodation}</p>
+                `;
+            }
+            
+            // Meals
+            if (job.meals) {
+                content += `
+                    <h4>Ăn uống:</h4>
+                    <p>${job.meals}</p>
+                `;
+            }
+            
+            // Insurance
+            if (job.insurance) {
+                content += `
+                    <h4>Bảo hiểm:</h4>
+                    <p>${job.insurance}</p>
+                `;
+            }
+            
+            // Application Process
+            if (job.application_process) {
+                content += `
+                    <h4>Quy trình ứng tuyển:</h4>
+                    <p>${job.application_process}</p>
+                `;
+            }
+            
+            // Documents Required
+            if (job.documents_required) {
+                content += `
+                    <h4>Hồ sơ yêu cầu:</h4>
+                    <p>${job.documents_required}</p>
+                `;
+            }
+            
+            // Training Provided
+            if (job.training_provided) {
+                content += `
+                    <h4>Đào tạo cung cấp:</h4>
+                    <p>${job.training_provided}</p>
+                `;
+            }
+            
+            // Language Requirement
+            if (job.language_requirement) {
+                content += `
+                    <h4>Yêu cầu ngoại ngữ:</h4>
+                    <p>${job.language_requirement}</p>
+                `;
+            }
+            
+            // Additional Notes
+            if (job.additional_notes) {
+                content += `
+                    <h4>Ghi chú thêm:</h4>
+                    <p>${job.additional_notes}</p>
+                `;
+            }
+            
             // Add country-specific information
-            if (job.country === 'nhat-ban' || job.country === 'ky-su-nhat-ban' || job.country === 'tokutei-nhat') {
+            if (job.country === 'Nhật Bản') {
                 content += `
                     <h4>Đặc điểm làm việc tại Nhật Bản:</h4>
                     <ul>
@@ -1749,7 +1899,7 @@
                         <li>Chế độ phúc lợi tốt theo luật Nhật Bản</li>
                     </ul>
                 `;
-            } else if (job.country === 'dai-loan' || job.country === 'ky-su-dai-loan') {
+            } else if (job.country === 'Đài Loan') {
                 content += `
                     <h4>Đặc điểm làm việc tại Đài Loan:</h4>
                     <ul>
@@ -1759,7 +1909,7 @@
                         <li>Môi trường làm việc thân thiện</li>
                     </ul>
                 `;
-            } else if (job.country === 'nga') {
+            } else if (job.country === 'Nga') {
                 content += `
                     <h4>Đặc điểm làm việc tại Nga:</h4>
                     <ul>
@@ -1767,6 +1917,26 @@
                         <li>Học hỏi công nghệ và kỹ thuật tiên tiến</li>
                         <li>Chế độ nghỉ phép theo luật Nga</li>
                         <li>Được hỗ trợ học tiếng Nga cơ bản</li>
+                    </ul>
+                `;
+            } else if (job.country === 'Hàn Quốc') {
+                content += `
+                    <h4>Đặc điểm làm việc tại Hàn Quốc:</h4>
+                    <ul>
+                        <li>Công nghệ hiện đại và môi trường năng động</li>
+                        <li>Cơ hội học hỏi văn hóa K-pop</li>
+                        <li>Chế độ làm việc hiệu quả</li>
+                        <li>Được học tiếng Hàn cơ bản</li>
+                    </ul>
+                `;
+            } else if (job.country === 'Singapore') {
+                content += `
+                    <h4>Đặc điểm làm việc tại Singapore:</h4>
+                    <ul>
+                        <li>Môi trường đa văn hóa và hiện đại</li>
+                        <li>Hệ thống pháp luật minh bạch</li>
+                        <li>Cơ hội phát triển nghề nghiệp cao</li>
+                        <li>Giao tiếp bằng tiếng Anh</li>
                     </ul>
                 `;
             }

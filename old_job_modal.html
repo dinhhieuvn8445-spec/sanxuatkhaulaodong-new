@@ -1,0 +1,162 @@
+                    <!-- Job Form Modal -->
+                    <div id="jobFormModal" class="modal" style="display: none;">
+                        <div class="modal-content large-modal">
+                            <div class="modal-header">
+                                <h3 id="jobFormTitle">Thêm đơn hàng việc làm</h3>
+                                <span class="close" onclick="hideJobForm()">&times;</span>
+                            </div>
+                            <div class="modal-body">
+                                <form id="jobForm">
+                                    <input type="hidden" id="jobId" name="jobId">
+                                    
+                                    <div class="form-row">
+                                        <div class="form-group full-width">
+                                            <label for="jobTitle">Tiêu đề công việc *</label>
+                                            <input type="text" id="jobTitle" name="title" class="form-control" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="jobCountry">Quốc gia *</label>
+                                            <select id="jobCountry" name="country" class="form-control" required>
+                                                <option value="">Chọn quốc gia</option>
+                                                <option value="Nga">Nga</option>
+                                                <option value="Đài Loan">Đài Loan</option>
+                                                <option value="Nhật Bản">Nhật Bản</option>
+                                                <option value="Hàn Quốc">Hàn Quốc</option>
+                                                <option value="Singapore">Singapore</option>
+                                                <option value="Malaysia">Malaysia</option>
+                                                <option value="Thái Lan">Thái Lan</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="jobCountryFlag">Đường dẫn cờ quốc gia</label>
+                                            <input type="text" id="jobCountryFlag" name="country_flag" class="form-control" placeholder="/images/flags/russia.png">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="jobSalaryAmount">Mức lương *</label>
+                                            <input type="number" id="jobSalaryAmount" name="salary_amount" class="form-control" step="0.01" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="jobSalaryCurrency">Đơn vị tiền tệ *</label>
+                                            <select id="jobSalaryCurrency" name="salary_currency" class="form-control" required>
+                                                <option value="">Chọn đơn vị</option>
+                                                <option value="USD">USD</option>
+                                                <option value="Đài tệ">Đài tệ</option>
+                                                <option value="Yên">Yên</option>
+                                                <option value="Won">Won</option>
+                                                <option value="SGD">SGD</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="jobSalaryPeriod">Chu kỳ lương</label>
+                                            <select id="jobSalaryPeriod" name="salary_period" class="form-control">
+                                                <option value="tháng">Tháng</option>
+                                                <option value="năm">Năm</option>
+                                                <option value="giờ">Giờ</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="jobRequirements">Yêu cầu ứng viên</label>
+                                            <input type="text" id="jobRequirements" name="requirements" class="form-control" placeholder="Nam, Nữ (1990-2005)">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="jobDeadline">Hạn tuyển</label>
+                                            <input type="text" id="jobDeadline" name="deadline" class="form-control" placeholder="30/09/2025 hoặc Liên tục">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="jobImageUrl">Hình ảnh đơn hàng</label>
+                                            <!-- Drag & Drop Upload Area -->
+                                            <div class="image-upload-container">
+                                                <div class="drag-drop-area" id="dragDropArea">
+                                                    <div class="drag-drop-content">
+                                                        <i class="fas fa-cloud-upload-alt drag-icon"></i>
+                                                        <p class="drag-text">Kéo thả hình ảnh vào đây</p>
+                                                        <p class="drag-subtext">hoặc <span class="browse-link">chọn file</span></p>
+                                                        <input type="file" id="imageFileInput" accept="image/*" style="display: none;">
+                                                        <input type="url" id="jobImageUrl" name="image_url" class="form-control image-url-input" placeholder="hoặc nhập URL hình ảnh">
+                                                    </div>
+                                                    <div class="image-preview" id="imagePreview" style="display: none;">
+                                                        <img id="previewImg" src="" alt="Preview">
+                                                        <div class="image-actions">
+                                                            <button type="button" class="btn-remove-image" onclick="removeImage()">
+                                                                <i class="fas fa-times"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="upload-progress" id="uploadProgress" style="display: none;">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill" id="progressFill"></div>
+                                                    </div>
+                                                    <span class="progress-text" id="progressText">0%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="jobStatusBadge">Nhãn trạng thái</label>
+                                            <select id="jobStatusBadge" name="status_badge" class="form-control">
+                                                <option value="">Không có</option>
+                                                <option value="HOT">HOT</option>
+                                                <option value="ĐƠN MIỄN PHÍ">Đơn miễn phí</option>
+                                                <option value="PHÍ THẤP">Phí thấp</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-section">
+                                        <h4>Thông tin tư vấn viên</h4>
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="consultantName">Tên tư vấn viên *</label>
+                                                <input type="text" id="consultantName" name="consultant_name" class="form-control" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="consultantPhone">Số điện thoại *</label>
+                                                <input type="tel" id="consultantPhone" name="consultant_phone" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="consultantZalo">Zalo</label>
+                                                <input type="text" id="consultantZalo" name="consultant_zalo" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="consultantFacebook">Facebook</label>
+                                                <input type="url" id="consultantFacebook" name="consultant_facebook" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="jobViewCount">Số lượt xem</label>
+                                            <input type="number" id="jobViewCount" name="view_count" class="form-control" value="0">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="jobIsActive">Trạng thái hoạt động</label>
+                                            <select id="jobIsActive" name="is_active" class="form-control">
+                                                <option value="1">Hoạt động</option>
+                                                <option value="0">Tạm dừng</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" onclick="hideJobForm()">Hủy</button>
+                                <button type="button" class="btn btn-primary" onclick="saveJob()">Lưu</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>

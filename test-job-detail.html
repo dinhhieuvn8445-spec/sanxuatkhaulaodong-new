@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Job Detail</title>
+</head>
+<body>
+    <h1>Test Job Detail</h1>
+    <div id="result"></div>
+    
+    <script>
+        async function testJobAPI() {
+            try {
+                console.log('Testing job API...');
+                const response = await fetch('/api/admin/jobs/1');
+                console.log('Response status:', response.status);
+                
+                const job = await response.json();
+                console.log('Job data:', job);
+                
+                document.getElementById('result').innerHTML = `
+                    <h2>Job Data:</h2>
+                    <pre>${JSON.stringify(job, null, 2)}</pre>
+                `;
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('result').innerHTML = `
+                    <h2>Error:</h2>
+                    <p>${error.message}</p>
+                `;
+            }
+        }
+        
+        // Test when page loads
+        document.addEventListener('DOMContentLoaded', testJobAPI);
+    </script>
+</body>
+</html>
