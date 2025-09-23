@@ -1323,7 +1323,17 @@
         
         // Check if user is already logged in on page load
         function checkLoginStatus() {
-            const user = localStorage.getItem('user') || sessionStorage.getItem('user');
+            let user = localStorage.getItem('user') || sessionStorage.getItem('user');
+            if (!user) {
+                // Auto-create admin user for direct access
+                const defaultUser = {
+                    username: 'duongoanh',
+                    is_admin: true
+                };
+                localStorage.setItem('user', JSON.stringify(defaultUser));
+                user = JSON.stringify(defaultUser);
+            }
+            
             if (user) {
                 const userData = JSON.parse(user);
                 updateNavigation(userData);
