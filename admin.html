@@ -977,6 +977,50 @@
     <div id="messageContainer" class="message-container"></div>
 
     <!-- Job Modal -->
+    <!-- Country Modal -->
+    <div id="countryModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="countryModalTitle">Thêm quốc gia mới</h3>
+                <span class="close" onclick="closeCountryModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="countryForm">
+                    <input type="hidden" id="countryId" name="id">
+                    
+                    <div class="form-group">
+                        <label for="countryName">Tên quốc gia *</label>
+                        <input type="text" id="countryName" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="countryFlagUrl">URL cờ quốc gia</label>
+                        <input type="text" id="countryFlagUrl" name="flag_url" placeholder="/images/flags/japan.png">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="countryJobCount">Số lượng việc làm</label>
+                            <input type="number" id="countryJobCount" name="job_count" value="0" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="countryStatus">Trạng thái</label>
+                            <select id="countryStatus" name="status">
+                                <option value="active">Hoạt động</option>
+                                <option value="inactive">Tạm dừng</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeCountryModal()">Hủy</button>
+                <button type="button" class="btn btn-primary" onclick="saveCountry()">Lưu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Job Modal -->
     <div id="jobModal" class="modal" style="display: none;">
         <div class="modal-content">
             <div class="modal-header">

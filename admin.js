@@ -635,16 +635,46 @@ AdminDashboard.prototype.getStatusText = function(status) {
 
 // Global functions for table actions
 function addCountry() {
-    alert('Chức năng thêm quốc gia sẽ được phát triển');
+    showCountryForm();
 }
 
-function editCountry(id) {
-    alert(`Chỉnh sửa quốc gia ID: ${id}`);
+async function editCountry(id) {
+    try {
+        const response = await fetch(`/api/admin/countries/${id}`);
+        const country = await response.json();
+        
+        if (country.error) {
+            alert('Không thể tải thông tin quốc gia');
+            return;
+        }
+        
+        showCountryForm(country);
+    } catch (error) {
+        console.error('Error loading country:', error);
+        alert('Lỗi khi tải thông tin quốc gia');
+    }
 }
 
-function deleteCountry(id) {
+async function deleteCountry(id) {
     if (confirm('Bạn có chắc chắn muốn xóa quốc gia này?')) {
-        alert(`Đã xóa quốc gia ID: ${id}`);
+        try {
+            const response = await fetch(`/api/admin/countries/${id}`, {
+                method: 'DELETE'
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                alert('Xóa quốc gia thành công');
+                // Reload countries table
+                window.adminDashboard.loadTableData('countries');
+            } else {
+                alert('Lỗi khi xóa quốc gia: ' + result.message);
+            }
+        } catch (error) {
+            console.error('Error deleting country:', error);
+            alert('Lỗi khi xóa quốc gia');
+        }
     }
 }
 
@@ -706,6 +736,79 @@ async function deleteJob(id) {
             alert('Lỗi khi xóa đơn hàng');
         }
     }
+}
+
+function showCountryForm(countryData = null) {
+    const modal = document.getElementById('countryModal');
+    const form = document.getElementById('countryForm');
+    const modalTitle = document.getElementById('countryModalTitle');
+    
+    // Set modal title
+    if (countryData) {
+        modalTitle.textContent = 'Chỉnh sửa quốc gia';
+    } else {
+        modalTitle.textContent = 'Thêm quốc gia mới';
+    }
+    
+    // Reset form
+    form.reset();
+    
+    // Fill form if editing
+    if (countryData) {
+        document.getElementById('countryId').value = countryData.id || '';
+        document.getElementById('countryName').value = countryData.name || '';
+        document.getElementById('countryFlagUrl').value = countryData.flag_url || '';
+        document.getElementById('countryJobCount').value = countryData.job_count || 0;
+        document.getElementById('countryStatus').value = countryData.status || 'active';
+    }
+    
+    // Show modal
+    modal.style.display = 'block';
+}
+
+async function saveCountry() {
+    const form = document.getElementById('countryForm');
+    const formData = new FormData(form);
+    
+    // Convert FormData to JSON
+    const countryData = {};
+    for (let [key, value] of formData.entries()) {
+        countryData[key] = value;
+    }
+    
+    // Convert job_count to number
+    if (countryData.job_count) {
+        countryData.job_count = parseInt(countryData.job_count);
+    }
+    
+    try {
+        const response = await fetch('/api/admin/countries', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(countryData)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert('Lưu quốc gia thành công');
+            closeCountryModal();
+            // Reload countries table
+            window.adminDashboard.loadTableData('countries');
+        } else {
+            alert('Lỗi khi lưu quốc gia: ' + result.message);
+        }
+    } catch (error) {
+        console.error('Error saving country:', error);
+        alert('Lỗi khi lưu quốc gia');
+    }
+}
+
+function closeCountryModal() {
+    const modal = document.getElementById('countryModal');
+    modal.style.display = 'none';
 }
 
 function showJobForm(jobData = null, viewMode = false) {

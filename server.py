@@ -17,7 +17,7 @@ import mimetypes
 import cgi
 
 # Set the port
-PORT = 12000
+PORT = 12001
 
 # Change to the project directory
 project_dir = Path(__file__).parent
@@ -111,6 +111,78 @@ def get_countries_data():
     except Exception as e:
         print(f"Error getting countries: {e}")
         return []
+    finally:
+        conn.close()
+
+def get_country_by_id(country_id):
+    """Lấy thông tin quốc gia theo ID"""
+    conn = get_db_connection()
+    if not conn:
+        return None
+    
+    try:
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM countries WHERE id = ?", (country_id,))
+        row = cur.fetchone()
+        return dict(row) if row else None
+    except Exception as e:
+        print(f"Error getting country by ID: {e}")
+        return None
+    finally:
+        conn.close()
+
+def save_country(country_data):
+    """Lưu thông tin quốc gia (thêm mới hoặc cập nhật)"""
+    conn = get_db_connection()
+    if not conn:
+        return False
+    
+    try:
+        cur = conn.cursor()
+        
+        if 'id' in country_data and country_data['id']:
+            # Cập nhật quốc gia hiện có
+            cur.execute("""
+                UPDATE countries SET
+                    name = ?, flag_url = ?, job_count = ?, status = ?
+                WHERE id = ?
+            """, (
+                country_data.get('name'), country_data.get('flag_url'),
+                country_data.get('job_count', 0), country_data.get('status', 'active'),
+                country_data['id']
+            ))
+        else:
+            # Thêm quốc gia mới
+            cur.execute("""
+                INSERT INTO countries (name, flag_url, job_count, status, created_at)
+                VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)
+            """, (
+                country_data.get('name'), country_data.get('flag_url'),
+                country_data.get('job_count', 0), country_data.get('status', 'active')
+            ))
+        
+        conn.commit()
+        return True
+    except Exception as e:
+        print(f"Error saving country: {e}")
+        return False
+    finally:
+        conn.close()
+
+def delete_country(country_id):
+    """Xóa quốc gia"""
+    conn = get_db_connection()
+    if not conn:
+        return False
+    
+    try:
+        cur = conn.cursor()
+        cur.execute("DELETE FROM countries WHERE id = ?", (country_id,))
+        conn.commit()
+        return True
+    except Exception as e:
+        print(f"Error deleting country: {e}")
+        return False
     finally:
         conn.close()
 
@@ -384,6 +456,8 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.handle_save_content()
         elif self.path == '/api/admin/jobs':
             self.handle_save_job()
+        elif self.path == '/api/admin/countries':
+            self.handle_save_country()
         elif self.path == '/api/admin/upload-image':
             self.handle_image_upload_request()
         elif self.path == '/api/admin/upload-logo':
@@ -399,6 +473,18 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.handle_get_content()
         elif self.path == '/api/admin/countries':
             self.send_json_response(get_countries_data())
+        elif self.path.startswith('/api/admin/countries/'):
+            # Get country by ID: /api/admin/countries/123
+            country_id = self.path.split('/')[-1]
+            try:
+                country_id = int(country_id)
+                country = get_country_by_id(country_id)
+                if country:
+                    self.send_json_response(country)
+                else:
+                    self.send_json_response({'error': 'Country not found'}, 404)
+            except ValueError:
+                self.send_json_response({'error': 'Invalid country ID'}, 400)
         elif self.path == '/api/admin/jobs':
             self.send_json_response(get_jobs_data())
         elif self.path.startswith('/api/admin/jobs/'):
@@ -431,7 +517,18 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
     def do_DELETE(self):
         """Handle DELETE requests"""
-        if self.path.startswith('/api/admin/jobs/'):
+        if self.path.startswith('/api/admin/countries/'):
+            # Delete country by ID: /api/admin/countries/123
+            country_id = self.path.split('/')[-1]
+            try:
+                country_id = int(country_id)
+                if delete_country(country_id):
+                    self.send_json_response({'success': True, 'message': 'Country deleted successfully'})
+                else:
+                    self.send_json_response({'success': False, 'message': 'Failed to delete country'}, 500)
+            except ValueError:
+                self.send_json_response({'error': 'Invalid country ID'}, 400)
+        elif self.path.startswith('/api/admin/jobs/'):
             # Delete job by ID: /api/admin/jobs/123
             job_id = self.path.split('/')[-1]
             try:
@@ -527,6 +624,22 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 
         except Exception as e:
             print(f"Save job error: {e}")
+            self.send_json_response({'success': False, 'message': 'Lỗi server'})
+
+    def handle_save_country(self):
+        """Xử lý lưu thông tin quốc gia"""
+        try:
+            content_length = int(self.headers['Content-Length'])
+            post_data = self.rfile.read(content_length)
+            data = json.loads(post_data.decode('utf-8'))
+            
+            if save_country(data):
+                self.send_json_response({'success': True, 'message': 'Lưu quốc gia thành công'})
+            else:
+                self.send_json_response({'success': False, 'message': 'Lỗi khi lưu quốc gia'})
+                
+        except Exception as e:
+            print(f"Save country error: {e}")
             self.send_json_response({'success': False, 'message': 'Lỗi server'})
 
     def handle_image_upload_request(self):
