@@ -1495,7 +1495,7 @@ function removeBanner() {
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize after a short delay to ensure all elements are rendered
     setTimeout(() => {
-        window.imageUploadManager = new ImageUploadManager();
+        // Only initialize logo and banner managers - no general image manager
         window.logoUploadManager = new LogoUploadManager();
         window.bannerUploadManager = new BannerUploadManager();
     }, 500);
