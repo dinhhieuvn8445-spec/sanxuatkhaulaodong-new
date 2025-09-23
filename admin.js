@@ -39,6 +39,7 @@ class AdminDashboard {
         this.loadUserInfo();
         this.loadTabContent(this.currentTab);
         this.setupFormHandlers();
+        this.loadCountriesForDropdowns();
     }
 
     // Load user information
@@ -863,6 +864,13 @@ function showJobForm(jobData = null, viewMode = false) {
     
     // Show modal
     modal.style.display = 'block';
+    
+    // Reload countries for this modal after it's shown
+    setTimeout(() => {
+        if (window.adminDashboard) {
+            window.adminDashboard.loadCountriesForDropdowns();
+        }
+    }, 100);
 }
 
 async function saveJob() {
@@ -1591,6 +1599,90 @@ function removeBanner() {
         
         const fileInput = document.getElementById('bannerFileInput');
         if (fileInput) fileInput.value = '';
+    }
+}
+
+// Load countries for dropdowns
+AdminDashboard.prototype.loadCountriesForDropdowns = async function() {
+    try {
+        const response = await fetch('/api/admin/countries');
+        if (!response.ok) {
+            console.error('Failed to load countries');
+            return;
+        }
+        
+        const countries = await response.json();
+        
+        // Update all job country dropdowns (there might be multiple modals)
+        const jobCountrySelects = document.querySelectorAll('#jobCountry');
+        jobCountrySelects.forEach(jobCountrySelect => {
+            if (jobCountrySelect && jobCountrySelect.tagName === 'SELECT') {
+                // Clear existing options except the first one
+                jobCountrySelect.innerHTML = '<option value="">Chọn quốc gia</option>';
+                
+                // Sort countries by name
+                countries.sort((a, b) => a.name.localeCompare(b.name, 'vi'));
+                
+                // Add countries to dropdown
+                countries.forEach(country => {
+                    if (country.status === 'active') {
+                        const option = document.createElement('option');
+                        option.value = country.name;
+                        option.textContent = country.name;
+                        option.dataset.flagUrl = country.flag_url;
+                        jobCountrySelect.appendChild(option);
+                    }
+                });
+            }
+        });
+        
+        // Update job country filter dropdown
+        const jobCountryFilter = document.getElementById('jobCountryFilter');
+        if (jobCountryFilter) {
+            // Clear existing options except the first one
+            jobCountryFilter.innerHTML = '<option value="">Tất cả quốc gia</option>';
+            
+            // Add countries to filter dropdown
+            countries.forEach(country => {
+                if (country.status === 'active') {
+                    const option = document.createElement('option');
+                    option.value = country.name;
+                    option.textContent = country.name;
+                    jobCountryFilter.appendChild(option);
+                }
+            });
+        }
+        
+        console.log(`✅ Đã load ${countries.length} quốc gia vào dropdowns`);
+        
+    } catch (error) {
+        console.error('Error loading countries for dropdowns:', error);
+    }
+};
+
+// Auto-fill country flag when country is selected
+function onCountryChange(selectElement) {
+    // If selectElement is not provided, find the active one
+    if (!selectElement) {
+        const countrySelects = document.querySelectorAll('#jobCountry');
+        countrySelects.forEach(select => {
+            if (select.closest('.modal').style.display !== 'none') {
+                selectElement = select;
+            }
+        });
+    }
+    
+    if (!selectElement) return;
+    
+    // Find the corresponding flag input in the same modal
+    const modal = selectElement.closest('.modal') || selectElement.closest('.tab-content');
+    const flagInput = modal ? modal.querySelector('#jobCountryFlag') : document.getElementById('jobCountryFlag');
+    
+    if (selectElement && flagInput) {
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+        if (selectedOption && selectedOption.dataset.flagUrl) {
+            flagInput.value = selectedOption.dataset.flagUrl;
+        }
     }
 }
 

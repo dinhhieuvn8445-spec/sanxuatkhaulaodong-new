@@ -580,11 +580,7 @@
                     <div class="filter-bar">
                         <select id="jobCountryFilter" class="form-control">
                             <option value="">Tất cả quốc gia</option>
-                            <option value="Nga">Nga</option>
-                            <option value="Đài Loan">Đài Loan</option>
-                            <option value="Nhật Bản">Nhật Bản</option>
-                            <option value="Hàn Quốc">Hàn Quốc</option>
-                            <option value="Singapore">Singapore</option>
+                            <!-- Countries will be loaded dynamically -->
                         </select>
                         <select id="jobStatusFilter" class="form-control">
                             <option value="">Tất cả trạng thái</option>
@@ -638,15 +634,9 @@
                                     <div class="form-row">
                                         <div class="form-group">
                                             <label for="jobCountry">Quốc gia *</label>
-                                            <select id="jobCountry" name="country" class="form-control" required>
+                                            <select id="jobCountry" name="country" class="form-control" required onchange="onCountryChange()">
                                                 <option value="">Chọn quốc gia</option>
-                                                <option value="Nga">Nga</option>
-                                                <option value="Đài Loan">Đài Loan</option>
-                                                <option value="Nhật Bản">Nhật Bản</option>
-                                                <option value="Hàn Quốc">Hàn Quốc</option>
-                                                <option value="Singapore">Singapore</option>
-                                                <option value="Malaysia">Malaysia</option>
-                                                <option value="Thái Lan">Thái Lan</option>
+                                                <!-- Countries will be loaded dynamically -->
                                             </select>
                                         </div>
                                         <div class="form-group">
@@ -1038,7 +1028,10 @@
                         </div>
                         <div class="form-group">
                             <label for="jobCountry">Quốc gia *</label>
-                            <input type="text" id="jobCountry" name="jobCountry" required>
+                            <select id="jobCountry" name="jobCountry" class="form-control" required onchange="onCountryChange()">
+                                <option value="">Chọn quốc gia</option>
+                                <!-- Countries will be loaded dynamically -->
+                            </select>
                         </div>
                     </div>
                     
