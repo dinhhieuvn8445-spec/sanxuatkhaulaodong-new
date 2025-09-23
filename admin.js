@@ -2,6 +2,36 @@
 class AdminDashboard {
     constructor() {
         this.currentTab = 'dashboard';
+        // Dữ liệu gốc để khôi phục
+        this.originalData = {
+            logo: {
+                logo: '/images/logos/duong-oanh-logo-new.svg'
+            },
+            banner: {
+                banner: '/images/duong-oanh-banner.png'
+            },
+            header: {
+                companyName: 'Dương Oanh Xuất Khẩu Lao Động',
+                slogan: 'Chuyên viên tư vấn & CTV du học - XKLĐ',
+                hotline: '0972.291.984',
+                email: 'duongoanh@xkld.com',
+                address: 'Hà Nội, Việt Nam'
+            },
+            home: {
+                title: 'DƯƠNG OANH XKLĐ TUYỂN DỤNG',
+                subtitle: 'Chuyên viên tư vấn & CTV du học - XKLĐ',
+                description: 'Chúng tôi cung cấp dịch vụ xuất khẩu lao động chuyên nghiệp, uy tín với nhiều năm kinh nghiệm.',
+                primaryButton: 'Xem chi tiết',
+                secondaryButton: 'Liên hệ tư vấn'
+            },
+            footer: {
+                companyInfo: 'Công ty TNHH Dương Oanh\nChuyên xuất khẩu lao động',
+                contactInfo: 'Hotline: 0972.291.984\nEmail: duongoanh@xkld.com',
+                services: 'Xuất khẩu lao động\nTư vấn du học\nDịch vụ visa',
+                socialMedia: 'Facebook\nZalo\nYoutube',
+                copyright: '© 2024 Dương Oanh XKLĐ. Tất cả quyền được bảo lưu.'
+            }
+        };
         this.init();
     }
 
@@ -54,11 +84,26 @@ class AdminDashboard {
         if (tabName === 'home') {
             this.showLoading();
             try {
-                // Load header data
+                // Load header data for logo and banner
                 const headerResponse = await fetch('/api/admin/content/header');
                 if (headerResponse.ok) {
                     const headerData = await headerResponse.json();
-                    this.populateForm('header', headerData);
+                    
+                    // Populate logo form
+                    if (headerData.logo) {
+                        this.populateForm('logo', { logo: headerData.logo });
+                    }
+                    
+                    // Populate banner form
+                    if (headerData.banner) {
+                        this.populateForm('banner', { banner: headerData.banner });
+                    }
+                    
+                    // Populate header form (without logo and banner)
+                    const headerOnlyData = { ...headerData };
+                    delete headerOnlyData.logo;
+                    delete headerOnlyData.banner;
+                    this.populateForm('header', headerOnlyData);
                 }
                 
                 // Load home data
@@ -107,16 +152,59 @@ class AdminDashboard {
         if (!form || !data) return;
 
         Object.keys(data).forEach(key => {
-            const field = form.querySelector(`[name="${key}"]`);
+            let field = form.querySelector(`[name="${key}"]`);
+            
+            // Xử lý đặc biệt cho logo form
+            if (tabName === 'logo' && key === 'logo') {
+                field = document.getElementById('logoFile');
+            }
+            // Xử lý đặc biệt cho banner form
+            else if (tabName === 'banner' && key === 'banner') {
+                field = document.getElementById('bannerFile');
+            }
+            
             if (field) {
                 field.value = data[key] || '';
+            }
+            
+            // Xử lý đặc biệt cho logo và banner preview
+            if (key === 'logo' && data[key]) {
+                this.showImagePreview('logo', data[key]);
+            } else if (key === 'banner' && data[key]) {
+                this.showImagePreview('banner', data[key]);
             }
         });
     }
 
+    // Hiển thị preview cho logo/banner
+    showImagePreview(type, imageUrl) {
+        const previewContainer = document.getElementById(`${type}Preview`);
+        const previewImg = document.getElementById(`${type}PreviewImg`);
+        const dropArea = document.getElementById(`${type}DropArea`);
+        
+        if (previewContainer && previewImg && dropArea) {
+            previewImg.src = imageUrl;
+            previewContainer.style.display = 'block';
+            
+            // Ẩn drag-drop-content
+            const dragDropContent = dropArea.querySelector('.drag-drop-content');
+            if (dragDropContent) {
+                dragDropContent.style.display = 'none';
+            }
+            
+            console.log(`Showing ${type} preview:`, imageUrl);
+        } else {
+            console.error(`Cannot find elements for ${type} preview:`, {
+                previewContainer: !!previewContainer,
+                previewImg: !!previewImg,
+                dropArea: !!dropArea
+            });
+        }
+    }
+
     // Setup form submit handlers
     setupFormHandlers() {
-        const forms = ['headerForm', 'homeForm', 'aboutForm', 'guideForm', 'consultationForm', 'footerForm', 'settingsForm'];
+        const forms = ['logoForm', 'bannerForm', 'headerForm', 'homeForm', 'aboutForm', 'guideForm', 'consultationForm', 'footerForm', 'settingsForm'];
         
         forms.forEach(formId => {
             const form = document.getElementById(formId);
@@ -141,13 +229,42 @@ class AdminDashboard {
         this.showLoading();
 
         try {
-            const response = await fetch(`/api/admin/content/${tabName}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data)
-            });
+            let response;
+            
+            // Xử lý đặc biệt cho logo và banner - lưu vào header
+            if (tabName === 'logo' || tabName === 'banner') {
+                // Lấy dữ liệu header hiện tại
+                const headerResponse = await fetch('/api/admin/content/header');
+                let headerData = {};
+                if (headerResponse.ok) {
+                    headerData = await headerResponse.json();
+                }
+                
+                // Cập nhật logo hoặc banner
+                if (tabName === 'logo') {
+                    headerData.logo = data.logo;
+                } else if (tabName === 'banner') {
+                    headerData.banner = data.banner;
+                }
+                
+                // Lưu lại header với dữ liệu mới
+                response = await fetch('/api/admin/content/header', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(headerData)
+                });
+            } else {
+                // Lưu bình thường cho các form khác
+                response = await fetch(`/api/admin/content/${tabName}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+            }
 
             const result = await response.json();
 
@@ -165,12 +282,71 @@ class AdminDashboard {
     }
 
     // Reset form to original values
-    resetForm(formId) {
+    async resetForm(formId) {
         const form = document.getElementById(formId);
         const tabName = formId.replace('Form', '');
         
-        if (confirm('Bạn có chắc muốn khôi phục về dữ liệu gốc?')) {
+        // Sử dụng dữ liệu gốc thay vì tải từ database
+        if (this.originalData[tabName]) {
+            // Populate form với dữ liệu gốc
+            this.populateForm(tabName, this.originalData[tabName]);
+            
+            // Lưu dữ liệu gốc vào database
+            try {
+                this.showLoading();
+                let response;
+                
+                // Xử lý đặc biệt cho logo và banner - lưu vào header
+                if (tabName === 'logo' || tabName === 'banner') {
+                    // Lấy dữ liệu header hiện tại
+                    const headerResponse = await fetch('/api/admin/content/header');
+                    let headerData = {};
+                    if (headerResponse.ok) {
+                        headerData = await headerResponse.json();
+                    }
+                    
+                    // Cập nhật logo hoặc banner
+                    if (tabName === 'logo') {
+                        headerData.logo = this.originalData[tabName].logo;
+                    } else if (tabName === 'banner') {
+                        headerData.banner = this.originalData[tabName].banner;
+                    }
+                    
+                    // Lưu lại header với dữ liệu mới
+                    response = await fetch('/api/admin/content/header', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(headerData)
+                    });
+                } else {
+                    // Lưu bình thường cho các form khác
+                    response = await fetch(`/api/admin/content/${tabName}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(this.originalData[tabName])
+                    });
+                }
+
+                if (response.ok) {
+                    this.showMessage('Đã khôi phục và lưu dữ liệu gốc thành công!', 'success');
+                    console.log('Restored and saved original data for:', tabName, this.originalData[tabName]);
+                } else {
+                    throw new Error('Failed to save original data');
+                }
+            } catch (error) {
+                console.error('Error saving original data:', error);
+                this.showMessage('Đã khôi phục form nhưng không thể lưu vào database', 'warning');
+            } finally {
+                this.hideLoading();
+            }
+        } else {
+            // Fallback: tải lại từ database nếu không có dữ liệu gốc
             this.loadTabContent(tabName);
+            this.showMessage('Đã tải lại dữ liệu từ database', 'info');
         }
     }
 

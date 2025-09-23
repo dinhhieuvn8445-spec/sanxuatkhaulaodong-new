@@ -179,14 +179,14 @@
 
                 <!-- Home Tab -->
                 <div id="home-tab" class="tab-content">
-                    <!-- Header Section -->
+                    <!-- Logo Section -->
                     <div class="content-header">
-                        <h2><i class="fas fa-window-maximize"></i> Quản lý Header</h2>
+                        <h2><i class="fas fa-image"></i> Quản lý Logo</h2>
                     </div>
                     
-                    <form class="admin-form" id="headerForm">
+                    <form class="admin-form" id="logoForm">
                         <div class="form-group">
-                            <label for="headerLogo">Logo công ty:</label>
+                            <label for="logoFile">Logo công ty:</label>
                             <!-- Logo Drag & Drop Upload Area -->
                             <div class="image-upload-container">
                                 <div class="drag-drop-area logo-upload" id="logoDropArea">
@@ -195,7 +195,7 @@
                                         <p class="drag-text">Kéo thả logo vào đây</p>
                                         <p class="drag-subtext">hoặc <span class="browse-link">chọn file logo</span></p>
                                         <input type="file" id="logoFileInput" accept="image/*" style="display: none;">
-                                        <input type="hidden" id="headerLogo" name="logo" class="form-control">
+                                        <input type="hidden" id="logoFile" name="logo" class="form-control">
                                     </div>
                                     <div class="image-preview" id="logoPreview" style="display: none;">
                                         <img id="logoPreviewImg" src="" alt="Logo Preview">
@@ -215,6 +215,74 @@
                             </div>
                         </div>
 
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Lưu thay đổi Logo
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="resetForm('logoForm')">
+                                <i class="fas fa-undo"></i> Khôi phục Logo
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Divider -->
+                    <hr style="margin: 30px 0; border: 1px solid #e0e0e0;">
+
+                    <!-- Banner Section -->
+                    <div class="content-header">
+                        <h2><i class="fas fa-panorama"></i> Quản lý Banner</h2>
+                    </div>
+                    
+                    <form class="admin-form" id="bannerForm">
+                        <div class="form-group">
+                            <label for="bannerFile">Banner quảng cáo:</label>
+                            <!-- Banner Drag & Drop Upload Area -->
+                            <div class="image-upload-container">
+                                <div class="drag-drop-area banner-upload" id="bannerDropArea">
+                                    <div class="drag-drop-content">
+                                        <i class="fas fa-panorama drag-icon"></i>
+                                        <p class="drag-text">Kéo thả banner vào đây</p>
+                                        <p class="drag-subtext">hoặc <span class="browse-link">chọn file banner</span></p>
+                                        <input type="file" id="bannerFileInput" accept="image/*" style="display: none;">
+                                        <input type="hidden" id="bannerFile" name="banner" class="form-control">
+                                    </div>
+                                    <div class="image-preview" id="bannerPreview" style="display: none;">
+                                        <img id="bannerPreviewImg" src="" alt="Banner Preview">
+                                        <div class="image-actions">
+                                            <button type="button" class="btn-remove-image" onclick="removeBanner()">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="upload-progress" id="bannerUploadProgress" style="display: none;">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="bannerProgressFill"></div>
+                                    </div>
+                                    <span class="progress-text" id="bannerProgressText">0%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Lưu thay đổi Banner
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="resetForm('bannerForm')">
+                                <i class="fas fa-undo"></i> Khôi phục Banner
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Divider -->
+                    <hr style="margin: 30px 0; border: 1px solid #e0e0e0;">
+
+                    <!-- Header Section -->
+                    <div class="content-header">
+                        <h2><i class="fas fa-window-maximize"></i> Quản lý Header</h2>
+                    </div>
+                    
+                    <form class="admin-form" id="headerForm">
                         <div class="form-group">
                             <label for="headerCompanyName">Tên công ty:</label>
                             <input type="text" id="headerCompanyName" name="companyName" class="form-control" placeholder="Tên công ty">
@@ -240,42 +308,12 @@
                             <textarea id="headerAddress" name="address" class="form-control" rows="2" placeholder="Địa chỉ công ty"></textarea>
                         </div>
 
-                        <div class="form-group">
-                            <label for="headerBanner">Banner quảng cáo:</label>
-                            <!-- Banner Drag & Drop Upload Area -->
-                            <div class="image-upload-container">
-                                <div class="drag-drop-area banner-upload" id="bannerDropArea">
-                                    <div class="drag-drop-content">
-                                        <i class="fas fa-panorama drag-icon"></i>
-                                        <p class="drag-text">Kéo thả banner vào đây</p>
-                                        <p class="drag-subtext">hoặc <span class="browse-link">chọn file banner</span></p>
-                                        <input type="file" id="bannerFileInput" accept="image/*" style="display: none;">
-                                        <input type="hidden" id="headerBanner" name="banner" class="form-control">
-                                    </div>
-                                    <div class="image-preview" id="bannerPreview" style="display: none;">
-                                        <img id="bannerPreviewImg" src="" alt="Banner Preview">
-                                        <div class="image-actions">
-                                            <button type="button" class="btn-remove-image" onclick="removeBanner()">
-                                                <i class="fas fa-times"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="upload-progress" id="bannerUploadProgress" style="display: none;">
-                                    <div class="progress-bar">
-                                        <div class="progress-fill" id="bannerProgressFill"></div>
-                                    </div>
-                                    <span class="progress-text" id="bannerProgressText">0%</span>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="form-actions">
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-save"></i> Lưu thay đổi Header
                             </button>
                             <button type="button" class="btn btn-secondary" onclick="resetForm('headerForm')">
-                                <i class="fas fa-undo"></i> Khôi phục
+                                <i class="fas fa-undo"></i> Khôi phục Header
                             </button>
                         </div>
                     </form>
