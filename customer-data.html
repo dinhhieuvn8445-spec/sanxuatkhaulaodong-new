@@ -184,11 +184,11 @@
                 tbody.innerHTML = data.map(item => `
                     <tr>
                         <td>${item.id}</td>
-                        <td>${item.name || 'N/A'}</td>
+                        <td>${item.full_name || 'N/A'}</td>
                         <td>${item.email || 'N/A'}</td>
                         <td>${item.phone || 'N/A'}</td>
                         <td>${item.country || 'N/A'}</td>
-                        <td>${item.service_type || 'N/A'}</td>
+                        <td>${item.form_type || 'N/A'}</td>
                         <td>
                             <span class="status-badge status-${item.status || 'new'}">
                                 ${getStatusText(item.status)}
