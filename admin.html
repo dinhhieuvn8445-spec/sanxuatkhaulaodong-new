@@ -61,7 +61,7 @@
                             </a>
                         </li>
                         <li class="nav-item" data-tab="customer-registrations">
-                            <a href="#" onclick="switchTab('customer-registrations')">
+                            <a href="customer-data.html" style="color: inherit; text-decoration: none;">
                                 <i class="fas fa-user-plus"></i>
                                 <span>Dữ liệu khách hàng</span>
                             </a>
@@ -955,7 +955,7 @@
                 </div>
 
                 <!-- Customer Registrations Tab -->
-                <div id="customer-registrations-tab" class="tab-content active" style="display: block !important;">
+                <div id="customer-registrations-tab" class="tab-content active" style="display: block !important; visibility: visible !important; opacity: 1 !important;">
                     <div class="content-header">
                         <h2><i class="fas fa-user-plus"></i> Dữ liệu khách hàng đăng ký</h2>
                         <div class="header-actions">
@@ -1315,5 +1315,51 @@
     </div>
 
     <script src="admin.js"></script>
+    <script>
+        // Force load customer registrations data on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                console.log('Force loading customer registrations...');
+                if (window.adminDashboard && window.adminDashboard.loadTableData) {
+                    window.adminDashboard.loadTableData('customer-registrations');
+                } else {
+                    // Fallback: load data directly
+                    fetch('/api/admin/customer-registrations')
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Customer data loaded:', data);
+                            const tbody = document.querySelector('#customer-registrationsTable tbody');
+                            if (tbody && data.length > 0) {
+                                tbody.innerHTML = data.map((item, index) => `
+                                    <tr>
+                                        <td>${index + 1}</td>
+                                        <td>${item.full_name || ''}</td>
+                                        <td>${item.phone || ''}</td>
+                                        <td>${item.email || ''}</td>
+                                        <td>${item.age || ''}</td>
+                                        <td>${item.gender === 'male' ? 'Nam' : 'Nữ'}</td>
+                                        <td>${item.province || ''}</td>
+                                        <td>${item.country || ''}</td>
+                                        <td>${item.industry || ''}</td>
+                                        <td>${item.experience || ''}</td>
+                                        <td>${item.form_type || ''}</td>
+                                        <td>${new Date(item.created_at).toLocaleDateString('vi-VN')}</td>
+                                        <td>
+                                            <button class="btn btn-danger btn-sm" onclick="deleteCustomerRegistration(${item.id})">
+                                                <i class="fas fa-trash"></i> Xóa
+                                            </button>
+                                        </td>
+                                    </tr>
+                                `).join('');
+                                
+                                // Update stats
+                                document.getElementById('totalCustomers').textContent = data.length;
+                            }
+                        })
+                        .catch(error => console.error('Error loading customer data:', error));
+                }
+            }, 1000);
+        });
+    </script>
 </body>
 </html>
