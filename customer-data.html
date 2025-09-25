@@ -137,6 +137,7 @@
                         <th>Số điện thoại</th>
                         <th>Quốc gia quan tâm</th>
                         <th>Ngành nghề</th>
+                        <th>Kinh nghiệm</th>
                         <th>Trạng thái</th>
                         <th>Ngày đăng ký</th>
                         <th>Thao tác</th>
@@ -144,7 +145,7 @@
                 </thead>
                 <tbody id="customerRegistrationsTableBody">
                     <tr>
-                        <td colspan="9" class="loading">
+                        <td colspan="10" class="loading">
                             <i class="fas fa-spinner fa-spin"></i> Đang tải dữ liệu...
                         </td>
                     </tr>
@@ -189,6 +190,7 @@
                         <td>${item.phone || 'N/A'}</td>
                         <td>${item.country || 'N/A'}</td>
                         <td>${getIndustryText(item.industry)}</td>
+                        <td>${getExperienceText(item.experience)}</td>
                         <td>
                             <span class="status-badge status-${item.status || 'new'}">
                                 ${getStatusText(item.status)}
@@ -248,6 +250,22 @@
                 'logistics': 'Vận tải - Logistics'
             };
             return industries[industry] || industry || 'N/A';
+        }
+
+        function getExperienceText(experience) {
+            const experiences = {
+                'none': 'Chưa có kinh nghiệm',
+                'no-experience': 'Chưa có kinh nghiệm',
+                '1-2': '1-2 năm',
+                '1-2-years': '1-2 năm',
+                '3-5': '3-5 năm',
+                '3-5-years': '3-5 năm',
+                '5-10': '5-10 năm',
+                '5-10-years': '5-10 năm',
+                '10+': 'Trên 10 năm',
+                '10+-years': 'Trên 10 năm'
+            };
+            return experiences[experience] || experience || 'N/A';
         }
 
         function formatDate(dateString) {
