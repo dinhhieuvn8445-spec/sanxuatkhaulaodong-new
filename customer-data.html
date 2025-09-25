@@ -136,7 +136,7 @@
                         <th>Email</th>
                         <th>Số điện thoại</th>
                         <th>Quốc gia quan tâm</th>
-                        <th>Loại dịch vụ</th>
+                        <th>Ngành nghề</th>
                         <th>Trạng thái</th>
                         <th>Ngày đăng ký</th>
                         <th>Thao tác</th>
@@ -188,7 +188,7 @@
                         <td>${item.email || 'N/A'}</td>
                         <td>${item.phone || 'N/A'}</td>
                         <td>${item.country || 'N/A'}</td>
-                        <td>${item.form_type || 'N/A'}</td>
+                        <td>${getIndustryText(item.industry)}</td>
                         <td>
                             <span class="status-badge status-${item.status || 'new'}">
                                 ${getStatusText(item.status)}
@@ -223,6 +223,31 @@
                 'converted': 'Đã chuyển đổi'
             };
             return statusMap[status] || 'Mới';
+        }
+
+        function getIndustryText(industry) {
+            const industries = {
+                'manufacturing': 'Sản xuất - Chế tạo',
+                'construction': 'Xây dựng',
+                'agriculture': 'Nông nghiệp',
+                'food-processing': 'Chế biến thực phẩm',
+                'electronics': 'Điện tử',
+                'automotive': 'Ô tô - Xe máy',
+                'textile': 'Dệt may',
+                'hospitality': 'Khách sạn - Nhà hàng',
+                'healthcare': 'Y tế - Chăm sóc',
+                'mechanical': 'Cơ khí',
+                'metalworking': 'Công xưởng',
+                'leather': 'Da giày',
+                'furniture': 'Gỗ nội thất',
+                'seafood': 'Thủy sản',
+                'pharmaceutical': 'Y tế - Dược phẩm',
+                'elderly-care': 'Chăm sóc người già',
+                'beauty-spa': 'Làm đẹp - Spa',
+                'education': 'Giáo dục - Đào tạo',
+                'logistics': 'Vận tải - Logistics'
+            };
+            return industries[industry] || industry || 'N/A';
         }
 
         function formatDate(dateString) {
