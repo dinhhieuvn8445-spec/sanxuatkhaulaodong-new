@@ -406,7 +406,7 @@ def get_dashboard_stats():
         cur = conn.cursor()
         
         # Đếm việc làm
-        cur.execute("SELECT COUNT(*) FROM jobs WHERE status = 'active'")
+        cur.execute("SELECT COUNT(*) FROM jobs")
         total_jobs = cur.fetchone()[0]
         
         # Đếm hồ sơ ứng tuyển
@@ -414,7 +414,7 @@ def get_dashboard_stats():
         total_applications = cur.fetchone()[0]
         
         # Đếm quốc gia
-        cur.execute("SELECT COUNT(*) FROM countries WHERE status = 'active'")
+        cur.execute("SELECT COUNT(*) FROM countries")
         total_countries = cur.fetchone()[0]
         
         # Đếm người dùng
@@ -461,6 +461,76 @@ def is_valid_image_type(filename):
     valid_extensions = {'.jpg', '.jpeg', '.png', '.gif', '.webp'}
     return Path(filename).suffix.lower() in valid_extensions
 
+def save_customer_registration(customer_data):
+    """Lưu thông tin đăng ký khách hàng"""
+    conn = get_db_connection()
+    if not conn:
+        return False
+    
+    try:
+        cur = conn.cursor()
+        cur.execute("""
+            INSERT INTO customer_registrations 
+            (full_name, phone, email, age, gender, province, country, industry, experience, notes, form_type, created_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+        """, (
+            customer_data.get('fullName') or customer_data.get('name'),
+            customer_data.get('phone'),
+            customer_data.get('email'),
+            customer_data.get('age'),
+            customer_data.get('gender'),
+            customer_data.get('province'),
+            customer_data.get('country'),
+            customer_data.get('industry'),
+            customer_data.get('experience'),
+            customer_data.get('notes'),
+            customer_data.get('form_type', 'consultation')
+        ))
+        
+        conn.commit()
+        return True
+    except Exception as e:
+        print(f"Error saving customer registration: {e}")
+        return False
+    finally:
+        conn.close()
+
+def get_customer_registrations():
+    """Lấy danh sách đăng ký khách hàng"""
+    conn = get_db_connection()
+    if not conn:
+        return []
+    
+    try:
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT * FROM customer_registrations 
+            ORDER BY created_at DESC
+        """)
+        return [dict(row) for row in cur.fetchall()]
+    except Exception as e:
+        print(f"Error getting customer registrations: {e}")
+        return []
+    finally:
+        conn.close()
+
+def delete_customer_registration(registration_id):
+    """Xóa đăng ký khách hàng"""
+    conn = get_db_connection()
+    if not conn:
+        return False
+    
+    try:
+        cur = conn.cursor()
+        cur.execute("DELETE FROM customer_registrations WHERE id = ?", (registration_id,))
+        conn.commit()
+        return True
+    except Exception as e:
+        print(f"Error deleting customer registration: {e}")
+        return False
+    finally:
+        conn.close()
+
 class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def end_headers(self):
         # Add CORS headers
@@ -480,6 +550,8 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         """Handle POST requests"""
         if self.path == '/api/login':
             self.handle_login()
+        elif self.path == '/api/customer-registration':
+            self.handle_customer_registration()
         elif self.path.startswith('/api/admin/content/'):
             self.handle_save_content()
         elif self.path == '/api/admin/jobs':
@@ -535,6 +607,8 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.send_json_response(get_partners_data())
         elif self.path == '/api/admin/users':
             self.send_json_response(get_users_data())
+        elif self.path == '/api/admin/customer-registrations':
+            self.send_json_response(get_customer_registrations())
         elif self.path == '/api/admin/dashboard/stats':
             self.send_json_response(get_dashboard_stats())
         else:
@@ -567,6 +641,17 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                     self.send_json_response({'success': False, 'message': 'Failed to delete job'}, 500)
             except ValueError:
                 self.send_json_response({'error': 'Invalid job ID'}, 400)
+        elif self.path.startswith('/api/admin/customer-registrations/'):
+            # Delete customer registration by ID: /api/admin/customer-registrations/123
+            registration_id = self.path.split('/')[-1]
+            try:
+                registration_id = int(registration_id)
+                if delete_customer_registration(registration_id):
+                    self.send_json_response({'success': True, 'message': 'Customer registration deleted successfully'})
+                else:
+                    self.send_json_response({'success': False, 'message': 'Failed to delete customer registration'}, 500)
+            except ValueError:
+                self.send_json_response({'error': 'Invalid registration ID'}, 400)
         else:
             self.send_error(404)
 
@@ -632,6 +717,62 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 
         except Exception as e:
             print(f"Login error: {e}")
+            self.send_json_response({'success': False, 'message': 'Lỗi server'})
+
+    def handle_customer_registration(self):
+        """Xử lý đăng ký khách hàng"""
+        try:
+            content_length = int(self.headers['Content-Length'])
+            post_data = self.rfile.read(content_length)
+            data = json.loads(post_data.decode('utf-8'))
+            
+            # Validate required fields
+            required_fields = ['phone', 'age', 'gender']
+            name_field = data.get('fullName') or data.get('name')
+            
+            if not name_field:
+                self.send_json_response({'success': False, 'message': 'Họ và tên là bắt buộc'})
+                return
+                
+            for field in required_fields:
+                if not data.get(field):
+                    field_names = {
+                        'phone': 'Số điện thoại',
+                        'age': 'Tuổi', 
+                        'gender': 'Giới tính'
+                    }
+                    self.send_json_response({'success': False, 'message': f'{field_names[field]} là bắt buộc'})
+                    return
+            
+            # Validate phone number format
+            import re
+            phone = data.get('phone', '').replace(' ', '').replace('-', '')
+            phone_pattern = r'^(0|\+84)[3|5|7|8|9][0-9]{8}$'
+            if not re.match(phone_pattern, phone):
+                self.send_json_response({'success': False, 'message': 'Số điện thoại không hợp lệ'})
+                return
+            
+            # Validate email if provided
+            email = data.get('email')
+            if email:
+                email_pattern = r'^[^\s@]+@[^\s@]+\.[^\s@]+$'
+                if not re.match(email_pattern, email):
+                    self.send_json_response({'success': False, 'message': 'Email không hợp lệ'})
+                    return
+            
+            # Save to database
+            if save_customer_registration(data):
+                self.send_json_response({
+                    'success': True, 
+                    'message': 'Đăng ký thành công! Chúng tôi sẽ liên hệ với bạn sớm nhất.'
+                })
+            else:
+                self.send_json_response({'success': False, 'message': 'Lỗi khi lưu thông tin. Vui lòng thử lại.'})
+                
+        except json.JSONDecodeError:
+            self.send_json_response({'success': False, 'message': 'Dữ liệu không hợp lệ'})
+        except Exception as e:
+            print(f"Customer registration error: {e}")
             self.send_json_response({'success': False, 'message': 'Lỗi server'})
 
     def handle_get_content(self):

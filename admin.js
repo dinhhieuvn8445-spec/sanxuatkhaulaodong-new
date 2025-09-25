@@ -39,6 +39,8 @@ class AdminDashboard {
         this.loadUserInfo();
         this.loadTabContent(this.currentTab);
         this.setupFormHandlers();
+        // Set dashboard as active by default
+        this.switchTab('dashboard');
     }
 
     // Load user information
@@ -60,8 +62,11 @@ class AdminDashboard {
         });
 
         // Add active class to selected tab
-        document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
-        document.getElementById(`${tabName}-tab`).classList.add('active');
+        const navItem = document.querySelector(`[data-tab="${tabName}"]`);
+        const tabContent = document.getElementById(`${tabName}-tab`);
+        
+        if (navItem) navItem.classList.add('active');
+        if (tabContent) tabContent.classList.add('active');
 
         this.currentTab = tabName;
         this.loadTabContent(tabName);
@@ -75,7 +80,7 @@ class AdminDashboard {
             return;
         }
         
-        if (['countries', 'jobs', 'applications', 'partners', 'users'].includes(tabName)) {
+        if (['countries', 'jobs', 'applications', 'partners', 'users', 'customer-registrations'].includes(tabName)) {
             this.loadTableData(tabName);
             return;
         }
@@ -400,7 +405,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Global functions for HTML onclick handlers
 function switchTab(tabName) {
-    window.adminDashboard.switchTab(tabName);
+    if (window.adminDashboard) {
+        window.adminDashboard.switchTab(tabName);
+    }
 }
 
 function resetForm(formId) {
@@ -596,6 +603,40 @@ AdminDashboard.prototype.createTableRow = function(tableName, item, index) {
                 <td>
                     <button class="btn-sm btn-edit" onclick="editUser(${item.id})">Sửa</button>
                     <button class="btn-sm btn-delete" onclick="deleteUser(${item.id})">Xóa</button>
+                </td>
+            `;
+            break;
+        case 'customer-registrations':
+            const genderText = item.gender === 'male' ? 'Nam' : 'Nữ';
+            const formTypeText = item.form_type === 'consultation' ? 'Tư vấn XKLĐ' : 'Trang chủ';
+            const createdDate = new Date(item.created_at).toLocaleDateString('vi-VN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            row.innerHTML = `
+                <td>${index}</td>
+                <td><strong>${item.full_name}</strong></td>
+                <td><a href="tel:${item.phone}">${item.phone}</a></td>
+                <td>${item.email ? `<a href="mailto:${item.email}">${item.email}</a>` : '-'}</td>
+                <td>${item.age}</td>
+                <td>${genderText}</td>
+                <td>${item.province || '-'}</td>
+                <td>${item.country || '-'}</td>
+                <td>${item.industry || '-'}</td>
+                <td>${item.experience || '-'}</td>
+                <td><span class="form-type-badge">${formTypeText}</span></td>
+                <td>${createdDate}</td>
+                <td>
+                    <button class="btn-sm btn-info" onclick="viewCustomerDetails(${item.id})" title="Xem chi tiết">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="btn-sm btn-delete" onclick="deleteCustomerRegistration(${item.id})" title="Xóa">
+                        <i class="fas fa-trash"></i>
+                    </button>
                 </td>
             `;
             break;
@@ -1037,6 +1078,183 @@ function deleteUser(id) {
     if (confirm('Bạn có chắc chắn muốn xóa người dùng này?')) {
         alert(`Đã xóa người dùng ID: ${id}`);
     }
+}
+
+// ===== CUSTOMER REGISTRATIONS FUNCTIONS =====
+function refreshCustomerRegistrations() {
+    window.adminDashboard.loadTableData('customer-registrations');
+    loadCustomerStats();
+}
+
+function exportCustomerRegistrations() {
+    // Create CSV export
+    fetch('/api/admin/customer-registrations')
+        .then(response => response.json())
+        .then(data => {
+            if (data.length === 0) {
+                alert('Không có dữ liệu để xuất');
+                return;
+            }
+            
+            // Create CSV content
+            const headers = ['STT', 'Họ và tên', 'Số điện thoại', 'Email', 'Tuổi', 'Giới tính', 'Tỉnh/TP', 'Quốc gia quan tâm', 'Ngành nghề', 'Kinh nghiệm', 'Ghi chú', 'Loại form', 'Ngày đăng ký'];
+            const csvContent = [
+                headers.join(','),
+                ...data.map((item, index) => [
+                    index + 1,
+                    `"${item.full_name}"`,
+                    item.phone,
+                    item.email || '',
+                    item.age,
+                    item.gender === 'male' ? 'Nam' : 'Nữ',
+                    item.province || '',
+                    item.country || '',
+                    item.industry || '',
+                    item.experience || '',
+                    `"${item.notes || ''}"`,
+                    item.form_type === 'consultation' ? 'Tư vấn XKLĐ' : 'Trang chủ',
+                    new Date(item.created_at).toLocaleDateString('vi-VN')
+                ].join(','))
+            ].join('\n');
+            
+            // Download CSV file
+            const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `khach-hang-dang-ky-${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        })
+        .catch(error => {
+            console.error('Export error:', error);
+            alert('Có lỗi xảy ra khi xuất dữ liệu');
+        });
+}
+
+function viewCustomerDetails(id) {
+    fetch(`/api/admin/customer-registrations`)
+        .then(response => response.json())
+        .then(data => {
+            const customer = data.find(c => c.id === id);
+            if (customer) {
+                const genderText = customer.gender === 'male' ? 'Nam' : 'Nữ';
+                const formTypeText = customer.form_type === 'consultation' ? 'Tư vấn XKLĐ' : 'Trang chủ';
+                const createdDate = new Date(customer.created_at).toLocaleDateString('vi-VN', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                const details = `
+                    <strong>Thông tin khách hàng:</strong><br><br>
+                    <strong>Họ và tên:</strong> ${customer.full_name}<br>
+                    <strong>Số điện thoại:</strong> ${customer.phone}<br>
+                    <strong>Email:</strong> ${customer.email || 'Không có'}<br>
+                    <strong>Tuổi:</strong> ${customer.age}<br>
+                    <strong>Giới tính:</strong> ${genderText}<br>
+                    <strong>Tỉnh/TP:</strong> ${customer.province || 'Không có'}<br>
+                    <strong>Quốc gia quan tâm:</strong> ${customer.country || 'Không có'}<br>
+                    <strong>Ngành nghề:</strong> ${customer.industry || 'Không có'}<br>
+                    <strong>Kinh nghiệm:</strong> ${customer.experience || 'Không có'}<br>
+                    <strong>Ghi chú:</strong> ${customer.notes || 'Không có'}<br>
+                    <strong>Loại form:</strong> ${formTypeText}<br>
+                    <strong>Ngày đăng ký:</strong> ${createdDate}
+                `;
+                
+                // Create modal to show details
+                const modal = document.createElement('div');
+                modal.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0,0,0,0.5);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 1000;
+                `;
+                
+                modal.innerHTML = `
+                    <div style="background: white; padding: 20px; border-radius: 8px; max-width: 500px; width: 90%;">
+                        <div style="margin-bottom: 20px;">
+                            ${details}
+                        </div>
+                        <div style="text-align: right;">
+                            <button onclick="this.closest('.modal').remove()" style="padding: 8px 16px; background: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer;">Đóng</button>
+                        </div>
+                    </div>
+                `;
+                modal.className = 'modal';
+                document.body.appendChild(modal);
+                
+                // Close modal when clicking outside
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.remove();
+                    }
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error loading customer details:', error);
+            alert('Có lỗi xảy ra khi tải thông tin khách hàng');
+        });
+}
+
+async function deleteCustomerRegistration(id) {
+    if (!confirm('Bạn có chắc chắn muốn xóa thông tin đăng ký này?')) {
+        return;
+    }
+    
+    try {
+        const response = await fetch(`/api/admin/customer-registrations/${id}`, {
+            method: 'DELETE'
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert('Đã xóa thông tin đăng ký thành công');
+            refreshCustomerRegistrations();
+        } else {
+            alert('Lỗi khi xóa: ' + result.message);
+        }
+    } catch (error) {
+        console.error('Delete error:', error);
+        alert('Có lỗi xảy ra khi xóa thông tin đăng ký');
+    }
+}
+
+function loadCustomerStats() {
+    fetch('/api/admin/customer-registrations')
+        .then(response => response.json())
+        .then(data => {
+            const total = data.length;
+            const today = new Date().toDateString();
+            const todayCount = data.filter(item => 
+                new Date(item.created_at).toDateString() === today
+            ).length;
+            
+            const weekAgo = new Date();
+            weekAgo.setDate(weekAgo.getDate() - 7);
+            const weekCount = data.filter(item => 
+                new Date(item.created_at) >= weekAgo
+            ).length;
+            
+            document.getElementById('totalCustomers').textContent = total;
+            document.getElementById('todayCustomers').textContent = todayCount;
+            document.getElementById('weekCustomers').textContent = weekCount;
+        })
+        .catch(error => {
+            console.error('Error loading customer stats:', error);
+        });
 }
 
 // ===== DRAG & DROP IMAGE UPLOAD FUNCTIONALITY =====

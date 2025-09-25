@@ -845,25 +845,31 @@ function submitForm(event) {
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
     submitBtn.disabled = true;
     
-    // Simulate form submission (replace with actual API call)
-    setTimeout(() => {
-        // Reset button
-        submitBtn.innerHTML = originalText;
-        submitBtn.disabled = false;
-        
-        // Show success message
-        showMessage(`Bạn đã đăng ký thành công! Tư vấn viên của chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.`, 'success');
-        
-        // Reset form
-        form.reset();
-        
-        // Log data for development (remove in production)
-        console.log('Form submitted with data:', data);
-        
-        // Optional: Send data to server
-        // sendToServer(data);
-        
-    }, 2000);
+    // Send data to server
+    sendToServer(data)
+        .then(response => {
+            // Reset button
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+            
+            if (response.success) {
+                // Show success message
+                showMessage(response.message, 'success');
+                // Reset form
+                form.reset();
+            } else {
+                // Show error message
+                showMessage(response.message || 'Có lỗi xảy ra. Vui lòng thử lại.', 'error');
+            }
+        })
+        .catch(error => {
+            // Reset button
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+            
+            console.error('Form submission error:', error);
+            showMessage('Có lỗi xảy ra. Vui lòng kiểm tra kết nối mạng và thử lại.', 'error');
+        });
 }
 
 // Show success/error messages
@@ -891,26 +897,25 @@ function showMessage(message, type) {
     messageDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
-// Optional: Send data to server (implement as needed)
+// Send data to server
 function sendToServer(data) {
-    // Example implementation:
-    /*
-    fetch('/api/consultation-request', {
+    return fetch('/api/customer-registration', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data)
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
     .then(result => {
         console.log('Server response:', result);
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showMessage('Có lỗi xảy ra khi gửi thông tin. Vui lòng thử lại sau.', 'error');
+        return result;
     });
-    */
 }
 
 // Function to show country filter notification

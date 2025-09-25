@@ -60,6 +60,12 @@
                                 <span>Hồ sơ ứng tuyển</span>
                             </a>
                         </li>
+                        <li class="nav-item" data-tab="customer-registrations">
+                            <a href="#" onclick="switchTab('customer-registrations')">
+                                <i class="fas fa-user-plus"></i>
+                                <span>Dữ liệu khách hàng</span>
+                            </a>
+                        </li>
                         <li class="nav-item" data-tab="about">
                             <a href="#" onclick="switchTab('about')">
                                 <i class="fas fa-info-circle"></i>
@@ -948,6 +954,76 @@
                     </div>
                 </div>
 
+                <!-- Customer Registrations Tab -->
+                <div id="customer-registrations-tab" class="tab-content">
+                    <div class="content-header">
+                        <h2><i class="fas fa-user-plus"></i> Dữ liệu khách hàng đăng ký</h2>
+                        <div class="header-actions">
+                            <button class="btn btn-secondary" onclick="refreshCustomerRegistrations()">
+                                <i class="fas fa-sync-alt"></i> Làm mới
+                            </button>
+                            <button class="btn btn-success" onclick="exportCustomerRegistrations()">
+                                <i class="fas fa-download"></i> Xuất Excel
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-cards">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalCustomers">0</h3>
+                                <p>Tổng khách hàng</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-calendar-day"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="todayCustomers">0</h3>
+                                <p>Đăng ký hôm nay</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-calendar-week"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="weekCustomers">0</h3>
+                                <p>Đăng ký tuần này</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="admin-table" id="customer-registrationsTable">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Họ và tên</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Email</th>
+                                    <th>Tuổi</th>
+                                    <th>Giới tính</th>
+                                    <th>Tỉnh/TP</th>
+                                    <th>Quốc gia quan tâm</th>
+                                    <th>Ngành nghề</th>
+                                    <th>Kinh nghiệm</th>
+                                    <th>Loại form</th>
+                                    <th>Ngày đăng ký</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
                 <!-- Partners Tab -->
                 <div id="partners-tab" class="tab-content">
                     <div class="content-header">
@@ -1239,6 +1315,5 @@
     </div>
 
     <script src="admin.js"></script>
-    <script src="debug-modal.js"></script>
 </body>
 </html>
