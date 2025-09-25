@@ -203,6 +203,9 @@
                             <button class="btn btn-sm btn-primary" onclick="viewCustomer(${item.id})">
                                 <i class="fas fa-eye"></i>
                             </button>
+                            <button class="btn btn-sm btn-danger ms-1" onclick="deleteCustomer(${item.id})" title="Xóa khách hàng">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </td>
                     </tr>
                 `).join('');
@@ -357,10 +360,57 @@
             alert(`Xem chi tiết khách hàng ID: ${id}`);
         }
 
+        async function deleteCustomer(id) {
+            try {
+                const response = await fetch(`/api/admin/customer-registrations/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    // Hiển thị thông báo thành công
+                    showAlert('Xóa khách hàng thành công!', 'success');
+                    
+                    // Tải lại danh sách khách hàng
+                    loadCustomerRegistrations();
+                } else {
+                    const error = await response.json();
+                    showAlert(`Lỗi khi xóa khách hàng: ${error.message || 'Không xác định'}`, 'danger');
+                }
+            } catch (error) {
+                console.error('Error deleting customer:', error);
+                showAlert(`Lỗi khi xóa khách hàng: ${error.message}`, 'danger');
+            }
+        }
+
+        function showAlert(message, type) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+            alertDiv.style.top = '20px';
+            alertDiv.style.right = '20px';
+            alertDiv.style.zIndex = '9999';
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            document.body.appendChild(alertDiv);
+            
+            // Tự động ẩn sau 3 giây
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    alertDiv.remove();
+                }
+            }, 3000);
+        }
+
         // Load data when page loads
         document.addEventListener('DOMContentLoaded', () => {
             loadCustomerRegistrations();
         });
     </script>
+
+
 </body>
 </html>
