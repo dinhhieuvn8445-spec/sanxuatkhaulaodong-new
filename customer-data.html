@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dữ liệu khách hàng - Dương Oanh XKLĐ</title>
+    <link rel="stylesheet" href="admin-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .customer-data-container {
+            padding: 20px;
+            background-color: #1a1d29;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #34495e;
+        }
+        .content-header h2 {
+            color: #3498db;
+            font-size: 28px;
+            font-weight: 500;
+        }
+        .header-actions {
+            display: flex;
+            gap: 15px;
+        }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #218838;
+        }
+        .data-table {
+            background: #2c3e50;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .table th {
+            background: #34495e;
+            color: #ffffff;
+            padding: 15px;
+            text-align: left;
+            font-weight: 500;
+            border-bottom: 2px solid #3498db;
+        }
+        .table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #34495e;
+            color: #ecf0f1;
+        }
+        .table tbody tr:hover {
+            background: #34495e;
+        }
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .status-new {
+            background: #3498db;
+            color: white;
+        }
+        .status-contacted {
+            background: #f39c12;
+            color: white;
+        }
+        .status-converted {
+            background: #27ae60;
+            color: white;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+        .error {
+            text-align: center;
+            padding: 40px;
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="customer-data-container">
+        <div class="content-header">
+            <h2><i class="fas fa-user-plus"></i> Dữ liệu khách hàng đăng ký</h2>
+            <div class="header-actions">
+                <button class="btn btn-secondary" onclick="refreshCustomerRegistrations()">
+                    <i class="fas fa-sync-alt"></i> Làm mới
+                </button>
+                <button class="btn btn-success" onclick="exportCustomerRegistrations()">
+                    <i class="fas fa-download"></i> Xuất Excel
+                </button>
+            </div>
+        </div>
+        
+        <div class="data-table">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Họ tên</th>
+                        <th>Email</th>
+                        <th>Số điện thoại</th>
+                        <th>Quốc gia quan tâm</th>
+                        <th>Loại dịch vụ</th>
+                        <th>Trạng thái</th>
+                        <th>Ngày đăng ký</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody id="customerRegistrationsTableBody">
+                    <tr>
+                        <td colspan="9" class="loading">
+                            <i class="fas fa-spinner fa-spin"></i> Đang tải dữ liệu...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Load customer registrations data
+        async function loadCustomerRegistrations() {
+            try {
+                console.log('Loading customer registrations...');
+                const response = await fetch('/api/admin/customer-registrations');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('Customer registrations data:', data);
+                
+                const tbody = document.getElementById('customerRegistrationsTableBody');
+                
+                if (data.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="9" style="text-align: center; padding: 40px; color: #7f8c8d;">
+                                <i class="fas fa-inbox"></i><br>
+                                Chưa có dữ liệu khách hàng đăng ký
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                tbody.innerHTML = data.map(item => `
+                    <tr>
+                        <td>${item.id}</td>
+                        <td>${item.name || 'N/A'}</td>
+                        <td>${item.email || 'N/A'}</td>
+                        <td>${item.phone || 'N/A'}</td>
+                        <td>${item.country || 'N/A'}</td>
+                        <td>${item.service_type || 'N/A'}</td>
+                        <td>
+                            <span class="status-badge status-${item.status || 'new'}">
+                                ${getStatusText(item.status)}
+                            </span>
+                        </td>
+                        <td>${formatDate(item.created_at)}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" onclick="viewCustomer(${item.id})">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+                
+            } catch (error) {
+                console.error('Error loading customer registrations:', error);
+                document.getElementById('customerRegistrationsTableBody').innerHTML = `
+                    <tr>
+                        <td colspan="9" class="error">
+                            <i class="fas fa-exclamation-triangle"></i><br>
+                            Lỗi khi tải dữ liệu: ${error.message}
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        function getStatusText(status) {
+            const statusMap = {
+                'new': 'Mới',
+                'contacted': 'Đã liên hệ',
+                'converted': 'Đã chuyển đổi'
+            };
+            return statusMap[status] || 'Mới';
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return 'N/A';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('vi-VN') + ' ' + date.toLocaleTimeString('vi-VN');
+        }
+
+        function refreshCustomerRegistrations() {
+            loadCustomerRegistrations();
+        }
+
+        function exportCustomerRegistrations() {
+            alert('Chức năng xuất Excel sẽ được phát triển sau');
+        }
+
+        function viewCustomer(id) {
+            alert(`Xem chi tiết khách hàng ID: ${id}`);
+        }
+
+        // Load data when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCustomerRegistrations();
+        });
+    </script>
+</body>
+</html>

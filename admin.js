@@ -53,6 +53,8 @@ class AdminDashboard {
 
     // Switch between tabs
     switchTab(tabName) {
+        console.log('AdminDashboard.switchTab called with:', tabName);
+        
         // Remove active class from all nav items and tab contents
         document.querySelectorAll('.nav-item').forEach(item => {
             item.classList.remove('active');
@@ -65,8 +67,20 @@ class AdminDashboard {
         const navItem = document.querySelector(`[data-tab="${tabName}"]`);
         const tabContent = document.getElementById(`${tabName}-tab`);
         
-        if (navItem) navItem.classList.add('active');
-        if (tabContent) tabContent.classList.add('active');
+        console.log('navItem found:', navItem);
+        console.log('tabContent found:', tabContent);
+        console.log('tabContent ID should be:', `${tabName}-tab`);
+        
+        if (navItem) {
+            navItem.classList.add('active');
+            console.log('Added active class to navItem');
+        }
+        if (tabContent) {
+            tabContent.classList.add('active');
+            console.log('Added active class to tabContent');
+        } else {
+            console.error('Tab content not found for:', `${tabName}-tab`);
+        }
 
         this.currentTab = tabName;
         this.loadTabContent(tabName);
@@ -400,13 +414,29 @@ class AdminDashboard {
 
 // Initialize dashboard when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded, initializing AdminDashboard');
     window.adminDashboard = new AdminDashboard();
+    console.log('AdminDashboard initialized:', window.adminDashboard);
 });
+
+// Test function
+window.testSwitchTab = function(tabName) {
+    console.log('testSwitchTab called with:', tabName);
+    if (window.adminDashboard) {
+        window.adminDashboard.switchTab(tabName);
+    } else {
+        console.error('adminDashboard not found');
+    }
+};
 
 // Global functions for HTML onclick handlers
 function switchTab(tabName) {
+    console.log('switchTab called with:', tabName);
     if (window.adminDashboard) {
+        console.log('adminDashboard exists, calling switchTab');
         window.adminDashboard.switchTab(tabName);
+    } else {
+        console.log('adminDashboard not found');
     }
 }
 
