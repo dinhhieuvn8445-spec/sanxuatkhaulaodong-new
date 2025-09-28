@@ -15,7 +15,6 @@ import bcrypt
 import uuid
 import mimetypes
 import cgi
-
 # Set the port
 PORT = 12000
 
@@ -32,6 +31,8 @@ def get_db_connection():
     except Exception as e:
         print(f"Database connection error: {e}")
         return None
+
+
 
 def authenticate_user(username, password):
     """Xác thực người dùng"""
@@ -300,6 +301,8 @@ def save_job(job_data):
         return True
     except Exception as e:
         print(f"Error saving job: {e}")
+        import traceback
+        traceback.print_exc()
         return False
     finally:
         conn.close()
@@ -487,7 +490,12 @@ def save_customer_registration(customer_data):
             customer_data.get('form_type', 'consultation')
         ))
         
+        # Get the ID of the newly inserted record
+        new_id = cur.lastrowid
         conn.commit()
+        
+
+        
         return True
     except Exception as e:
         print(f"Error saving customer registration: {e}")
@@ -511,6 +519,27 @@ def get_customer_registrations():
     except Exception as e:
         print(f"Error getting customer registrations: {e}")
         return []
+    finally:
+        conn.close()
+
+def get_latest_customer_registration():
+    """Lấy bản ghi đăng ký mới nhất"""
+    conn = get_db_connection()
+    if not conn:
+        return None
+    
+    try:
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT * FROM customer_registrations 
+            ORDER BY created_at DESC 
+            LIMIT 1
+        """)
+        row = cur.fetchone()
+        return dict(row) if row else None
+    except Exception as e:
+        print(f"Error getting latest customer registration: {e}")
+        return None
     finally:
         conn.close()
 
@@ -549,13 +578,15 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def do_POST(self):
         """Handle POST requests"""
         if self.path == '/api/login':
-            self.handle_login()
+            pass  # Login not implemented yet
         elif self.path == '/api/customer-registration':
             self.handle_customer_registration()
         elif self.path.startswith('/api/admin/content/'):
             self.handle_save_content()
         elif self.path == '/api/admin/jobs':
             self.handle_save_job()
+        elif self.path == '/api/admin/upload-job-image':
+            self.handle_upload_image()
         elif self.path == '/api/admin/countries':
             self.handle_save_country()
         elif self.path == '/api/admin/upload-image':
@@ -609,6 +640,8 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.send_json_response(get_users_data())
         elif self.path == '/api/admin/customer-registrations':
             self.send_json_response(get_customer_registrations())
+        elif self.path == '/api/admin/customer-registrations/latest':
+            self.send_json_response(get_latest_customer_registration())
         elif self.path == '/api/admin/dashboard/stats':
             self.send_json_response(get_dashboard_stats())
         else:
@@ -811,6 +844,99 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             print(f"Save content error: {e}")
             self.send_json_response({'success': False, 'message': 'Lỗi server'})
 
+    def handle_upload_image(self):
+        """Xử lý upload ảnh"""
+        try:
+            # Parse multipart form data
+            content_type = self.headers.get('Content-Type', '')
+            if not content_type.startswith('multipart/form-data'):
+                self.send_json_response({'success': False, 'message': 'Invalid content type'})
+                return
+            
+            # Get boundary
+            boundary = content_type.split('boundary=')[1].encode()
+            
+            # Read content
+            content_length = int(self.headers.get('Content-Length', 0))
+            if content_length == 0:
+                self.send_json_response({'success': False, 'message': 'No file data'})
+                return
+                
+            post_data = self.rfile.read(content_length)
+            
+            # Parse multipart data manually
+            parts = post_data.split(b'--' + boundary)
+            
+            for part in parts:
+                if b'Content-Disposition: form-data' in part and b'filename=' in part:
+                    # Extract filename
+                    lines = part.split(b'\r\n')
+                    content_disposition = None
+                    for line in lines:
+                        if b'Content-Disposition' in line:
+                            content_disposition = line.decode()
+                            break
+                    
+                    if not content_disposition:
+                        continue
+                        
+                    # Extract filename from Content-Disposition
+                    filename_start = content_disposition.find('filename="') + 10
+                    filename_end = content_disposition.find('"', filename_start)
+                    original_filename = content_disposition[filename_start:filename_end]
+                    
+                    if not original_filename:
+                        continue
+                    
+                    # Get file extension
+                    file_ext = original_filename.split('.')[-1].lower()
+                    allowed_extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp']
+                    
+                    if file_ext not in allowed_extensions:
+                        self.send_json_response({'success': False, 'message': 'File type not allowed'})
+                        return
+                    
+                    # Generate unique filename
+                    import time
+                    timestamp = str(int(time.time()))
+                    new_filename = f"job_{timestamp}.{file_ext}"
+                    
+                    # Find file data (after double CRLF)
+                    data_start = part.find(b'\r\n\r\n') + 4
+                    data_end = len(part) - 2  # Remove trailing CRLF
+                    file_data = part[data_start:data_end]
+                    
+                    # Check file size (max 5MB)
+                    if len(file_data) > 5 * 1024 * 1024:
+                        self.send_json_response({'success': False, 'message': 'File too large (max 5MB)'})
+                        return
+                    
+                    # Save file
+                    file_path = os.path.join('images', 'jobs', new_filename)
+                    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+                    
+                    with open(file_path, 'wb') as f:
+                        f.write(file_data)
+                    
+                    # Return success with image URL
+                    image_url = f"/images/jobs/{new_filename}"
+                    print(f"Image uploaded successfully: {image_url}")
+                    self.send_json_response({
+                        'success': True, 
+                        'message': 'Upload thành công',
+                        'image_url': image_url,
+                        'filename': new_filename
+                    })
+                    return
+            
+            self.send_json_response({'success': False, 'message': 'No valid image file found'})
+            
+        except Exception as e:
+            print(f"Upload image error: {e}")
+            import traceback
+            traceback.print_exc()
+            self.send_json_response({'success': False, 'message': 'Lỗi server khi upload ảnh'})
+
     def handle_save_job(self):
         """Xử lý lưu thông tin job"""
         try:
@@ -818,13 +944,20 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             post_data = self.rfile.read(content_length)
             data = json.loads(post_data.decode('utf-8'))
             
+            print(f"Received job data keys: {list(data.keys())}")
+            print(f"Job ID: {data.get('id')}, Title exists: {'title' in data}")
+            
             if save_job(data):
+                print("Job saved successfully")
                 self.send_json_response({'success': True, 'message': 'Lưu đơn hàng thành công'})
             else:
+                print("Failed to save job")
                 self.send_json_response({'success': False, 'message': 'Lỗi khi lưu đơn hàng'})
                 
         except Exception as e:
             print(f"Save job error: {e}")
+            import traceback
+            traceback.print_exc()
             self.send_json_response({'success': False, 'message': 'Lỗi server'})
 
     def handle_save_country(self):
@@ -1068,6 +1201,8 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         except Exception as e:
             print(f"Banner upload error: {e}")
             self.send_json_response({'success': False, 'message': 'Lỗi server khi upload banner'}, 500)
+
+
 
     def send_json_response(self, data, status_code=200):
         """Gửi response JSON"""

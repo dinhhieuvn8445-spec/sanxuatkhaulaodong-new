@@ -443,18 +443,20 @@ function switchTab(tabName) {
 function resetForm(formId) {
     window.adminDashboard.resetForm(formId);
 }
-
 function logout() {
     window.adminDashboard.logout();
 }
 
-// Check authentication on page load
+// Allow direct access to admin panel - No authentication required
 document.addEventListener('DOMContentLoaded', () => {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if (!user.username || !user.is_admin) {
-        alert('Bạn không có quyền truy cập trang này!');
-        window.location.href = '/login.html';
-    }
+    // Auto-create admin user for direct access
+    const adminUser = {
+        username: 'admin',
+        is_admin: true,
+        email: 'admin@duongoanh.com'
+    };
+    localStorage.setItem('user', JSON.stringify(adminUser));
+    console.log('Admin access granted automatically');
 });
 
 // Sample data for testing (will be replaced with real data from database)
@@ -765,7 +767,7 @@ async function editJob(id) {
         console.log('Job data for edit:', job);
         
         if (job.error) {
-            alert('Không tìm thấy đơn hàng');
+            alert('Không tìm thấy đơn hàng: ' + job.error);
             return;
         }
         
@@ -892,9 +894,11 @@ function switchJobTab(tabName) {
         selectedTab.classList.add('active');
     }
     
-    // Add active class to clicked button
-    const clickedButton = event.target;
-    clickedButton.classList.add('active');
+    // Add active class to the corresponding tab button
+    const clickedButton = document.querySelector(`.tab-btn[onclick*="${tabName}"]`);
+    if (clickedButton) {
+        clickedButton.classList.add('active');
+    }
 }
 
 function showJobForm(jobData = null, viewMode = false) {
@@ -916,8 +920,25 @@ function showJobForm(jobData = null, viewMode = false) {
         modalTitle.textContent = 'Thêm đơn hàng mới';
     }
     
-    // Reset form
+    // Reset form completely
     form.reset();
+    
+    // Clear all form fields explicitly for new job
+    if (!jobData) {
+        document.getElementById('jobId').value = '';
+        document.getElementById('jobCode').value = '';
+        document.getElementById('jobTitle').value = '';
+        document.getElementById('jobCountry').value = '';
+        document.getElementById('jobLocation').value = '';
+        document.getElementById('jobCompany').value = '';
+        // Clear other important fields
+        const allInputs = form.querySelectorAll('input, textarea, select');
+        allInputs.forEach(input => {
+            if (input.type !== 'hidden') {
+                input.value = '';
+            }
+        });
+    }
     
     // Fill form if editing
     if (jobData) {
@@ -1001,39 +1022,48 @@ async function saveJob() {
     const form = document.getElementById('jobForm');
     const formData = new FormData(form);
     
-    // Convert FormData to JSON with proper field mapping
-    const jobData = {};
-    const fieldMapping = {
-        'jobId': 'id',
-        'jobTitle': 'title',
-        'jobCountry': 'country',
-        'jobCountryFlag': 'country_flag',
+    // Simple approach - directly map form fields to database fields
+    const jobIdValue = document.getElementById('jobId').value;
+    const jobData = {
+        id: (jobIdValue && jobIdValue.trim() !== '') ? parseInt(jobIdValue) : null,
+        title: document.getElementById('jobTitle').value || 'Test Job Title',
+        country: document.getElementById('jobCountry').value || 'Nga',
+        job_code: document.getElementById('jobCode').value || 'JOB001',
+        is_active: 1
+    };
+    
+    console.log('Job ID value:', jobIdValue);
+    console.log('Parsed Job ID:', jobData.id);
+    console.log('Is new job:', jobData.id === null);
+    
+    // Add other fields if they exist
+    const optionalFields = {
+        'jobLocation': 'location',
+        'jobCompany': 'company', 
+        'jobQuantity': 'quantity',
+        'jobGender': 'gender_requirement',
+        'jobAgeMin': 'age_min',
+        'jobAgeMax': 'age_max',
         'jobSalaryAmount': 'salary_amount',
         'jobSalaryCurrency': 'salary_currency',
         'jobSalaryPeriod': 'salary_period',
-        'jobRequirements': 'requirements',
         'jobDeadline': 'deadline',
-        'jobImageUrl': 'image_url',
         'jobStatusBadge': 'status_badge',
-        'jobConsultantName': 'consultant_name',
-        'jobConsultantPhone': 'consultant_phone',
-        'jobConsultantZalo': 'consultant_zalo',
-        'jobConsultantFacebook': 'consultant_facebook',
-        'jobViewCount': 'view_count'
+        'jobImageUrl': 'image_url',
+        'jobCountryFlag': 'country_flag',
+        'jobDescription': 'job_description',
+        'jobRequirements': 'requirements'
     };
     
-    for (let [key, value] of formData.entries()) {
-        if (key === 'jobIsActive') {
-            jobData['is_active'] = value === 'on' ? 1 : 0;
-        } else if (fieldMapping[key]) {
-            jobData[fieldMapping[key]] = value;
+    for (let [formField, dbField] of Object.entries(optionalFields)) {
+        const element = document.getElementById(formField);
+        if (element) {
+            jobData[dbField] = element.value || null;
         }
     }
     
-    // Handle checkbox for is_active
-    if (!formData.has('jobIsActive')) {
-        jobData['is_active'] = 0;
-    }
+    console.log('Job data to save:', jobData);
+    console.log('Title value:', jobData.title);
     
     try {
         const response = await fetch('/api/admin/jobs', {
@@ -1061,7 +1091,7 @@ async function saveJob() {
 }
 
 function closeJobModal() {
-    document.getElementById('jobModal').style.display = 'none';
+    document.getElementById('jobFormModal').style.display = 'none';
 }
 
 
@@ -1639,7 +1669,7 @@ class LogoUploadManager extends ImageUploadManager {
         this.fileInput = document.getElementById('logoFileInput');
         this.imagePreview = document.getElementById('logoPreview');
         this.uploadProgress = document.getElementById('logoUploadProgress');
-        this.hiddenInput = document.getElementById('headerLogo');
+        this.hiddenInput = document.getElementById('logoFile');
         this.previewImg = document.getElementById('logoPreviewImg');
         this.progressFill = document.getElementById('logoProgressFill');
         this.progressText = document.getElementById('logoProgressText');
@@ -1757,7 +1787,7 @@ class BannerUploadManager extends ImageUploadManager {
         this.fileInput = document.getElementById('bannerFileInput');
         this.imagePreview = document.getElementById('bannerPreview');
         this.uploadProgress = document.getElementById('bannerUploadProgress');
-        this.hiddenInput = document.getElementById('headerBanner');
+        this.hiddenInput = document.getElementById('bannerFile');
         this.previewImg = document.getElementById('bannerPreviewImg');
         this.progressFill = document.getElementById('bannerProgressFill');
         this.progressText = document.getElementById('bannerProgressText');
@@ -1897,12 +1927,200 @@ function removeBanner() {
     }
 }
 
+// Debug function to test modal
+function debugViewJob(id) {
+    console.log('Debug: Testing viewJob with ID:', id);
+    const modal = document.getElementById('jobFormModal');
+    console.log('Debug: Modal element found:', !!modal);
+    
+    if (modal) {
+        modal.style.display = 'block';
+        modal.style.visibility = 'visible';
+        modal.style.opacity = '1';
+        console.log('Debug: Modal should be visible now');
+        alert('Modal test successful! Modal is now visible.');
+    } else {
+        alert('Error: Modal element not found!');
+    }
+}
+
+// Function to populate country dropdown
+function populateCountries() {
+    const countrySelect = document.getElementById('jobCountry');
+    if (!countrySelect || !COUNTRIES_REGIONS) return;
+    
+    // Clear existing options except the first one
+    countrySelect.innerHTML = '<option value="">Chọn quốc gia</option>';
+    
+    // Add countries from data
+    Object.keys(COUNTRIES_REGIONS).forEach(countryKey => {
+        const country = COUNTRIES_REGIONS[countryKey];
+        const option = document.createElement('option');
+        option.value = countryKey;
+        option.textContent = `${country.flag} ${country.name}`;
+        countrySelect.appendChild(option);
+    });
+}
+
+// Function to update regions based on selected country
+function updateRegions() {
+    const countrySelect = document.getElementById('jobCountry');
+    const regionSelect = document.getElementById('jobLocation');
+    const flagUrlInput = document.getElementById('jobCountryFlag');
+    
+    if (!countrySelect || !regionSelect || !COUNTRIES_REGIONS) return;
+    
+    const selectedCountry = countrySelect.value;
+    
+    // Clear regions
+    regionSelect.innerHTML = '<option value="">Chọn tỉnh/khu vực</option><option value="Toàn quốc">Toàn quốc</option>';
+    
+    // Clear flag URL
+    if (flagUrlInput) {
+        flagUrlInput.value = '';
+    }
+    
+    if (selectedCountry && COUNTRIES_REGIONS[selectedCountry]) {
+        const countryData = COUNTRIES_REGIONS[selectedCountry];
+        
+        // Update regions
+        const regions = countryData.regions;
+        regions.forEach(region => {
+            const option = document.createElement('option');
+            option.value = region;
+            option.textContent = region;
+            regionSelect.appendChild(option);
+        });
+        
+        // Auto-fill flag URL
+        if (flagUrlInput && countryData.flagUrl) {
+            flagUrlInput.value = countryData.flagUrl;
+            console.log(`Auto-filled flag URL for ${selectedCountry}: ${countryData.flagUrl}`);
+        }
+    }
+}
+
+// Job Image Upload Manager
+class JobImageUploadManager extends ImageUploadManager {
+    constructor() {
+        super();
+        this.dragDropArea = document.getElementById('jobImageDropArea');
+        this.fileInput = document.getElementById('jobImageFileInput');
+        this.imagePreview = document.getElementById('jobImagePreview');
+        this.uploadProgress = document.getElementById('jobImageUploadProgress');
+        this.hiddenInput = document.getElementById('jobImageUrl');
+        this.previewImg = document.getElementById('jobImagePreviewImg');
+        this.progressFill = document.getElementById('jobImageProgressFill');
+        this.progressText = document.getElementById('jobImageProgressText');
+        this.init();
+    }
+
+    init() {
+        if (!this.dragDropArea) return;
+        this.setupDragDropArea();
+        this.setupFileInput();
+    }
+
+    setupDragDropArea() {
+        // Drag and drop events
+        this.dragDropArea.addEventListener('dragover', this.handleDragOver.bind(this));
+        this.dragDropArea.addEventListener('dragenter', this.handleDragEnter.bind(this));
+        this.dragDropArea.addEventListener('dragleave', this.handleDragLeave.bind(this));
+        this.dragDropArea.addEventListener('drop', this.handleDrop.bind(this));
+        
+        // Click to browse
+        this.dragDropArea.addEventListener('click', this.handleClick.bind(this));
+        
+        // Browse link click
+        const browseLink = this.dragDropArea.querySelector('.browse-link');
+        if (browseLink) {
+            browseLink.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.openFileDialog();
+            });
+        }
+    }
+
+    async uploadFile(file) {
+        try {
+            this.showUploadProgress();
+            this.simulateUploadProgress();
+            
+            const formData = new FormData();
+            formData.append('image', file);
+            
+            const response = await fetch('/api/admin/upload-image', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                await this.completeUploadProgress();
+                this.showImagePreview(result.image_url);
+                
+                if (this.hiddenInput) {
+                    this.hiddenInput.value = result.image_url;
+                }
+                
+                this.currentImageUrl = result.image_url;
+                this.hideUploadProgress();
+                this.dragDropArea.classList.add('upload-success');
+                
+            } else {
+                throw new Error(result.message || 'Upload failed');
+            }
+            
+        } catch (error) {
+            console.error('Job image upload error:', error);
+            this.showError(error.message || 'Có lỗi xảy ra khi tải lên ảnh');
+            this.hideUploadProgress();
+        }
+    }
+
+    showImagePreview(imageUrl) {
+        const dragDropContent = this.dragDropArea.querySelector('.drag-drop-content');
+        
+        if (this.previewImg) {
+            this.previewImg.src = imageUrl;
+            this.previewImg.onload = () => {
+                dragDropContent.style.display = 'none';
+                this.imagePreview.style.display = 'block';
+            };
+            this.previewImg.onerror = () => {
+                this.showError('Không thể tải ảnh từ URL này');
+                this.hideImagePreview();
+            };
+        }
+    }
+}
+
+// Global function to remove job image
+function removeJobImage() {
+    const jobImageManager = window.jobImageUploadManager;
+    if (jobImageManager) {
+        jobImageManager.hideImagePreview();
+        jobImageManager.dragDropArea.classList.remove('upload-success');
+        
+        const hiddenInput = document.getElementById('jobImageUrl');
+        if (hiddenInput) hiddenInput.value = '';
+        
+        const fileInput = document.getElementById('jobImageFileInput');
+        if (fileInput) fileInput.value = '';
+    }
+}
+
 // Initialize image upload managers when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize after a short delay to ensure all elements are rendered
     setTimeout(() => {
-        // Only initialize logo and banner managers - no general image manager
+        // Initialize all upload managers
         window.logoUploadManager = new LogoUploadManager();
         window.bannerUploadManager = new BannerUploadManager();
+        window.jobImageUploadManager = new JobImageUploadManager();
+        
+        // Populate countries dropdown
+        populateCountries();
     }, 500);
 });

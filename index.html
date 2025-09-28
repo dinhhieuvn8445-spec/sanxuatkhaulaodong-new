@@ -7,6 +7,78 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Immediate image replacement to prevent flicker -->
+    <script>
+        // Synchronous fetch to get current images immediately
+        function getCurrentImageUrls() {
+            try {
+                const logoXHR = new XMLHttpRequest();
+                logoXHR.open('GET', '/api/admin/content/header', false);
+                logoXHR.send();
+                
+                const bannerXHR = new XMLHttpRequest();
+                bannerXHR.open('GET', '/api/admin/content/home', false);
+                bannerXHR.send();
+                
+                let logoUrl = null;
+                let bannerUrl = null;
+                
+                if (logoXHR.status === 200) {
+                    const logoResult = JSON.parse(logoXHR.responseText);
+                    if (logoResult && logoResult.data) {
+                        let data = logoResult.data;
+                        while (data && data.data) data = data.data;
+                        logoUrl = data.logo;
+                    }
+                }
+                
+                if (bannerXHR.status === 200) {
+                    const bannerResult = JSON.parse(bannerXHR.responseText);
+                    if (bannerResult && bannerResult.data) {
+                        let data = bannerResult.data;
+                        while (data && data.data) data = data.data;
+                        bannerUrl = data.banner;
+                    }
+                }
+                
+                return { logoUrl, bannerUrl };
+            } catch (error) {
+                console.error('Error getting current images:', error);
+                return { logoUrl: null, bannerUrl: null };
+            }
+        }
+        
+        // Get current URLs
+        const { logoUrl, bannerUrl } = getCurrentImageUrls();
+        
+        // Store for later use
+        window.CURRENT_LOGO_URL = logoUrl;
+        window.CURRENT_BANNER_URL = bannerUrl;
+        
+        console.log('🔥 HEAD SCRIPT - Current URLs:', { logoUrl, bannerUrl });
+        
+        // Replace images as soon as DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔥 DOM READY - Replacing images immediately');
+            
+            if (logoUrl) {
+                const mainLogo = document.getElementById('mainLogo');
+                if (mainLogo) {
+                    mainLogo.src = logoUrl;
+                    console.log('🔥 Main logo replaced immediately');
+                }
+            }
+            
+            if (bannerUrl) {
+                const headerBanner = document.getElementById('headerBanner');
+                if (headerBanner) {
+                    headerBanner.src = bannerUrl;
+                    console.log('🔥 Header banner replaced immediately');
+                }
+            }
+        });
+    </script>
 </head>
 <body>
     <!-- Top Navigation -->
@@ -28,30 +100,10 @@
                         <i class="fa fa-search"></i> Tìm kiếm
                     </button>
                     
-                    <!-- Admin Dropdown (hidden by default) -->
-                    <div id="adminDropdown" class="admin-dropdown" style="display: none;">
-                        <button class="btn btn-admin dropdown-toggle" onclick="toggleAdminDropdown()">
-                            <i class="fas fa-cog"></i> Admin
-                        </button>
-                        <div class="dropdown-menu" id="adminDropdownMenu">
-                            <a href="admin.html" class="dropdown-item">
-                                <i class="fas fa-tachometer-alt"></i> Dashboard Quản trị
-                            </a>
-                            <a href="#" class="dropdown-item" onclick="manageUsers()">
-                                <i class="fas fa-users"></i> Quản lý người dùng
-                            </a>
-                            <a href="#" class="dropdown-item" onclick="manageJobs()">
-                                <i class="fas fa-briefcase"></i> Quản lý công việc
-                            </a>
-                            <a href="#" class="dropdown-item" onclick="viewReports()">
-                                <i class="fas fa-chart-bar"></i> Báo cáo
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item" onclick="adminSettings()">
-                                <i class="fas fa-cogs"></i> Cài đặt hệ thống
-                            </a>
-                        </div>
-                    </div>
+                    <!-- Admin Link - Always visible -->
+                    <a href="admin.html" class="btn btn-admin" style="display: inline-block;">
+                        <i class="fas fa-cog"></i> Admin
+                    </a>
                     
                     <!-- User Info (hidden by default) -->
                     <div id="userInfo" class="user-info" style="display: none;">
@@ -74,13 +126,13 @@
             <div class="container">
                 <div class="header-left">
                     <a href="index.html" class="logo">
-                        <img src="images/logos/duong-oanh-new-logo.svg" alt="Dương Oanh Xuất Khẩu Lao Động" />
+                        <img id="mainLogo" src="images/logos/duong-oanh-new-logo.svg" alt="Dương Oanh Xuất Khẩu Lao Động" />
                     </a>
                 </div>
                 <div class="header-right">
                     <div class="banner-ad">
                         <a href="#" target="_blank">
-                            <img src="images/uploads/duong-oanh-banner.png" alt="Dương Oanh XKLĐ Tuyển Dụng" />
+                            <img id="headerBanner" src="images/uploads/duong-oanh-banner.png" alt="Dương Oanh XKLĐ Tuyển Dụng" />
                         </a>
                     </div>
                 </div>
@@ -1249,13 +1301,12 @@
                     alert('Lỗi: ' + data.message);
                 }
             } catch (error) {
-                console.error('Login error:', error);
-                alert('Lỗi kết nối đến server');
+                console.error('Error loading header content:', error);
             }
         }
-        
-        function handleForgotPassword(event) {
-            event.preventDefault();
+
+        // Load home content (banner) from database
+        async function loadHomeContent() {
             const email = document.getElementById('resetEmail').value;
             
             alert('Email đặt lại mật khẩu đã được gửi đến: ' + email + '\nVà thông báo đã được gửi đến admin: dinhhieuvn8445@gmail.com');
@@ -1381,15 +1432,12 @@
                         console.log('Header content loaded:', data);
                     }
                 }
-            } catch (error) {
-                console.log('Could not load header content:', error);
-            }
-        }
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
             checkLoginStatus();
             loadHeaderContent();
+            loadHomeContent();
         });
         
         // Close modal when clicking outside
@@ -1676,6 +1724,8 @@
         </div>
     </div>
 
+    <script src="no-flicker.js"></script>
+    <script src="simple-logo-banner-fix.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

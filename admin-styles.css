@@ -12,18 +12,14 @@ body {
     overflow-x: hidden;
 }
 
-.admin-container {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Header Styles */
 .admin-header {
-    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-    padding: 15px 30px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    height: 70px;
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    border-bottom: 1px solid #34495e;
     align-items: center;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     position: sticky;
@@ -1211,13 +1207,29 @@ textarea.form-control {
     
     .tab-btn {
         flex: 1;
-        min-width: 120px;
-        font-size: 12px;
-        padding: 10px 15px;
     }
     
-    .job-tab-content .form-row {
-        flex-direction: column;
-        gap: 10px;
+    .browse-link {
+        font-size: 14px;
+    }
+    
+    .upload-progress {
+        bottom: 5px;
+        left: 10px;
+        right: 10px;
+    }
+    
+    .progress-bar {
+        height: 6px;
+    }
+    
+    .image-preview img {
+        max-height: 150px;
+    }
+    
+    .remove-image-btn {
+        width: 25px;
+        height: 25px;
+        font-size: 16px;
     }
 }

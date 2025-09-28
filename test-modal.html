@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Modal</title>
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+        }
+        .btn {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Modal Functionality</h1>
+    
+    <button class="btn" onclick="testViewJob(1)">Test View Job ID 1</button>
+    <button class="btn" onclick="testViewJob(2)">Test View Job ID 2</button>
+    <button class="btn" onclick="testViewJob(3)">Test View Job ID 3</button>
+    
+    <div id="result"></div>
+    
+    <script>
+        async function testViewJob(id) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Testing...';
+            
+            try {
+                console.log('Testing viewJob with ID:', id);
+                const response = await fetch(`/api/admin/jobs/${id}`);
+                console.log('Response status:', response.status);
+                const job = await response.json();
+                console.log('Job data received:', job);
+                
+                if (job.error) {
+                    resultDiv.innerHTML = `<p style="color: red;">Error: ${job.error}</p>`;
+                    return;
+                }
+                
+                resultDiv.innerHTML = `
+                    <h3>Job Data Retrieved Successfully:</h3>
+                    <p><strong>ID:</strong> ${job.id}</p>
+                    <p><strong>Title:</strong> ${job.title}</p>
+                    <p><strong>Country:</strong> ${job.country}</p>
+                    <p><strong>Salary:</strong> ${job.salary_amount} ${job.salary_currency}</p>
+                    <p style="color: green;">✅ API is working correctly!</p>
+                `;
+                
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

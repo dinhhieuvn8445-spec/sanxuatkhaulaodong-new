@@ -220,7 +220,7 @@
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-save"></i> Lưu thay đổi Logo
                             </button>
-                            <button type="button" class="btn btn-secondary" onclick="resetForm('logoForm')">
+                            <button type="button" class="btn btn-secondary" onclick="restoreOriginalLogo()">
                                 <i class="fas fa-undo"></i> Khôi phục Logo
                             </button>
                         </div>
@@ -269,7 +269,7 @@
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-save"></i> Lưu thay đổi Banner
                             </button>
-                            <button type="button" class="btn btn-secondary" onclick="resetForm('bannerForm')">
+                            <button type="button" class="btn btn-secondary" onclick="restoreOriginalBanner()">
                                 <i class="fas fa-undo"></i> Khôi phục Banner
                             </button>
                         </div>
@@ -642,18 +642,18 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="jobCode">Mã đơn hàng *</label>
-                            <input type="text" id="jobCode" name="job_code" class="form-control" required>
+                            <input type="text" id="jobCode" name="jobCode" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="jobTitle">Tiêu đề công việc *</label>
-                            <input type="text" id="jobTitle" name="title" class="form-control" required>
+                            <input type="text" id="jobTitle" name="jobTitle" class="form-control" required>
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
                             <label for="jobCountry">Quốc gia *</label>
-                            <select id="jobCountry" name="country" class="form-control" required>
+                            <select id="jobCountry" name="jobCountry" class="form-control" required onchange="updateRegions()">
                                 <option value="">Chọn quốc gia</option>
                                 <option value="Nga">Nga</option>
                                 <option value="Đài Loan">Đài Loan</option>
@@ -671,7 +671,10 @@
                         </div>
                         <div class="form-group">
                             <label for="jobLocation">Tỉnh, khu vực</label>
-                            <input type="text" id="jobLocation" name="location" class="form-control" placeholder="Toàn quốc">
+                            <select id="jobLocation" name="location" class="form-control">
+                                <option value="">Chọn tỉnh/khu vực</option>
+                                <option value="Toàn quốc">Toàn quốc</option>
+                            </select>
                         </div>
                     </div>
 
@@ -755,11 +758,34 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="jobImageUrl">Hình ảnh công việc</label>
-                            <input type="text" id="jobImageUrl" name="image_url" class="form-control" placeholder="/images/jobs/job1.jpg">
+                            <input type="hidden" id="jobImageUrl" name="image_url">
+                            
+                            <!-- Job Image Upload Area -->
+                            <div id="jobImageDropArea" class="drag-drop-area">
+                                <div class="drag-drop-content">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <p>Kéo thả ảnh vào đây hoặc <span class="browse-link">chọn file</span></p>
+                                    <small>Hỗ trợ: JPG, PNG, GIF, WebP (tối đa 5MB)</small>
+                                </div>
+                                
+                                <div id="jobImageUploadProgress" class="upload-progress" style="display: none;">
+                                    <div class="progress-bar">
+                                        <div id="jobImageProgressFill" class="progress-fill"></div>
+                                    </div>
+                                    <span id="jobImageProgressText">0%</span>
+                                </div>
+                                
+                                <div id="jobImagePreview" class="image-preview" style="display: none;">
+                                    <img id="jobImagePreviewImg" src="" alt="Preview">
+                                    <button type="button" class="remove-image-btn" onclick="removeJobImage()">×</button>
+                                </div>
+                            </div>
+                            
+                            <input type="file" id="jobImageFileInput" accept="image/*" style="display: none;">
                         </div>
                         <div class="form-group">
                             <label for="jobCountryFlag">Đường dẫn cờ quốc gia</label>
-                            <input type="text" id="jobCountryFlag" name="country_flag" class="form-control" placeholder="/images/flags/russia.png">
+                            <input type="text" id="jobCountryFlag" name="jobCountryFlag" class="form-control" placeholder="/images/flags/russia.png">
                         </div>
                     </div>
                 </div>
@@ -769,21 +795,21 @@
                     <div class="form-row">
                         <div class="form-group full-width">
                             <label for="jobDescription">Mô tả công việc chi tiết</label>
-                            <textarea id="jobDescription" name="job_description" class="form-control" rows="4" placeholder="Mô tả chi tiết về công việc cần làm..."></textarea>
+                            <textarea id="jobDescription" name="jobDescription" class="form-control" rows="4" placeholder="Mô tả chi tiết về công việc cần làm..."></textarea>
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group full-width">
                             <label for="jobRequirements">Yêu cầu công việc chi tiết</label>
-                            <textarea id="jobRequirements" name="job_requirements" class="form-control" rows="4" placeholder="Yêu cầu kỹ năng, kinh nghiệm, bằng cấp..."></textarea>
+                            <textarea id="jobRequirements" name="jobRequirements" class="form-control" rows="4" placeholder="Yêu cầu kỹ năng, kinh nghiệm, bằng cấp..."></textarea>
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
                             <label for="jobWorkHours">Thời gian làm việc</label>
-                            <input type="text" id="jobWorkHours" name="work_hours" class="form-control" placeholder="8 giờ/ngày, 5 ngày/tuần">
+                            <input type="text" id="jobWorkHours" name="jobWorkHours" class="form-control" placeholder="8 giờ/ngày, 5 ngày/tuần">
                         </div>
                         <div class="form-group">
                             <label for="jobContractDuration">Thời hạn hợp đồng</label>
@@ -1310,16 +1336,19 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" onclick="closeJobModal()">Hủy</button>
                 <button type="button" class="btn btn-primary" onclick="saveJob()">Lưu</button>
-            </div>
-        </div>
-    </div>
-
+    <script src="countries-regions.js"></script>
     <script src="admin.js"></script>
+    <script src="job-image-fix.js"></script>
+    <script src="simple-logo-banner-fix.js"></script>
+    <script src="debug-restore.js"></script>
+    <script src="simple-restore.js"></script>
+    <script src="auto-test-restore.js"></script>
     <script>
         // Force load customer registrations data on page load
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
                 console.log('Force loading customer registrations...');
+
                 if (window.adminDashboard && window.adminDashboard.loadTableData) {
                     window.adminDashboard.loadTableData('customer-registrations');
                 } else {

@@ -58,31 +58,12 @@ This is a Vietnamese job portal website for Cường Oanh Xuất Khẩu Lao Đ�
 /workspace/project/
 ├── index.html          # Main HTML file
 ├── styles.css          # CSS styling
-├── script.js           # JavaScript functionality
 ├── server.py           # Development server
 ├── server.log          # Server logs
+├── images/                # Thư mục ảnh
+│   ├── logos/            # Logo files
+│   └── uploads/          # Uploaded images
 └── README.md           # This file
-```
-
-## Running the Website
-
-### Development Server
-
-The website is currently running on a Python development server:
-
-```bash
-python server.py
-```
-
-**Access URLs:**
-- Local: http://localhost:12000
-- Public: https://work-1-ckzkiiromoghsbtn.prod-runtime.all-hands.dev
-
-### Features Implemented
-
-1. **Responsive Design** - Works on desktop, tablet, and mobile devices
-2. **Interactive Elements** - Hover effects, click handlers
-3. **Modern UI** - Clean, professional design matching the original
 4. **Cross-browser Compatibility** - Works on all modern browsers
 5. **SEO Friendly** - Proper HTML structure and meta tags
 

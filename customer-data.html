@@ -405,9 +405,95 @@
             }, 3000);
         }
 
+        // Real-time polling for new registrations
+        let lastRegistrationId = 0;
+        let pollingInterval = null;
+
+        function startRealTimePolling() {
+            // Get current highest ID
+            const rows = document.querySelectorAll('.data-table tbody tr');
+            if (rows.length > 0) {
+                const firstRow = rows[0];
+                const idCell = firstRow.querySelector('td:first-child');
+                if (idCell) {
+                    lastRegistrationId = parseInt(idCell.textContent) || 0;
+                }
+            }
+            
+            // Start polling every 3 seconds
+            pollingInterval = setInterval(checkForNewRegistrations, 3000);
+            showAlert('Đã bật chế độ real-time!', 'success');
+        }
+
+        function checkForNewRegistrations() {
+            fetch('/api/admin/customer-registrations/latest')
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.id > lastRegistrationId) {
+                        // New registration found
+                        addNewRegistrationToTable(data);
+                        lastRegistrationId = data.id;
+                        showAlert('Có đăng ký mới!', 'info');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking for new registrations:', error);
+                });
+        }
+
+        function addNewRegistrationToTable(registration) {
+            const tbody = document.querySelector('.data-table tbody');
+            if (!tbody) return;
+            
+            // Create new row
+            const row = document.createElement('tr');
+            row.style.backgroundColor = '#e8f5e8'; // Highlight new row
+            
+            // Format date
+            const date = new Date(registration.created_at);
+            const formattedDate = date.toLocaleString('vi-VN');
+            
+            row.innerHTML = `
+                <td>${registration.id}</td>
+                <td>${registration.full_name || 'N/A'}</td>
+                <td>${registration.email || 'N/A'}</td>
+                <td>${registration.phone || 'N/A'}</td>
+                <td>${getProvinceText(registration.province)}</td>
+                <td>${registration.country || 'N/A'}</td>
+                <td>${getIndustryText(registration.industry)}</td>
+                <td>${getExperienceText(registration.experience)}</td>
+                <td><span class="status-badge status-new">MỚI</span></td>
+                <td>${formattedDate}</td>
+                <td class="action-buttons">
+                    <button class="btn btn-sm btn-primary" onclick="viewCustomer(${registration.id})">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteCustomer(${registration.id})">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            `;
+            
+            // Insert at the top of the table
+            tbody.insertBefore(row, tbody.firstChild);
+            
+            // Remove highlight after 5 seconds
+            setTimeout(() => {
+                row.style.backgroundColor = '';
+            }, 5000);
+        }
+
         // Load data when page loads
         document.addEventListener('DOMContentLoaded', () => {
             loadCustomerRegistrations();
+            startRealTimePolling(); // Start real-time polling
+        });
+
+        // Clean up polling when page unloads
+        window.addEventListener('beforeunload', () => {
+            if (pollingInterval) {
+                clearInterval(pollingInterval);
+            }
         });
     </script>
 
